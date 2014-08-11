@@ -1,41 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
-	
-	<!-- view textview -->
-	<style name="Example.TextView" parent="@android:style/Widget.DeviceDefault.TextView">
-		<item name="android:textColor">@color/global_text_primary_inverse</item>
-	</style>
-	<style name="Example.TextView.Light" parent="@android:style/Widget.DeviceDefault.Light.TextView">
-		<item name="android:textColor">@color/global_text_primary</item>
-	</style>
-	
-	
-	<!-- view button -->
-	<style name="Example.Button" parent="@android:style/Widget.DeviceDefault.Button">
-		<item name="android:textColor">@color/global_text_primary_inverse</item>
-	</style>
-	<style name="Example.Button.Light" parent="@android:style/Widget.DeviceDefault.Light.Button">
-		<item name="android:textColor">@color/global_text_primary</item>
-	</style>
-	
-	
-	<!-- view edittext -->
-	<style name="Example.EditText" parent="@android:style/Widget.DeviceDefault.EditText">
-		<item name="android:textColor">@color/global_text_primary_inverse</item>
-		<item name="android:textColorHint">@color/global_text_secondary_inverse</item>
-	</style>
-	<style name="Example.EditText.Light" parent="@android:style/Widget.DeviceDefault.Light.EditText">
-		<item name="android:textColor">@color/global_text_primary</item>
-		<item name="android:textColorHint">@color/global_text_secondary</item>
-	</style>
-	
-	
-	<!-- view checkbox -->
-	<style name="Example.CheckBox" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
-		<item name="android:textColor">@color/global_text_primary_inverse</item>
-	</style>
-	<style name="Example.CheckBox.Light" parent="@android:style/Widget.DeviceDefault.Light.CompoundButton.CheckBox">
-		<item name="android:textColor">@color/global_text_primary</item>
-	</style>
-	
+<!-- File created by the Android Action Bar Style Generator
+
+     Copyright (C) 2011 The Android Open Source Project
+     Copyright (C) 2012 readyState Software Ltd
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+    <style name="Theme.FutureHousing" parent="@style/Theme.AppCompat">
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_futurehousing</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.FutureHousing</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.FutureHousing</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.FutureHousing</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.FutureHousing</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Transparent.FutureHousing</item>
+        <item name="android:actionModeBackground">@drawable/cab_background_top_futurehousing</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_futurehousing</item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.FutureHousing</item>
+        
+        
+    </style>
+
+    <style name="ActionBar.Solid.FutureHousing" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@drawable/ab_solid_futurehousing</item>
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_futurehousing</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_futurehousing</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.FutureHousing</item>
+    </style>
+
+    <style name="ActionBar.Transparent.FutureHousing" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:background">@drawable/ab_transparent_futurehousing</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.FutureHousing</item>
+    </style>
+    
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.FutureHousing.Widget" parent="@style/Theme.AppCompat">
+        <item name="android:popupMenuStyle">@style/PopupMenu.FutureHousing</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.FutureHousing</item>
+    </style>
+
 </resources>
