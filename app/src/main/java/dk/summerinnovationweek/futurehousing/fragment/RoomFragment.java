@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.ProductEntity;
-import dk.summerinnovationweek.futurehousing.listener.OnLoadDataListener;
 import dk.summerinnovationweek.futurehousing.task.LoadDataTask;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
 import dk.summerinnovationweek.futurehousing.utility.NetworkManager;

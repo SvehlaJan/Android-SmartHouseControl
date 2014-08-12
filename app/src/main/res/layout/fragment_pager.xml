@@ -4,16 +4,16 @@
 	android:layout_height="match_parent"
 	android:animateLayoutChanges="true">
 
-	<ScrollView
+	<RelativeLayout
 		android:id="@+id/container_content"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:fillViewport="true"
 		android:background="@color/global_bg_front">
 
-		<include layout="@layout/fragment_main_content" />
+		<include layout="@layout/fragment_pager_content" />
 
-	</ScrollView>
+	</RelativeLayout>
 
 	<include layout="@layout/placeholder_progress"
 		android:id="@+id/container_progress"

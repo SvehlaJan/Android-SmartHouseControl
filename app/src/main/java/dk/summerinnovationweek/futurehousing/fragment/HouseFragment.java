@@ -1,6 +1,5 @@
 package dk.summerinnovationweek.futurehousing.fragment;
 
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -13,13 +12,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import dk.summerinnovationweek.futurehousing.R;
+import dk.summerinnovationweek.futurehousing.client.OnLoadDataListener;
 import dk.summerinnovationweek.futurehousing.entity.ProductEntity;
-import dk.summerinnovationweek.futurehousing.listener.OnLoadDataListener;
 import dk.summerinnovationweek.futurehousing.task.LoadDataTask;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
 import dk.summerinnovationweek.futurehousing.utility.NetworkManager;
 import dk.summerinnovationweek.futurehousing.view.ViewState;
-
 
 
 public class HouseFragment extends TaskFragment
@@ -162,8 +160,8 @@ public class HouseFragment extends TaskFragment
 		
 		// TODO
 	}
-	
-	
+
+
 	private void showActionBarProgress(boolean visible)
 	{
 		// show action bar progress

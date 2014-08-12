@@ -86,7 +86,6 @@ public class MainActivity extends ActionBarActivity
 		switch(item.getItemId()) 
 		{
 			case android.R.id.home:
-				// TODO
 				Intent intentHome = dk.summerinnovationweek.futurehousing.activity.MainActivity.newIntent(this);
 				startActivity(intentHome);
 				return true;

@@ -4,7 +4,7 @@ import java.lang.ref.WeakReference;
 
 import android.os.AsyncTask;
 
-import dk.summerinnovationweek.futurehousing.listener.OnLoadDataListener;
+import dk.summerinnovationweek.futurehousing.client.OnLoadDataListener;
 
 
 public class LoadDataTask extends AsyncTask<Void, Void, String>

@@ -1,4 +1,4 @@
-package dk.summerinnovationweek.futurehousing.listener;
+package dk.summerinnovationweek.futurehousing.client;
 
 
 public interface OnLoadDataListener
