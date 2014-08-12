@@ -21,15 +21,28 @@
 		android:hardwareAccelerated="true">
 		
 		<activity
-			android:name=".activity.MainActivity"
-			android:label="@string/app_name"
-			android:launchMode="standard"
-			android:uiOptions="none">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
+        android:name=".activity.MainActivity"
+        android:label="@string/app_name"
+        android:launchMode="standard"
+        android:uiOptions="none">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+        <activity
+            android:name=".activity.HouseActivity"
+            android:label="@string/house_activity"
+            android:launchMode="standard"
+            android:uiOptions="none">
+        </activity>
 
-	</application>
+        <activity
+            android:name=".activity.RoomActivity"
+            android:label="@string/room_activity"
+            android:launchMode="standard"
+            android:uiOptions="none">
+        </activity>
+
+    </application>
 </manifest>

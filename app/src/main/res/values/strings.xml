@@ -29,6 +29,6 @@
     <string name="ab_button_list_expand">Rooms</string>
     <string name="ab_button_list_collapse">Schedule</string>
     <string name="ab_button_list_mybutton">Kitchen</string>
-
+    <string name="room_activity">Room overview</string>
     <string name="house_activity">House overview</string>
 </resources>
