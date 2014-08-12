@@ -2,6 +2,7 @@ package dk.summerinnovationweek.futurehousing.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,11 +48,14 @@ public class RoomFragment extends TaskFragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
+        //ViewPager mRootView = (ViewPager) mRootView.findViewById(R.id.fragment_room);
 		mRootView = inflater.inflate(R.layout.fragment_room, container, false);
+        View tv = mRootView.findViewById(R.id.fragment_room_content);
+        tv.setBackgroundColor(getResources().getColor(R.color.global_bg_front));
 		return mRootView;
 	}
-	
-	
+
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
@@ -232,5 +236,6 @@ public class RoomFragment extends TaskFragment
 	
 	private void renderView()
 	{
+
 	}
 }

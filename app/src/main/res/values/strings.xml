@@ -31,4 +31,7 @@
     <string name="ab_button_list_mybutton">Kitchen</string>
     <string name="room_activity">Room overview</string>
     <string name="house_activity">House overview</string>
+    <string name="bulbContentDesc">Bulb</string>
+    <string name="tv_MainLamp">Main lamp</string>
+
 </resources>

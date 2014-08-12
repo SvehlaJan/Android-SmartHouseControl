@@ -11,8 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
 import dk.summerinnovationweek.futurehousing.R;
@@ -45,20 +45,9 @@ public class RoomActivity extends ActionBarActivity
     }
 
 
-    public void onToggleClicked(View view) {
-        // Is the toggle on?
-        boolean on = ((ToggleButton) view).isChecked();
-
-        if (on) {
-            // Enable vibrate
-        } else {
-            // Disable vibrate
-        }
-    }
-
     public void addListenerOnButton() {
 
-        final LinearLayout bg = (LinearLayout) findViewById(R.id.fragment_room_content);
+        final FrameLayout bg = (FrameLayout) findViewById(R.id.fragment_room_content);
         image = (ImageView) findViewById(R.id.ivLightOn);
 
         button = (ToggleButton) findViewById(R.id.toggleButton);

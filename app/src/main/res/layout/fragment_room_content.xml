@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -10,19 +10,35 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" />
 
+    <ImageView
+        android:layout_width="158dp"
+        android:layout_height="213dp"
+        android:id="@+id/ivLightOn"
+        android:src="@drawable/bulb_off"
+        android:layout_gravity="right|bottom"
+        android:contentDescription="@string/bulbContentDesc" />
+
     <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Light1"
         android:id="@+id/toggleButton"
-        android:layout_gravity="left" />
+        android:layout_gravity="left|bottom" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ivLightOn"
-        android:src="@drawable/bulb_off"
-        android:layout_gravity="top|center" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_gravity="left|center_vertical" />
 
-	
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tv_MainLamp"
+        android:id="@+id/twMainLamp"
+        android:layout_gravity="left|top" />
+
+
+</FrameLayout>
