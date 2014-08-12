@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import dk.summerinnovationweek.futurehousing.R;
 
@@ -16,12 +20,20 @@ import dk.summerinnovationweek.futurehousing.R;
 public class HouseActivity extends ActionBarActivity
 {
 
+    Button kitchen;
+    Button dinningroom;
+    Button livingroom;
+    Button office;
+    Button guest;
 	public static Intent newIntent(Context context)
 	{
 		Intent intent = new Intent(context, dk.summerinnovationweek.futurehousing.activity.HouseActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		return intent;
-	}
+
+
+
+    }
 
 
 	@Override
@@ -32,8 +44,82 @@ public class HouseActivity extends ActionBarActivity
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setupActionBar();
 		setContentView(R.layout.activity_house);
-	}
-	
+        addListenerOnButton();
+
+
+    }
+    public void addListenerOnButton() {
+
+
+        kitchen = (Button) findViewById(R.id.kitchen);
+        kitchen.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                //TODO
+                Log.e("TAG", "Kitchen" );
+
+
+            }
+
+        });
+
+        dinningroom = (Button) findViewById(R.id.dinningroom);
+        dinningroom.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                //TODO
+                Log.e("TAG", "dinningroom" );
+
+
+            }
+
+        });
+        livingroom = (Button) findViewById(R.id.livingroom);
+        livingroom.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                //TODO
+                Log.e("TAG", "livingroom" );
+
+
+            }
+
+        });
+        office = (Button) findViewById(R.id.office);
+        office.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                //TODO
+                Log.e("TAG", "office" );
+
+
+            }
+
+        });
+
+        guest = (Button) findViewById(R.id.guest);
+        guest.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                //TODO
+                Log.e("TAG", "guest" );
+
+
+            }
+
+        });
+
+    }
 	
 	@Override
 	public void onStart()
