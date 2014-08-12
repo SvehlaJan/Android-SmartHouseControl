@@ -87,12 +87,18 @@ public class MainActivity extends ActionBarActivity
 		{
 			case android.R.id.home:
 				// TODO
-				Intent intent = dk.summerinnovationweek.futurehousing.activity.MainActivity.newIntent(this);
-				startActivity(intent);
+				Intent intentHome = dk.summerinnovationweek.futurehousing.activity.MainActivity.newIntent(this);
+				startActivity(intentHome);
 				return true;
 
-			case R.id.ab_button_refresh:
-				// TODO
+			case R.id.ab_button_list_expand:
+				Intent intentRoom = RoomActivity.newIntent(this);
+				startActivity(intentRoom);
+				return true;
+
+			case R.id.ab_button_list_collapse:
+				Intent intentHouse = HouseActivity.newIntent(this);
+				startActivity(intentHouse);
 				return true;
 
 			default:
