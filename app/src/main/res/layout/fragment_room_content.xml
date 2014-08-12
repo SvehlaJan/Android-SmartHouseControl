@@ -1,44 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/fragment_room_content">
-	
-	<TextView
-		android:id="@+id/fragment_simple_name"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <ImageView
-        android:layout_width="158dp"
-        android:layout_height="213dp"
-        android:id="@+id/ivLightOn"
-        android:src="@drawable/bulb_off"
-        android:layout_gravity="right|bottom"
-        android:contentDescription="@string/bulbContentDesc" />
 
-    <ToggleButton
-        android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragment_room_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Light1"
-        android:id="@+id/toggleButton"
-        android:layout_gravity="left|bottom" />
+        android:gravity="center"
+        android:measureAllChildren="false"
+        android:orientation="horizontal">
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="128dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_gravity="left|center_vertical" />
+        <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
+            android:layout_weight="1"
+            android:text="Light1" />
+
+
+        <ImageView
+            android:id="@+id/ivLightOn"
+            android:layout_width="106dp"
+            android:layout_height="142dp"
+            android:layout_gravity="right|bottom"
+            android:layout_weight="1"
+            android:contentDescription="@string/bulbContentDesc"
+            android:src="@drawable/bulb_off" />
+
+    </LinearLayout>
 
     <TextView
+        android:id="@+id/tvTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/tv_MainLamp"
-        android:id="@+id/twMainLamp"
-        android:layout_gravity="left|top" />
+        android:layout_above="@+id/seekBar"
+        android:layout_alignParentLeft="true"
+        android:text="@string/temp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
 
 
-</FrameLayout>
+</RelativeLayout>
