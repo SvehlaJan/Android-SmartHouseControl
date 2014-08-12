@@ -69,7 +69,10 @@ public class RoomActivity extends ActionBarActivity {
                 int tColor = (int) abs(seekValue * 2.5);
                 sb.setBackgroundColor(Color.rgb(tColor, seekValue, seekValue));
                 sb.invalidate();
-                String val = Integer.toString(seekValue);
+
+                // przedzial 15 - 30deg, seek: 1-100
+                int temp = 15 + abs(seekValue/8);
+                String val = Integer.toString(temp);
                 tvTemp.setText("Temperature: " + val);
             }
 
