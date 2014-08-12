@@ -21,6 +21,8 @@ import android.widget.ToggleButton;
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 
+import static java.lang.Math.abs;
+
 
 public class RoomActivity extends ActionBarActivity {
 
@@ -47,7 +49,7 @@ public class RoomActivity extends ActionBarActivity {
 
         RoomEntity re = new RoomEntity(10, "aName", true, 20);
         String cpuInfo = re.ReadCPUinfo();
-
+        int temp = re.getMeasuredTemperature();
 
     }
 
@@ -64,7 +66,8 @@ public class RoomActivity extends ActionBarActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 int seekValue = sb.getProgress();
-                sb.setBackgroundColor(Color.rgb(seekValue, seekValue, seekValue));
+                int tColor = (int) abs(seekValue * 2.5);
+                sb.setBackgroundColor(Color.rgb(tColor, seekValue, seekValue));
                 sb.invalidate();
                 String val = Integer.toString(seekValue);
                 tvTemp.setText("Temperature: " + val);

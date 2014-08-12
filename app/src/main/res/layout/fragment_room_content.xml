@@ -17,7 +17,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="left|bottom"
             android:layout_weight="1"
-            android:text="Light1" />
+            android:text="Light1"
+            android:layout_marginTop="20dp" />
 
 
         <ImageView
@@ -27,7 +28,8 @@
             android:layout_gravity="right|bottom"
             android:layout_weight="1"
             android:contentDescription="@string/bulbContentDesc"
-            android:src="@drawable/bulb_off" />
+            android:src="@drawable/bulb_off"
+            android:layout_marginTop="20dp"/>
 
     </LinearLayout>
 
