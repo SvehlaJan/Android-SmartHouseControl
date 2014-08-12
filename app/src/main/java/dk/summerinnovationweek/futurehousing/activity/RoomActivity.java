@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ToggleButton;
 
 import dk.summerinnovationweek.futurehousing.R;
 
@@ -40,25 +42,44 @@ public class RoomActivity extends ActionBarActivity
 		setContentView(R.layout.activity_room);
 
         addListenerOnButton();
-
     }
 
+
+    public void onToggleClicked(View view) {
+        // Is the toggle on?
+        boolean on = ((ToggleButton) view).isChecked();
+
+        if (on) {
+            // Enable vibrate
+        } else {
+            // Disable vibrate
+        }
+    }
 
     public void addListenerOnButton() {
 
+        final LinearLayout bg = (LinearLayout) findViewById(R.id.fragment_room_content);
         image = (ImageView) findViewById(R.id.ivLightOn);
 
-        button = (Button) findViewById(R.id.switch1);
+        button = (ToggleButton) findViewById(R.id.toggleButton);
         button.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View arg0) {
-                image.setImageResource(R.drawable.bulb_off);
-            }
 
+            @Override
+            public void onClick(View view) {
+                boolean on = ((ToggleButton) view).isChecked();
+                if (on == true) {
+                   image.setImageResource(R.drawable.bulb_on);
+                    // bg.setBackgroundColor(0xFFF3F3F3);
+                } else {
+                    image.setImageResource(R.drawable.bulb_off);
+                    //bg.setBackgroundColor(0xFF000000);
+                }
+
+            }
         });
 
-    }
+       }
 	
 	@Override
 	public void onStart()
