@@ -12,10 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import dk.summerinnovationweek.futurehousing.R;
-import dk.summerinnovationweek.futurehousing.entity.ProductEntity;
+import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 import dk.summerinnovationweek.futurehousing.task.LoadDataTask;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
-import dk.summerinnovationweek.futurehousing.utility.NetworkManager;
 import dk.summerinnovationweek.futurehousing.view.ViewState;
 
 public class RoomFragment extends TaskFragment
@@ -25,7 +24,7 @@ public class RoomFragment extends TaskFragment
 	private View mRootView;
 	private LoadDataTask mLoadDataTask;
 
-	private ProductEntity mProduct;
+	private HouseEntity mProduct;
 	
 	
 	@Override
@@ -233,10 +232,5 @@ public class RoomFragment extends TaskFragment
 	
 	private void renderView()
 	{
-		// reference
-		TextView nameTextView = (TextView) mRootView.findViewById(R.id.fragment_simple_name);
-		
-		// content
-		nameTextView.setText(mProduct.getName());
 	}
 }

@@ -10,11 +10,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 
+import java.util.ArrayList;
+
 import dk.summerinnovationweek.futurehousing.R;
+import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
+import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 
 
 public class MainActivity extends ActionBarActivity
 {
+	public static final String EXTRA_HOUSE = "extraHouse";
+	public static final String EXTRA_ROOM = "extraRoom";
+
 	public static Intent newIntent(Context context)
 	{
 		Intent intent = new Intent(context, dk.summerinnovationweek.futurehousing.activity.MainActivity.class);
@@ -82,6 +89,38 @@ public class MainActivity extends ActionBarActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
+		HouseEntity house = new HouseEntity();
+		house.setId(1);
+
+		ArrayList<RoomEntity> rooms = new ArrayList<RoomEntity>();
+
+		RoomEntity room = new RoomEntity(1, "Kitchen", true, 20);
+		room.setInputIsLightOn(true);
+		room.setInputTemperature(22);
+		rooms.add(room);
+
+		room = new RoomEntity(2, "Guest room", false, 17);
+		room.setInputIsLightOn(false);
+		room.setInputTemperature(17);
+		rooms.add(room);
+
+		room = new RoomEntity(3, "Living room", true, 23);
+		room.setInputIsLightOn(true);
+		room.setInputTemperature(22);
+		rooms.add(room);
+
+		room = new RoomEntity(4, "Office", false, 22);
+		room.setInputIsLightOn(true);
+		room.setInputTemperature(22);
+		rooms.add(room);
+
+		room = new RoomEntity(5, "Dining room", false, 20);
+		room.setInputIsLightOn(false);
+		room.setInputTemperature(20);
+		rooms.add(room);
+
+		house.setRoomList(rooms);
+
 		// action bar menu behaviour
 		switch(item.getItemId()) 
 		{
@@ -92,11 +131,13 @@ public class MainActivity extends ActionBarActivity
 
 			case R.id.ab_button_list_expand:
 				Intent intentRoom = RoomActivity.newIntent(this);
+				intentRoom.putExtra(EXTRA_ROOM, room);
 				startActivity(intentRoom);
 				return true;
 
 			case R.id.ab_button_list_collapse:
 				Intent intentHouse = HouseActivity.newIntent(this);
+				intentHouse.putExtra(EXTRA_HOUSE, house);
 				startActivity(intentHouse);
 				return true;
 

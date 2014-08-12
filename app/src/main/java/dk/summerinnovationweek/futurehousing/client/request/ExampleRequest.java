@@ -14,7 +14,7 @@ import java.util.List;
 
 import dk.summerinnovationweek.futurehousing.client.parser.ExampleParser;
 import dk.summerinnovationweek.futurehousing.client.response.Response;
-import dk.summerinnovationweek.futurehousing.entity.ProductEntity;
+import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 
 
 public class ExampleRequest extends Request
@@ -62,7 +62,7 @@ public class ExampleRequest extends Request
 
 
 	@Override
-	public Response<List<ProductEntity>> parseResponse(InputStream stream) throws IOException, JsonParseException
+	public Response<HouseEntity> parseResponse(InputStream stream) throws IOException, JsonParseException
 	{
 		return ExampleParser.parse(stream);
 	}

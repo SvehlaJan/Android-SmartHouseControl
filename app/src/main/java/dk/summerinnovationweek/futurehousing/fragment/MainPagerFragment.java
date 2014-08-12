@@ -26,7 +26,7 @@ import dk.summerinnovationweek.futurehousing.client.APICallTask;
 import dk.summerinnovationweek.futurehousing.client.ResponseStatus;
 import dk.summerinnovationweek.futurehousing.client.request.ExampleRequest;
 import dk.summerinnovationweek.futurehousing.client.response.Response;
-import dk.summerinnovationweek.futurehousing.entity.ProductEntity;
+import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
 import dk.summerinnovationweek.futurehousing.utility.Logcat;
 import dk.summerinnovationweek.futurehousing.utility.NetworkManager;
@@ -44,7 +44,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	private APICallManager mAPICallManager = new APICallManager();
 
 	private ViewPager mViewPager;
-	private ArrayList<ProductEntity> mProductList = new ArrayList<ProductEntity>();
+	private HouseEntity mHouseEntity;
 	
 	
 	@Override
@@ -70,8 +70,9 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		}
 		else if(mViewState==ViewState.CONTENT)
 		{
-			if(mProductList!=null) renderView();
-			showList();
+			if(mHouseEntity!=null)
+				renderView();
+			showContent();
 		}
 		else if(mViewState==ViewState.PROGRESS)
 		{
@@ -114,7 +115,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 				
 				if(task.getRequest().getClass().equals(ExampleRequest.class))
 				{
-					Response<List<ProductEntity>> exampleResponse = (Response<List<ProductEntity>>) response;
+					Response<HouseEntity> exampleResponse = (Response<HouseEntity>) response;
 					
 					// error
 					if(exampleResponse.isError())
@@ -123,7 +124,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 								" / error / " + exampleResponse.getErrorType() + " / " + exampleResponse.getErrorMessage());
 
 						// hide progress
-						showList();
+						showContent();
 
 						// handle error
 						handleError(exampleResponse.getErrorType(), exampleResponse.getErrorMessage());
@@ -134,26 +135,13 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 					{
 						Logcat.d("Fragment.onAPICallRespond(ExampleRequest): " + status.getStatusCode() + " " + status.getStatusMessage());
 
-						// check meta data
-						if(task.getRequest().getMetaData()!=null && task.getRequest().getMetaData().getBoolean(META_REFRESH, false))
-						{
-							// refresh
-							mProductList.clear();
-						}
-						
-						// get data
-						List<ProductEntity> productList = exampleResponse.getResponseObject();
-						Iterator<ProductEntity> iterator = productList.iterator();
-						while(iterator.hasNext())
-						{
-							ProductEntity product = iterator.next();
-							mProductList.add(new ProductEntity(product));
-						}
+						mHouseEntity = exampleResponse.getResponseObject();
 
-						if(mProductList!=null) renderView();
+						if (mHouseEntity != null)
+							renderView();
 
 						// hide progress
-						showList();
+						showContent();
 					}
 				}
 				
@@ -182,7 +170,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 							" / " + exception.getClass().getSimpleName() + " / " + exception.getMessage());
 					
 					// hide progress
-					showList();
+					showContent();
 
 					// handle fail
 					handleFail(exception);
@@ -277,7 +265,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	}
 	
 	
-	private void showList()
+	private void showContent()
 	{
 		// show list container
 		ViewGroup containerList = (ViewGroup) mRootView.findViewById(R.id.container_content);

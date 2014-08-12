@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.summerinnovationweek.futurehousing.client.response.Response;
-import dk.summerinnovationweek.futurehousing.entity.ProductEntity;
+import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 
 
 public class ExampleParser extends Parser
 {
-	public static Response<List<ProductEntity>> parse(InputStream stream) throws IOException, JsonParseException
+	public static Response<HouseEntity> parse(InputStream stream) throws IOException, JsonParseException
 	{
-		Response<List<ProductEntity>> response = null;
+		Response<HouseEntity> response = null;
 		
 		
 		// init parser
@@ -51,7 +51,7 @@ public class ExampleParser extends Parser
 					}
 				}
 				
-				response = new Response<List<ProductEntity>>();
+				response = new Response<HouseEntity>();
 				response.setError(true);
 				response.setErrorType(type);
 				response.setErrorMessage(message);
@@ -81,15 +81,11 @@ public class ExampleParser extends Parser
 					}
 				}
 
-				ProductEntity product = new ProductEntity();
+				HouseEntity product = new HouseEntity();
 				product.setId(id);
-				product.setName(name);
 
-				List<ProductEntity> productList = new ArrayList<ProductEntity>();
-				productList.add(product);
-
-				response = new Response<List<ProductEntity>>();
-				response.setResponseObject(productList);
+				response = new Response<HouseEntity>();
+				response.setResponseObject(product);
 			}
 		}
 		

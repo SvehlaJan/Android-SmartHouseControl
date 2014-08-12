@@ -9,14 +9,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import dk.summerinnovationweek.futurehousing.R;
-import dk.summerinnovationweek.futurehousing.client.OnLoadDataListener;
-import dk.summerinnovationweek.futurehousing.entity.ProductEntity;
-import dk.summerinnovationweek.futurehousing.task.LoadDataTask;
+import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
-import dk.summerinnovationweek.futurehousing.utility.NetworkManager;
 import dk.summerinnovationweek.futurehousing.view.ViewState;
 
 
@@ -26,7 +22,7 @@ public class HouseFragment extends TaskFragment
 	private ViewState mViewState = null;
 	private View mRootView;
 
-	private ProductEntity mProduct;
+	private HouseEntity mProduct;
 	
 	
 	@Override
