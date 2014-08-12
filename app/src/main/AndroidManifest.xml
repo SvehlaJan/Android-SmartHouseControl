@@ -35,7 +35,10 @@
             android:name=".activity.HouseActivity"
             android:label="@string/house_activity"
             android:launchMode="standard"
-            android:uiOptions="none">
+            android:uiOptions="none"
+            android:screenOrientation="portrait"
+            >
+
         </activity>
 
         <activity
