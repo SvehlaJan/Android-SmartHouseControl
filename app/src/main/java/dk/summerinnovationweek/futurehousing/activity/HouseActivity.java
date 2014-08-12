@@ -31,7 +31,7 @@ public class HouseActivity extends ActionBarActivity
 		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setupActionBar();
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_house);
 	}
 	
 	

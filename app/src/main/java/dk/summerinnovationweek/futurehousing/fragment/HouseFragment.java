@@ -22,12 +22,11 @@ import dk.summerinnovationweek.futurehousing.view.ViewState;
 
 
 
-public class HouseFragment extends TaskFragment implements OnLoadDataListener
+public class HouseFragment extends TaskFragment
 {
 	private boolean mActionBarProgress = false;
 	private ViewState mViewState = null;
 	private View mRootView;
-	private LoadDataTask mLoadDataTask;
 
 	private ProductEntity mProduct;
 	
@@ -65,7 +64,7 @@ public class HouseFragment extends TaskFragment implements OnLoadDataListener
 		// load and show data
 		if(mViewState==null || mViewState==ViewState.OFFLINE)
 		{
-			loadData();
+			showContent();
 		}
 		else if(mViewState==ViewState.CONTENT)
 		{
@@ -126,9 +125,6 @@ public class HouseFragment extends TaskFragment implements OnLoadDataListener
 	public void onDestroy()
 	{
 		super.onDestroy();
-		
-		// cancel async tasks
-		if(mLoadDataTask!=null) mLoadDataTask.cancel(true);
 	}
 	
 	
@@ -165,49 +161,6 @@ public class HouseFragment extends TaskFragment implements OnLoadDataListener
 		return super.onOptionsItemSelected(item);
 		
 		// TODO
-	}
-	
-	
-	@Override
-	public void onLoadData()
-	{
-		runTaskCallback(new Runnable()
-		{
-			public void run()
-			{
-				if(mRootView==null) return; // view was destroyed
-				
-				// get data
-				mProduct = new ProductEntity();
-				mProduct.setName("Test Product");
-				
-				// hide progress and render view
-				if(mProduct!=null)
-				{
-					renderView();
-					showContent();
-				}
-				else showEmpty();
-			}
-		});
-	}
-	
-	
-	private void loadData()
-	{
-		if(NetworkManager.isOnline(getActivity()))
-		{
-			// show progress
-			showProgress();
-			
-			// run async task
-			mLoadDataTask = new LoadDataTask(this);
-			executeTask(mLoadDataTask);
-		}
-		else
-		{
-			showOffline();
-		}
 	}
 	
 	
@@ -281,10 +234,5 @@ public class HouseFragment extends TaskFragment implements OnLoadDataListener
 	
 	private void renderView()
 	{
-		// reference
-		TextView nameTextView = (TextView) mRootView.findViewById(R.id.fragment_simple_name);
-		
-		// content
-		nameTextView.setText(mProduct.getName());
 	}
 }
