@@ -2,38 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/fragment_room_content">
 	
 	<TextView
 		android:id="@+id/fragment_simple_name"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" />
 
-    <Switch
+    <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Light1"
-        android:id="@+id/switch1"
+        android:id="@+id/toggleButton"
         android:layout_gravity="left" />
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Light2"
-        android:id="@+id/switch2" />
-
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="140dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/ivLightOn"
-        android:layout_gravity="left"
-        android:src="@drawable/bulb_off"/>
+        android:src="@drawable/bulb_off"
+        android:layout_gravity="top|center" />
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="140dp"
-        android:id="@+id/ivLightOff"
-        android:layout_gravity="left"
-        android:src="@drawable/bulb_on"/>
 	
 </LinearLayout>
