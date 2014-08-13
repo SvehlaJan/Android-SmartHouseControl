@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.adapter.MainPagerAdapter;
@@ -207,6 +208,42 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	
 	private void loadData()
 	{
+		HouseEntity house = new HouseEntity();
+		house.setId(1);
+
+		ArrayList<RoomEntity> rooms = new ArrayList<RoomEntity>();
+
+		RoomEntity room = new RoomEntity(1, "Kitchen", true, 20);
+		room.setInputIsLightOn(true);
+		room.setInputTemperature(22);
+		rooms.add(room);
+
+		room = new RoomEntity(2, "Guest room", false, 17);
+		room.setInputIsLightOn(false);
+		room.setInputTemperature(17);
+		rooms.add(room);
+
+		room = new RoomEntity(3, "Living room", true, 23);
+		room.setInputIsLightOn(true);
+		room.setInputTemperature(22);
+		rooms.add(room);
+
+		room = new RoomEntity(4, "Office", false, 22);
+		room.setInputIsLightOn(true);
+		room.setInputTemperature(22);
+		rooms.add(room);
+
+		room = new RoomEntity(5, "Dining room", false, 20);
+		room.setInputIsLightOn(false);
+		room.setInputTemperature(20);
+		rooms.add(room);
+
+		house.setRoomList(rooms);
+
+		mHouseEntity = house;
+		showProgress();
+
+		/*
 		if(NetworkManager.isOnline(getActivity()))
 		{
 			if(!mAPICallManager.hasRunningTask(HouseRequest.class))
@@ -226,6 +263,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		{
 			showOffline();
 		}
+		*/
 	}
 
 
