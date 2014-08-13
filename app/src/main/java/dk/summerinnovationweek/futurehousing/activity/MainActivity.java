@@ -99,7 +99,7 @@ public class MainActivity extends ActionBarActivity
 		RoomEntity room = new RoomEntity(1, "Kitchen", true, 20);
 		room.setInputIsLightOn(true);
 		room.setInputTemperature(22);
-		rooms.add(room);
+        rooms.add(room);
 
 		room = new RoomEntity(2, "Guest room", false, 17);
 		room.setInputIsLightOn(false);

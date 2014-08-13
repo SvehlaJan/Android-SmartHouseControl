@@ -17,10 +17,10 @@ public class RoomEntity implements Serializable {
 
     }
 
-    public RoomEntity(int id, String name, boolean inputIsLightOn, int measuredTemperature) {
+    public RoomEntity(int id, String name, boolean isMeasuredIsLightOn, int measuredTemperature) {
         mId = id;
         mName = name;
-        mInputIsLightOn = inputIsLightOn;
+        mInputIsLightOn = isMeasuredIsLightOn;
         mMeasuredTemperature = measuredTemperature;
     }
 

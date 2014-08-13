@@ -85,10 +85,11 @@ public class HouseActivity extends ActionBarActivity
         RoomEntity kitchenroom = getRoomByName(house, "Kitchen");
         if (kitchenroom != null ) {
         kitchenlight = (ImageView) findViewById(R.id.kitchenlight);
+            Log.e("Debug",Boolean.toString(kitchenroom.isMeasuredIsLightOn()));
         if (kitchenroom.isMeasuredIsLightOn()) {
-            kitchenlight.setImageResource(R.drawable.lightbulb);
-        } else {
             kitchenlight.setImageResource(R.drawable.lightbulb_off);
+        } else {
+            kitchenlight.setImageResource(R.drawable.lightbulb);
         }
         temperaturekitchen = (TextView) findViewById(R.id.temperaturekitchen);
         temperaturekitchen.setText(Integer.toString(kitchenroom.getMeasuredTemperature()));
@@ -111,9 +112,9 @@ public class HouseActivity extends ActionBarActivity
         if (livingroom != null ) {
             livingroomlight = (ImageView) findViewById(R.id.livingroomlight);
             if (livingroom.isMeasuredIsLightOn()) {
-                livingroomlight.setImageResource(R.drawable.lightbulb);
-            } else {
                 livingroomlight.setImageResource(R.drawable.lightbulb_off);
+            } else {
+                livingroomlight.setImageResource(R.drawable.lightbulb);
             }
             temperaturelivingroom = (TextView) findViewById(R.id.temperaturelivingroom);
             temperaturelivingroom.setText(Integer.toString(livingroom.getMeasuredTemperature()));
