@@ -30,16 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity
-            android:name=".activity.HouseActivity"
-            android:label="@string/house_activity"
-            android:launchMode="standard"
-            android:uiOptions="none"
-            android:screenOrientation="portrait"
-            >
-
-        </activity>
 
     </application>
 </manifest>

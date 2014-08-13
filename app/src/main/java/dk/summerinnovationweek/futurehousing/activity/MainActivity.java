@@ -141,11 +141,6 @@ public class MainActivity extends ActionBarActivity
 				return true;
 
 			case R.id.ab_button_list_collapse:
-				Intent intentHouse = HouseActivity.newIntent(this);
-                Bundle bundleHouse = new Bundle();
-                bundleHouse.putSerializable(EXTRA_HOUSE, house);
-                intentHouse.putExtras(bundleHouse);
-				startActivity(intentHouse);
 				return true;
 
 			default:

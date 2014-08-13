@@ -18,6 +18,7 @@ import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
+import dk.summerinnovationweek.futurehousing.utility.FragmentUtils;
 import dk.summerinnovationweek.futurehousing.view.ViewState;
 
 
@@ -422,12 +423,14 @@ public class HouseFragment extends TaskFragment
 
     public void addListenerOnButton() {
 
+        final MainPagerFragment fragment = FragmentUtils.getParent(this, MainPagerFragment.class);
 
         kitchen = (Button) mRootView.findViewById(R.id.kitchen);
         kitchen.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
+                fragment.showRoom(1);
 
                 //TODO
                 Log.e("TAG", "Kitchen" );
@@ -445,6 +448,7 @@ public class HouseFragment extends TaskFragment
 
                 //TODO
                 Log.e("TAG", "dinningroom" );
+                fragment.showRoom(5);
 
 
             }
@@ -458,6 +462,7 @@ public class HouseFragment extends TaskFragment
 
                 //TODO
                 Log.e("TAG", "livingroom" );
+                fragment.showRoom(3);
 
 
             }
@@ -471,6 +476,7 @@ public class HouseFragment extends TaskFragment
 
                 //TODO
                 Log.e("TAG", "office" );
+                fragment.showRoom(4);
 
 
             }
@@ -485,6 +491,8 @@ public class HouseFragment extends TaskFragment
 
                 //TODO
                 Log.e("TAG", "guest" );
+                fragment.showRoom(2);
+
 
 
             }
