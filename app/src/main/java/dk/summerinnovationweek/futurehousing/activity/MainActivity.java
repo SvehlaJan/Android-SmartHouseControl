@@ -138,11 +138,6 @@ public class MainActivity extends ActionBarActivity
 				return true;
 
 			case R.id.ab_button_list_expand:
-				Intent intentRoom = RoomActivity.newIntent(this);
-                Bundle bundleRoom = new Bundle();
-                bundleRoom.putSerializable(EXTRA_ROOM, room);
-				intentRoom.putExtras(bundleRoom);
-				startActivity(intentRoom);
 				return true;
 
 			case R.id.ab_button_list_collapse:
@@ -162,7 +157,7 @@ public class MainActivity extends ActionBarActivity
 	private void setupActionBar()
 	{
 		ActionBar bar = getSupportActionBar();
-		bar.setIcon(getResources().getDrawable(R.drawable.back_arrow_image));
+//		bar.setIcon(getResources().getDrawable(R.drawable.back_arrow_image));
 		bar.setDisplayUseLogoEnabled(false);
 		bar.setDisplayShowTitleEnabled(true);
 		bar.setDisplayShowHomeEnabled(true);

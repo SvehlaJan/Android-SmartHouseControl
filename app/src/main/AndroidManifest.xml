@@ -41,12 +41,5 @@
 
         </activity>
 
-        <activity
-            android:name=".activity.RoomActivity"
-            android:label="@string/room_activity"
-            android:launchMode="standard"
-            android:uiOptions="none">
-        </activity>
-
     </application>
 </manifest>

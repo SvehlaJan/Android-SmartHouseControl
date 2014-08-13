@@ -1,6 +1,7 @@
 package dk.summerinnovationweek.futurehousing.fragment;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -9,6 +10,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
@@ -24,11 +30,13 @@ public class RoomFragment extends TaskFragment
 	private View mRootView;
 
 	private RoomEntity mRoom;
+    Button button;
+    ImageView image;
 
 
-	public static HouseFragment newInstance(RoomEntity room)
+	public static RoomFragment newInstance(RoomEntity room)
 	{
-		HouseFragment fragment = new HouseFragment();
+        RoomFragment fragment = new RoomFragment();
 
 		// arguments
 		Bundle arguments = new Bundle();
@@ -73,8 +81,9 @@ public class RoomFragment extends TaskFragment
 	{
         //ViewPager mRootView = (ViewPager) mRootView.findViewById(R.id.fragment_room);
 		mRootView = inflater.inflate(R.layout.fragment_room, container, false);
-        View tv = mRootView.findViewById(R.id.fragment_room_content);
-        tv.setBackgroundColor(getResources().getColor(R.color.global_bg_front));
+        image = (ImageView) mRootView.findViewById(R.id.ivLightOn);
+        button = (ToggleButton) mRootView.findViewById(R.id.toggleButton);
+
 		return mRootView;
 	}
 
@@ -255,7 +264,102 @@ public class RoomFragment extends TaskFragment
 	
 	
 	private void renderView()
-	{
+	{/*
+        ImageView kitchenlight = (ImageView) mRootView.findViewById(R.id.);
+        RoomEntity re = mRoom;
+        if (re.isMeasuredIsLightOn())
+        {
+            kitchenlight.setImageResource(R.drawable.lightbulb);
+        } else {
+            kitchenlight.setImageResource(R.drawable.lightbulb_off);
+        }
 
+        boolean on = ((ToggleButton) view).isChecked();
+        if (on == true) {
+            image.setImageResource(R.drawable.bulb_on);
+            // bg.setBackgroundColor(0xFFF3F3F3);
+        } else {
+            image.setImageResource(R.drawable.bulb_off);
+            //bg.setBackgroundColor(0xFF000000);
+        }
+*/
+
+        addListenerOnButton();
 	}
+
+    public void addListenerOnButton() {
+
+        final int[][] bgArray = {{0, 0, 255}, {0, 17, 238}, {0, 34, 221}, {0, 51, 204}, {0, 68, 187}, {0, 85, 170}, {0, 102, 153}, {0, 119, 136}, {0, 136, 119}, {0, 153, 102}, {0, 170, 85}, {0, 187, 68}, {0, 204, 51}, {0, 221, 34}, {0, 238, 17}, {0, 255, 0}};
+        final int[][] grArray = {{0, 255, 0}, {17, 238, 0}, {34, 221, 0}, {51, 204, 0}, {68, 187, 0}, {85, 170, 0}, {102, 153, 0}, {119, 136, 0}, {136, 119, 0}, {153, 102, 0}, {170, 85, 0}, {187, 68, 0}, {204, 51, 0}, {221, 34, 0}, {238, 17, 0}, {255, 0, 0}};
+        final int[][] rbArray = {{255, 0, 0}, {238, 0, 17}, {221, 0, 34}, {204, 0, 51}, {187, 0, 68}, {170, 0, 85}, {153, 0, 102}, {136, 0, 119}, {119, 0, 136}, {102, 0, 153}, {85, 0, 170}, {68, 0, 187}, {51, 0, 204}, {34, 0, 221}, {17, 0, 238}, {0, 0, 255}};
+
+        // final LinearLayout bg = (LinearLayout) findViewById(R.id.fragment_room_content);
+        final TextView tvTemp = (TextView) mRootView.findViewById((R.id.tvTemp));
+        final SeekBar sb = (SeekBar) mRootView.findViewById(R.id.seekBar);
+        sb.setProgress(0);
+
+
+
+        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                seekBar.setMax(15);
+                int seekValue = sb.getProgress();
+                int temp = 15 + seekValue;
+
+                int red = grArray[seekValue][0];
+                int green = grArray[seekValue][1];
+                int blue = grArray[seekValue][2];
+
+                sb.setBackgroundColor(Color.rgb(red, green, blue));
+                sb.invalidate();
+
+                String val = Integer.toString(temp);
+                tvTemp.setText("Temperature: " + val);
+
+/*                int seekValue = sb.getProgress();
+                int tColor = (int) abs(seekValue * 2.5);  // 1-100
+                sb.setBackgroundColor(Color.rgb(tColor, seekValue, seekValue));
+                sb.invalidate();
+
+                // przedzial 15 - 30deg, seek: 1-100
+                int temp = 15 + abs(seekValue / 8);
+                String val = Integer.toString(temp);
+                tvTemp.setText("Temperature: " + val);
+*/
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser == true) {
+                    ;
+                }
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View view) {
+                boolean on = ((ToggleButton) view).isChecked();
+                if (on == true) {
+                    image.setImageResource(R.drawable.bulb_on);
+                    // bg.setBackgroundColor(0xFFF3F3F3);
+                } else {
+                    image.setImageResource(R.drawable.bulb_off);
+                    //bg.setBackgroundColor(0xFF000000);
+                }
+
+            }
+        });
+
+    }
 }

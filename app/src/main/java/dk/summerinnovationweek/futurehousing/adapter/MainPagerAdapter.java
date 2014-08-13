@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 import dk.summerinnovationweek.futurehousing.fragment.HouseFragment;
 import dk.summerinnovationweek.futurehousing.fragment.RoomFragment;
+import dk.summerinnovationweek.futurehousing.utility.Logcat;
 
 
 public class MainPagerAdapter extends FragmentPagerAdapter
