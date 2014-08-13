@@ -10,9 +10,52 @@
         android:layout_height="match_parent"
         android:src="@drawable/floorplan"
         android:scaleType="fitXY"
-
+         />
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/lightbulb_off"
+        android:layout_alignTop="@+id/livingroom"
+        android:layout_alignLeft="@+id/livingroom"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/livingroomlight"
         />
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/lightbulb_off"
+        android:layout_alignTop="@+id/dinningroom"
+        android:layout_alignLeft="@+id/dinningroom"
+        android:id="@+id/dinningroomlight"
+        />
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/lightbulb_off"
+        android:layout_alignTop="@+id/office"
+        android:layout_alignLeft="@+id/office"
+        android:id="@+id/officelight"
+        />
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/lightbulb_off"
+        android:layout_alignTop="@+id/kitchen"
+        android:layout_alignLeft="@+id/kitchen"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/kitchenlight"
+        />
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/lightbulb_off"
+        android:layout_alignTop="@+id/guest"
+        android:layout_alignLeft="@+id/guest"
 
+        android:id="@+id/guestlight"
+        />
     <Button
         android:layout_width="160dp"
         android:layout_height="225dp"
@@ -48,5 +91,17 @@
         android:background="@android:color/transparent"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="170dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="22°"
+        android:background="#ffffff"
+        android:id="@+id/temperature"
+        android:layout_alignTop="@+id/kitchen"
+        android:layout_alignRight="@+id/guest"
+
+        android:layout_marginTop="42dp" />
 
 </RelativeLayout>

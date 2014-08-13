@@ -58,6 +58,7 @@ public class HouseFragment extends TaskFragment
 		// load and show data
 		if(mViewState==null || mViewState==ViewState.OFFLINE)
 		{
+            renderView();
 			showContent();
 		}
 		else if(mViewState==ViewState.CONTENT)

@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import dk.summerinnovationweek.futurehousing.R;
+import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
+import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 
 
 public class HouseActivity extends ActionBarActivity
@@ -25,6 +27,11 @@ public class HouseActivity extends ActionBarActivity
     Button livingroom;
     Button office;
     Button guest;
+    ImageView kitchenlight;
+    ImageView dinningroomlight;
+    ImageView livingroomlight;
+    ImageView officelight;
+    ImageView guestlight;
 	public static Intent newIntent(Context context)
 	{
 		Intent intent = new Intent(context, dk.summerinnovationweek.futurehousing.activity.HouseActivity.class);
@@ -40,11 +47,76 @@ public class HouseActivity extends ActionBarActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+        HouseEntity house = (HouseEntity) savedInstanceState.getSerializable(MainActivity.EXTRA_HOUSE);
+
 		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setupActionBar();
 		setContentView(R.layout.activity_house);
         addListenerOnButton();
+
+
+    }
+
+    private RoomEntity getRoomByName(HouseEntity house, String roomName)
+    {
+        for (RoomEntity room : house.getRoomList())
+        {
+            if (room.getName() == roomName)
+                return room;
+        }
+
+        return null;
+    }
+
+    public void renderView(HouseEntity house)
+    {
+        kitchenlight = (ImageView)findViewById(R.id.kitchenlight);
+        RoomEntity kitchenroom = getRoomByName(house, "Kitchen");
+        if (kitchenroom.isMeasuredIsLightOn())
+        {
+            kitchenlight.setImageResource(R.drawable.lightbulb);
+        } else {
+            kitchenlight.setImageResource(R.drawable.lightbulb_off);
+        }
+
+        livingroomlight = (ImageView)findViewById(R.id.livingroomlight);
+        RoomEntity livingroom = getRoomByName(house, "Living room");
+        if (livingroom.isMeasuredIsLightOn())
+        {
+            livingroomlight.setImageResource(R.drawable.lightbulb);
+        } else {
+            livingroomlight.setImageResource(R.drawable.lightbulb_off);
+        }
+
+
+        dinningroomlight = (ImageView)findViewById(R.id.dinningroomlight);
+        RoomEntity dinningroom = getRoomByName(house, "Dining room");
+        if (dinningroom.isMeasuredIsLightOn())
+        {
+            dinningroomlight.setImageResource(R.drawable.lightbulb);
+        } else {
+            dinningroomlight.setImageResource(R.drawable.lightbulb_off);
+        }
+
+        officelight = (ImageView)findViewById(R.id.officelight);
+        RoomEntity officeroom = getRoomByName(house, "Office");
+        if (officeroom.isMeasuredIsLightOn())
+        {
+            dinningroomlight.setImageResource(R.drawable.lightbulb);
+        } else {
+            dinningroomlight.setImageResource(R.drawable.lightbulb_off);
+        }
+
+        guestlight = (ImageView)findViewById(R.id.officelight);
+        RoomEntity guestroom = getRoomByName(house, "Office");
+        if (guestroom.isMeasuredIsLightOn())
+        {
+            guestlight.setImageResource(R.drawable.lightbulb);
+        } else {
+            guestlight.setImageResource(R.drawable.lightbulb_off);
+        }
 
 
     }
@@ -120,7 +192,7 @@ public class HouseActivity extends ActionBarActivity
         });
 
     }
-	
+
 	@Override
 	public void onStart()
 	{
