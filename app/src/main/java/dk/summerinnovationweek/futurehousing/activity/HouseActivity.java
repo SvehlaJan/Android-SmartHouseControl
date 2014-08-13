@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
@@ -21,7 +22,11 @@ import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 
 public class HouseActivity extends ActionBarActivity
 {
-
+    TextView temperaturekitchen;
+    TextView temperaturedinningroom;
+    TextView temperaturelivingroom;
+    TextView temperatureoffice;
+    TextView temperatureguest;
     Button kitchen;
     Button dinningroom;
     Button livingroom;
@@ -48,6 +53,9 @@ public class HouseActivity extends ActionBarActivity
 	{
 		super.onCreate(savedInstanceState);
 
+
+
+
         Bundle extras = getIntent().getExtras();
         HouseEntity house = (HouseEntity) extras.getSerializable(MainActivity.EXTRA_HOUSE);
 
@@ -56,6 +64,7 @@ public class HouseActivity extends ActionBarActivity
 		setupActionBar();
 		setContentView(R.layout.activity_house);
         addListenerOnButton();
+        renderView(house);
 
 
     }
@@ -64,7 +73,7 @@ public class HouseActivity extends ActionBarActivity
     {
         for (RoomEntity room : house.getRoomList())
         {
-            if (room.getName() == roomName)
+            if (room.getName().equals(roomName))
                 return room;
         }
 
@@ -73,7 +82,6 @@ public class HouseActivity extends ActionBarActivity
 
     public void renderView(HouseEntity house)
     {
-        Log.e("TAG", "Test1" );
 
         kitchenlight = (ImageView)findViewById(R.id.kitchenlight);
         RoomEntity kitchenroom = getRoomByName(house, "Kitchen");
@@ -83,6 +91,26 @@ public class HouseActivity extends ActionBarActivity
         } else {
             kitchenlight.setImageResource(R.drawable.lightbulb_off);
         }
+        temperaturekitchen = (TextView)findViewById(R.id.temperaturekitchen);
+        temperaturekitchen.setText(Integer.toString(kitchenroom.getMeasuredTemperature()));
+
+        if (kitchenroom.getInputTemperature() == kitchenroom.getMeasuredTemperature())
+        {
+            temperaturekitchen.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_green));
+        }
+
+        if (kitchenroom.getInputTemperature() > kitchenroom.getMeasuredTemperature())
+        {
+            temperaturekitchen.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_blue));
+        }
+
+        if (kitchenroom.getInputTemperature() < kitchenroom.getMeasuredTemperature())
+        {
+            temperaturekitchen.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_red));
+        }
+
+
+
 
         livingroomlight = (ImageView)findViewById(R.id.livingroomlight);
         RoomEntity livingroom = getRoomByName(house, "Living room");
@@ -92,6 +120,24 @@ public class HouseActivity extends ActionBarActivity
         } else {
             livingroomlight.setImageResource(R.drawable.lightbulb_off);
         }
+        temperaturelivingroom = (TextView)findViewById(R.id.temperaturelivingroom);
+        temperaturelivingroom.setText(Integer.toString(livingroom.getMeasuredTemperature()));
+
+        if (livingroom.getInputTemperature() == livingroom.getMeasuredTemperature())
+        {
+            temperaturelivingroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_green));
+        }
+
+        if (livingroom.getInputTemperature() > livingroom.getMeasuredTemperature())
+        {
+            temperaturelivingroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_blue));
+        }
+
+        if (livingroom.getInputTemperature() < livingroom.getMeasuredTemperature())
+        {
+            temperaturelivingroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_red));
+        }
+
 
 
         dinningroomlight = (ImageView)findViewById(R.id.dinningroomlight);
@@ -103,24 +149,79 @@ public class HouseActivity extends ActionBarActivity
             dinningroomlight.setImageResource(R.drawable.lightbulb_off);
         }
 
+        temperaturedinningroom = (TextView)findViewById(R.id.temperaturedinningroom);
+        temperaturedinningroom.setText(Integer.toString(dinningroom.getMeasuredTemperature()));
+
+        if (dinningroom.getInputTemperature() == dinningroom.getMeasuredTemperature())
+        {
+            temperaturedinningroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_green));
+        }
+
+        if (dinningroom.getInputTemperature() > dinningroom.getMeasuredTemperature())
+        {
+            temperaturedinningroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_blue));
+        }
+
+        if (dinningroom.getInputTemperature() < dinningroom.getMeasuredTemperature())
+        {
+            temperaturedinningroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_red));
+        }
+
+
         officelight = (ImageView)findViewById(R.id.officelight);
         RoomEntity officeroom = getRoomByName(house, "Office");
         if (officeroom.isMeasuredIsLightOn())
         {
-            dinningroomlight.setImageResource(R.drawable.lightbulb);
+            officelight.setImageResource(R.drawable.lightbulb);
         } else {
-            dinningroomlight.setImageResource(R.drawable.lightbulb_off);
+            officelight.setImageResource(R.drawable.lightbulb_off);
         }
 
-        guestlight = (ImageView)findViewById(R.id.officelight);
-        RoomEntity guestroom = getRoomByName(house, "Office");
+        temperatureoffice = (TextView)findViewById(R.id.temperatureoffice);
+        temperatureoffice.setText(Integer.toString(officeroom.getMeasuredTemperature()));
+
+        if (officeroom.getInputTemperature() == officeroom.getMeasuredTemperature())
+        {
+            temperatureoffice.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_green));
+        }
+
+        if (officeroom.getInputTemperature() > officeroom.getMeasuredTemperature())
+        {
+            temperatureoffice.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_blue));
+        }
+
+        if (officeroom.getInputTemperature() < officeroom.getMeasuredTemperature())
+        {
+            temperatureoffice.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_red));
+        }
+
+
+
+        guestlight = (ImageView)findViewById(R.id.guestlight);
+        RoomEntity guestroom = getRoomByName(house, "Guest room");
         if (guestroom.isMeasuredIsLightOn())
         {
             guestlight.setImageResource(R.drawable.lightbulb);
         } else {
             guestlight.setImageResource(R.drawable.lightbulb_off);
         }
+        temperatureguest = (TextView)findViewById(R.id.temperatureguest);
+        temperatureguest.setText(Integer.toString(guestroom.getMeasuredTemperature()));
 
+        if (guestroom.getInputTemperature() == guestroom.getMeasuredTemperature())
+        {
+            temperatureguest.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_green));
+        }
+
+        if (guestroom.getInputTemperature() > guestroom.getMeasuredTemperature())
+        {
+            temperatureguest.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_blue));
+        }
+
+        if (guestroom.getInputTemperature() < guestroom.getMeasuredTemperature())
+        {
+            temperatureguest.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_red));
+        }
 
     }
     public void addListenerOnButton() {

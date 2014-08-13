@@ -35,6 +35,7 @@
         android:src="@drawable/lightbulb_off"
         android:layout_alignTop="@+id/office"
         android:layout_alignLeft="@+id/office"
+        android:layout_marginTop="15dp"
         android:id="@+id/officelight"
         />
     <ImageView
@@ -53,7 +54,7 @@
         android:src="@drawable/lightbulb_off"
         android:layout_alignTop="@+id/guest"
         android:layout_alignLeft="@+id/guest"
-
+        android:layout_marginTop="15dp"
         android:id="@+id/guestlight"
         />
     <Button
@@ -95,15 +96,62 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="22°"
         android:textColor="@android:color/black"
-        android:background="@drawable/temperature_shape"
+        android:background="@drawable/temperature_shape_green"
         android:gravity="center"
         android:id="@+id/temperaturekitchen"
         android:layout_alignTop="@+id/kitchen"
         android:layout_alignLeft="@+id/kitchen"
         android:layout_marginTop="130dp"
         android:layout_marginLeft="25dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:background="@drawable/temperature_shape_green"
+        android:gravity="center"
+        android:id="@+id/temperaturelivingroom"
+        android:layout_alignTop="@+id/livingroom"
+        android:layout_alignLeft="@+id/livingroom"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="80dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:background="@drawable/temperature_shape_green"
+        android:gravity="center"
+        android:id="@+id/temperaturedinningroom"
+        android:layout_alignTop="@+id/dinningroom"
+        android:layout_alignLeft="@+id/dinningroom"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="80dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:background="@drawable/temperature_shape_green"
+        android:gravity="center"
+        android:id="@+id/temperatureguest"
+        android:layout_alignTop="@+id/guest"
+        android:layout_alignLeft="@+id/guest"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="80dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:background="@drawable/temperature_shape_green"
+        android:gravity="center"
+        android:id="@+id/temperatureoffice"
+        android:layout_alignTop="@+id/office"
+        android:layout_alignLeft="@+id/office"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="80dp"
         />
 
 
