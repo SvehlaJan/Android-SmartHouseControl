@@ -95,13 +95,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="22°"
-        android:background="#ffffff"
-        android:id="@+id/temperature"
+        android:textColor="@android:color/black"
+        android:background="@drawable/temperature_shape"
+        android:gravity="center"
+        android:id="@+id/temperaturekitchen"
         android:layout_alignTop="@+id/kitchen"
-        android:layout_alignRight="@+id/guest"
+        android:layout_alignLeft="@+id/kitchen"
+        android:layout_marginTop="130dp"
+        android:layout_marginLeft="25dp"
+        />
 
-        android:layout_marginTop="42dp" />
 
 </RelativeLayout>
