@@ -48,7 +48,8 @@ public class HouseActivity extends ActionBarActivity
 	{
 		super.onCreate(savedInstanceState);
 
-        HouseEntity house = (HouseEntity) savedInstanceState.getSerializable(MainActivity.EXTRA_HOUSE);
+        Bundle extras = getIntent().getExtras();
+        HouseEntity house = (HouseEntity) extras.getSerializable(MainActivity.EXTRA_HOUSE);
 
 		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -72,6 +73,8 @@ public class HouseActivity extends ActionBarActivity
 
     public void renderView(HouseEntity house)
     {
+        Log.e("TAG", "Test1" );
+
         kitchenlight = (ImageView)findViewById(R.id.kitchenlight);
         RoomEntity kitchenroom = getRoomByName(house, "Kitchen");
         if (kitchenroom.isMeasuredIsLightOn())

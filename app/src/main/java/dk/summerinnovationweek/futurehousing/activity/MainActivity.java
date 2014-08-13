@@ -131,13 +131,17 @@ public class MainActivity extends ActionBarActivity
 
 			case R.id.ab_button_list_expand:
 				Intent intentRoom = RoomActivity.newIntent(this);
-				intentRoom.putExtra(EXTRA_ROOM, room);
+                Bundle bundleRoom = new Bundle();
+                bundleRoom.putSerializable(EXTRA_ROOM, room);
+				intentRoom.putExtras(bundleRoom);
 				startActivity(intentRoom);
 				return true;
 
 			case R.id.ab_button_list_collapse:
 				Intent intentHouse = HouseActivity.newIntent(this);
-				intentHouse.putExtra(EXTRA_HOUSE, house);
+                Bundle bundleHouse = new Bundle();
+                bundleHouse.putSerializable(EXTRA_HOUSE, house);
+                intentHouse.putExtras(bundleHouse);
 				startActivity(intentHouse);
 				return true;
 
