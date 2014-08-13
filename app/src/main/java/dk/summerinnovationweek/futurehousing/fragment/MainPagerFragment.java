@@ -14,9 +14,6 @@ import java.io.FileNotFoundException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.adapter.MainPagerAdapter;
@@ -24,9 +21,10 @@ import dk.summerinnovationweek.futurehousing.client.APICallListener;
 import dk.summerinnovationweek.futurehousing.client.APICallManager;
 import dk.summerinnovationweek.futurehousing.client.APICallTask;
 import dk.summerinnovationweek.futurehousing.client.ResponseStatus;
-import dk.summerinnovationweek.futurehousing.client.request.ExampleRequest;
+import dk.summerinnovationweek.futurehousing.client.request.HouseRequest;
 import dk.summerinnovationweek.futurehousing.client.response.Response;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
+import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
 import dk.summerinnovationweek.futurehousing.utility.Logcat;
 import dk.summerinnovationweek.futurehousing.utility.NetworkManager;
@@ -113,14 +111,14 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 			{
 				if(mRootView==null) return; // view was destroyed
 				
-				if(task.getRequest().getClass().equals(ExampleRequest.class))
+				if(task.getRequest().getClass().equals(HouseRequest.class))
 				{
 					Response<HouseEntity> exampleResponse = (Response<HouseEntity>) response;
 					
 					// error
 					if(exampleResponse.isError())
 					{
-						Logcat.d("Fragment.onAPICallRespond(ExampleRequest): " + status.getStatusCode() + " " + status.getStatusMessage() +
+						Logcat.d("Fragment.onAPICallRespond(HouseRequest): " + status.getStatusCode() + " " + status.getStatusMessage() +
 								" / error / " + exampleResponse.getErrorType() + " / " + exampleResponse.getErrorMessage());
 
 						// hide progress
@@ -133,7 +131,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 					// response
 					else
 					{
-						Logcat.d("Fragment.onAPICallRespond(ExampleRequest): " + status.getStatusCode() + " " + status.getStatusMessage());
+						Logcat.d("Fragment.onAPICallRespond(HouseRequest): " + status.getStatusCode() + " " + status.getStatusMessage());
 
 						mHouseEntity = exampleResponse.getResponseObject();
 
@@ -164,9 +162,9 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 			{
 				if(mRootView==null) return; // view was destroyed
 				
-				if(task.getRequest().getClass().equals(ExampleRequest.class))
+				if(task.getRequest().getClass().equals(HouseRequest.class))
 				{
-					Logcat.d("Fragment.onAPICallFail(ExampleRequest): " + status.getStatusCode() + " " + status.getStatusMessage() +
+					Logcat.d("Fragment.onAPICallFail(HouseRequest): " + status.getStatusCode() + " " + status.getStatusMessage() +
 							" / " + exception.getClass().getSimpleName() + " / " + exception.getMessage());
 					
 					// hide progress
@@ -211,7 +209,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	{
 		if(NetworkManager.isOnline(getActivity()))
 		{
-			if(!mAPICallManager.hasRunningTask(ExampleRequest.class))
+			if(!mAPICallManager.hasRunningTask(HouseRequest.class))
 			{
 				// show progress
 				showProgress();
@@ -220,7 +218,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 				showActionBarProgress(true);
 				
 				// execute request
-				ExampleRequest request = new ExampleRequest(0);
+				HouseRequest request = new HouseRequest(0);
 				mAPICallManager.executeTask(request, this);
 			}
 		}
@@ -235,7 +233,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	{
 		if(NetworkManager.isOnline(getActivity()))
 		{
-			if(!mAPICallManager.hasRunningTask(ExampleRequest.class))
+			if(!mAPICallManager.hasRunningTask(HouseRequest.class))
 			{
 				// show progress in action bar
 				showActionBarProgress(true);
@@ -245,7 +243,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 				bundle.putBoolean(META_REFRESH, true);
 				
 				// execute request
-				ExampleRequest request = new ExampleRequest(0);
+				HouseRequest request = new HouseRequest(0);
 				request.setMetaData(bundle);
 				mAPICallManager.executeTask(request, this);
 			}
@@ -310,15 +308,38 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		if(mAdapter==null)
 		{
 			// create adapter
-			mAdapter = new MainPagerAdapter(((ActionBarActivity) getActivity()).getSupportFragmentManager());
+			mAdapter = new MainPagerAdapter(((ActionBarActivity) getActivity()).getSupportFragmentManager(), mHouseEntity);
 		}
 		else
 		{
 			// refill adapter
-			mAdapter.refill();
+			mAdapter.refill(mHouseEntity);
 		}
 
 		// set adapter
 		mViewPager.setAdapter(mAdapter);
+	}
+
+
+	public void showRoom(int id)
+	{
+		if (mViewPager == null)
+			return;
+
+		for (int i = 0; i < mHouseEntity.getRoomList().size(); i++)
+		{
+			RoomEntity room = mHouseEntity.getRoomList().get(i);
+			if (room.getId() == id)
+			{
+				mViewPager.setCurrentItem(i + 1);
+			}
+		}
+
+	}
+
+	public void showHouse()
+	{
+		if (mViewPager != null)
+			mViewPager.setCurrentItem(0);
 	}
 }

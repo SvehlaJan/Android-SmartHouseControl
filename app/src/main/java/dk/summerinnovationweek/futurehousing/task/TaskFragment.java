@@ -3,7 +3,7 @@ package dk.summerinnovationweek.futurehousing.task;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;

@@ -4,43 +4,60 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
+import dk.summerinnovationweek.futurehousing.fragment.HouseFragment;
+import dk.summerinnovationweek.futurehousing.fragment.RoomFragment;
 
-public class MainPagerAdapter extends FragmentPagerAdapter // TODO: use FragmentPagerAdapter or FragmentStatePagerAdapter
+
+public class MainPagerAdapter extends FragmentPagerAdapter
 {
-	private static final int FRAGMENT_COUNT = 2;
+	private HouseEntity mHouse;
 	
 	
-	public MainPagerAdapter(FragmentManager fragmentManager)
+	public MainPagerAdapter(FragmentManager fragmentManager, HouseEntity house)
 	{
 		super(fragmentManager);
+		mHouse = house;
 	}
 
 
 	@Override
 	public int getCount()
 	{
-		return FRAGMENT_COUNT;
+		if (mHouse == null)
+			return 1;
+		else
+			return mHouse.getRoomList().size() + 1;
 	}
 
 
 	@Override
 	public Fragment getItem(int position)
 	{
-//		return ExampleFragment.newInstance(Integer.toString(position));
-		return null;
+		if (position == 0)
+		{
+			return HouseFragment.newInstance(mHouse);
+		}
+		else
+		{
+			return RoomFragment.newInstance(mHouse.getRoomList().get(position - 1));
+		}
 	}
 	
 	
 	@Override
 	public CharSequence getPageTitle(int position)
 	{
-		String title = "Fragment " + position;
-		return title;
+		if (position == 0)
+			return "House overview";
+		else
+			return mHouse.getRoomList().get(position - 1).getName();
 	}
 	
 	
-	public void refill()
+	public void refill(HouseEntity house)
 	{
+		mHouse = house;
 		notifyDataSetChanged();
 	}
 	

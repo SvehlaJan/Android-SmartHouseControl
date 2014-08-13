@@ -12,12 +12,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 
-import dk.summerinnovationweek.futurehousing.client.parser.ExampleParser;
+import dk.summerinnovationweek.futurehousing.client.parser.HouseParser;
 import dk.summerinnovationweek.futurehousing.client.response.Response;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 
 
-public class ExampleRequest extends Request
+public class HouseRequest extends Request
 {
 	private static final String REQUEST_METHOD = "POST";
 	private static final String REQUEST_PATH = "example";
@@ -25,7 +25,7 @@ public class ExampleRequest extends Request
 	private int mSkip;
 	
 
-	public ExampleRequest(int skip)
+	public HouseRequest(int skip)
 	{
 		mSkip = skip;
 	}
@@ -64,7 +64,7 @@ public class ExampleRequest extends Request
 	@Override
 	public Response<HouseEntity> parseResponse(InputStream stream) throws IOException, JsonParseException
 	{
-		return ExampleParser.parse(stream);
+		return HouseParser.parse(stream);
 	}
 
 

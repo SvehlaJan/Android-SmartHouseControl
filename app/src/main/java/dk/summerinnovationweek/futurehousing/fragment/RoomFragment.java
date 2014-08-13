@@ -2,7 +2,6 @@ package dk.summerinnovationweek.futurehousing.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,38 +9,62 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
-import dk.summerinnovationweek.futurehousing.task.LoadDataTask;
+import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
 import dk.summerinnovationweek.futurehousing.view.ViewState;
 
 public class RoomFragment extends TaskFragment
 {
+	private static final String ARGUMENT_ROOM = "room";
 	private boolean mActionBarProgress = false;
 	private ViewState mViewState = null;
 	private View mRootView;
-	private LoadDataTask mLoadDataTask;
 
-	private HouseEntity mProduct;
-	
+	private RoomEntity mRoom;
+
+
+	public static HouseFragment newInstance(RoomEntity room)
+	{
+		HouseFragment fragment = new HouseFragment();
+
+		// arguments
+		Bundle arguments = new Bundle();
+		arguments.putSerializable(ARGUMENT_ROOM, room);
+		fragment.setArguments(arguments);
+
+		return fragment;
+	}
+
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
+		// handle fragment arguments
+		Bundle arguments = getArguments();
+		if(arguments != null)
+		{
+			handleArguments(arguments);
+		}
+	}
+
+	private void handleArguments(Bundle arguments)
+	{
+		if(arguments.containsKey(ARGUMENT_ROOM))
+		{
+			mRoom = (RoomEntity) arguments.getSerializable(ARGUMENT_ROOM);
+		}
+	}
+
 	
 	@Override
 	public void onAttach(Activity activity) 
 	{
 		super.onAttach(activity);
-	}
-	
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		
-		setHasOptionsMenu(true);
-		setRetainInstance(true);
 	}
 	
 	
@@ -68,7 +91,7 @@ public class RoomFragment extends TaskFragment
 		}
 		else if(mViewState==ViewState.CONTENT)
 		{
-			if(mProduct!=null) renderView();
+			if(mRoom !=null) renderView();
 			showContent();
 		}
 		else if(mViewState==ViewState.PROGRESS)
@@ -125,9 +148,6 @@ public class RoomFragment extends TaskFragment
 	public void onDestroy()
 	{
 		super.onDestroy();
-		
-		// cancel async tasks
-		if(mLoadDataTask!=null) mLoadDataTask.cancel(true);
 	}
 	
 	

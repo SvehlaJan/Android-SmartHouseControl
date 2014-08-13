@@ -15,7 +15,7 @@ import dk.summerinnovationweek.futurehousing.client.response.Response;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 
 
-public class ExampleParser extends Parser
+public class HouseParser extends Parser
 {
 	public static Response<HouseEntity> parse(InputStream stream) throws IOException, JsonParseException
 	{

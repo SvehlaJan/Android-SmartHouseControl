@@ -18,27 +18,51 @@ import dk.summerinnovationweek.futurehousing.view.ViewState;
 
 public class HouseFragment extends TaskFragment
 {
+	private static final String ARGUMENT_HOUSE = "house";
 	private boolean mActionBarProgress = false;
 	private ViewState mViewState = null;
 	private View mRootView;
 
-	private HouseEntity mProduct;
-	
-	
+	private HouseEntity mHouse;
+
+	public static HouseFragment newInstance(HouseEntity house)
+	{
+		HouseFragment fragment = new HouseFragment();
+
+		// arguments
+		Bundle arguments = new Bundle();
+		arguments.putSerializable(ARGUMENT_HOUSE, house);
+		fragment.setArguments(arguments);
+
+		return fragment;
+	}
+
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
+		// handle fragment arguments
+		Bundle arguments = getArguments();
+		if(arguments != null)
+		{
+			handleArguments(arguments);
+		}
+	}
+
+	private void handleArguments(Bundle arguments)
+	{
+		if(arguments.containsKey(ARGUMENT_HOUSE))
+		{
+			mHouse = (HouseEntity) arguments.getSerializable(ARGUMENT_HOUSE);
+		}
+	}
+
 	@Override
 	public void onAttach(Activity activity) 
 	{
 		super.onAttach(activity);
-	}
-	
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		
-		setHasOptionsMenu(true);
-		setRetainInstance(true);
 	}
 	
 	
@@ -63,7 +87,7 @@ public class HouseFragment extends TaskFragment
 		}
 		else if(mViewState==ViewState.CONTENT)
 		{
-			if(mProduct!=null) renderView();
+			if(mHouse !=null) renderView();
 			showContent();
 		}
 		else if(mViewState==ViewState.PROGRESS)

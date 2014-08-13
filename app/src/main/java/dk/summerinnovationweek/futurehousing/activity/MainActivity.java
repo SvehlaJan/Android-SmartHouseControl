@@ -1,5 +1,6 @@
 package dk.summerinnovationweek.futurehousing.activity;
 
+import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
+import dk.summerinnovationweek.futurehousing.fragment.MainPagerFragment;
 
 
 public class MainActivity extends ActionBarActivity
@@ -121,12 +123,18 @@ public class MainActivity extends ActionBarActivity
 
 		house.setRoomList(rooms);
 
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		MainPagerFragment fragment = (MainPagerFragment) fragmentManager.findFragmentById(R.id.fragment_main_pager);
+
 		// action bar menu behaviour
 		switch(item.getItemId()) 
 		{
 			case android.R.id.home:
-				Intent intentHome = dk.summerinnovationweek.futurehousing.activity.MainActivity.newIntent(this);
-				startActivity(intentHome);
+				fragment.showHouse();
+				return true;
+
+			case R.id.ab_button_refresh:
+				fragment.refreshData();
 				return true;
 
 			case R.id.ab_button_list_expand:
@@ -154,6 +162,7 @@ public class MainActivity extends ActionBarActivity
 	private void setupActionBar()
 	{
 		ActionBar bar = getSupportActionBar();
+		bar.setIcon(getResources().getDrawable(R.drawable.back_arrow_image));
 		bar.setDisplayUseLogoEnabled(false);
 		bar.setDisplayShowTitleEnabled(true);
 		bar.setDisplayShowHomeEnabled(true);
