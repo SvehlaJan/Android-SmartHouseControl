@@ -44,17 +44,24 @@ public class RoomActivity extends ActionBarActivity {
         setupActionBar();
         setContentView(R.layout.activity_room);
 
-        addListenerOnButton();
+        Bundle extras = getIntent().getExtras();
+        RoomEntity room = (RoomEntity) extras.getSerializable(MainActivity.EXTRA_HOUSE);
 
+//        int inTemp = room.getInputTemperature();
+//        int measTemp = room.getMeasuredTemperature();
+
+        addListenerOnButton();
 
         RoomEntity re = new RoomEntity(10, "aName", true, 20);
         String cpuInfo = re.ReadCPUinfo();
         int temp = re.getMeasuredTemperature();
-
     }
 
-
     public void addListenerOnButton() {
+
+        final int[][] bgArray = {{0, 0, 255}, {0, 17, 238}, {0, 34, 221}, {0, 51, 204}, {0, 68, 187}, {0, 85, 170}, {0, 102, 153}, {0, 119, 136}, {0, 136, 119}, {0, 153, 102}, {0, 170, 85}, {0, 187, 68}, {0, 204, 51}, {0, 221, 34}, {0, 238, 17}, {0, 255, 0}};
+        final int[][] grArray = {{0, 255, 0}, {17, 238, 0}, {34, 221, 0}, {51, 204, 0}, {68, 187, 0}, {85, 170, 0}, {102, 153, 0}, {119, 136, 0}, {136, 119, 0}, {153, 102, 0}, {170, 85, 0}, {187, 68, 0}, {204, 51, 0}, {221, 34, 0}, {238, 17, 0}, {255, 0, 0}};
+        final int[][] rbArray = {{255, 0, 0}, {238, 0, 17}, {221, 0, 34}, {204, 0, 51}, {187, 0, 68}, {170, 0, 85}, {153, 0, 102}, {136, 0, 119}, {119, 0, 136}, {102, 0, 153}, {85, 0, 170}, {68, 0, 187}, {51, 0, 204}, {34, 0, 221}, {17, 0, 238}, {0, 0, 255}};
 
         // final LinearLayout bg = (LinearLayout) findViewById(R.id.fragment_room_content);
         final TextView tvTemp = (TextView) findViewById((R.id.tvTemp));
@@ -65,15 +72,30 @@ public class RoomActivity extends ActionBarActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                seekBar.setMax(15);
                 int seekValue = sb.getProgress();
-                int tColor = (int) abs(seekValue * 2.5);
+                int temp = 15 + seekValue;
+
+                int red = grArray[seekValue][0];
+                int green = grArray[seekValue][1];
+                int blue = grArray[seekValue][2];
+
+                sb.setBackgroundColor(Color.rgb(red, green, blue));
+                sb.invalidate();
+
+                String val = Integer.toString(temp);
+                tvTemp.setText("Temperature: " + val);
+
+/*                int seekValue = sb.getProgress();
+                int tColor = (int) abs(seekValue * 2.5);  // 1-100
                 sb.setBackgroundColor(Color.rgb(tColor, seekValue, seekValue));
                 sb.invalidate();
 
                 // przedzial 15 - 30deg, seek: 1-100
-                int temp = 15 + abs(seekValue/8);
+                int temp = 15 + abs(seekValue / 8);
                 String val = Integer.toString(temp);
                 tvTemp.setText("Temperature: " + val);
+*/
             }
 
             @Override
