@@ -163,6 +163,7 @@ public class MainActivity extends ActionBarActivity
 				return true;
 
 			case R.id.ab_button_list_house_consumption:
+				fragment.showStatistics();
 				return true;
 
 			case R.id.ab_button_list_change_background:

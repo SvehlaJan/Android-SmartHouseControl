@@ -112,26 +112,6 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 
 			mHouseEntity = house;
 
-			/*
-			Gson gson = new Gson();
-
-			String gsonString = "{\"smarthouse\":{\"house\":{\"id\":\"1\",\"name\":\"Innovation House\",\"floorPlanPicture\":\"http:\\/\\/is.gd\\/qsAKnw\",\"rooms\":{\"room\":[{\"id\":\"1\",\"name\":\"Kitchen\",\"temperature\":\"22\",\"light\":\"false\"},{\"id\":\"2\",\"name\":\"Living room\",\"temperature\":\"22\",\"light\":\"true\"}]}},\"users\":{\"user\":[{\"id\":\"1\",\"houseId\":\"1\",\"username\":\"admin\",\"password\":\"password\",\"isAdmin\":\"true\",\"analytics\":{\"data\":[{\"id\":\"1\",\"hoursOfSleep\":\"6\",\"weight\":\"70\",\"date\":\"2014-08-12T07:30:00\"},{\"id\":\"2\",\"hoursOfSleep\":\"6.5\",\"weight\":\"72\",\"date\":\"2014-08-13T07:32:00\"}]}},{\"id\":\"2\",\"houseId\":\"1\",\"username\":\"user\",\"password\":\"password\",\"isAdmin\":\"false\",\"analytics\":{\"data\":[{\"id\":\"1\",\"hoursOfSleep\":\"8\",\"weight\":\"50\",\"date\":\"2014-08-12T07:33:00\"},{\"id\":\"2\",\"hoursOfSleep\":\"7.7\",\"weight\":\"49.5\",\"date\":\"2014-08-13T07:35:00\"}]}}]}}}";
-			JSONObject jsonObject;
-			JSONArray data = null;
-			try
-			{
-				jsonObject = new JSONObject(gsonString);
-				data = jsonObject.getJSONArray("houseEntity");
-			} catch (JSONException e)
-			{
-				e.printStackTrace();
-			}
-
-			SmartHouseEntity smartHouseEntity = gson.fromJson(data, );
-
-			Logcat.e(smartHouseEntity.getHouseEntity().getName());
-			*/
-
 			renderView();
 			showContent();
 //			loadData();
@@ -396,6 +376,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 
 		// set adapter
 		mViewPager.setAdapter(mAdapter);
+		mViewPager.setOffscreenPageLimit(3);
 		mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
 		{
 			@Override
@@ -449,6 +430,12 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	{
 		if (mViewPager != null)
 			mViewPager.setCurrentItem(0);
+	}
+
+	public void showStatistics()
+	{
+		if (mViewPager != null)
+			mViewPager.setCurrentItem(mViewPager.getChildCount() + 1);
 	}
 
 	public void setBackground(Bitmap background)

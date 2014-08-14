@@ -1,6 +1,7 @@
 package dk.summerinnovationweek.futurehousing.fragment;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -265,6 +266,13 @@ public class RoomFragment extends TaskFragment
     }
 
 
+	public void setBackground(Bitmap bitmap)
+	{
+		if (mBackgroundImageView != null)
+			mBackgroundImageView.setImageBitmap(bitmap);
+	}
+
+
     private void renderView() {
 //		Logcat.e(mBackgroundPath);
 		mImageLoader.displayImage(mBackgroundPath, mBackgroundImageView, mDisplayImageOptions, mImageLoadingListener);
@@ -340,45 +348,51 @@ public class RoomFragment extends TaskFragment
 // http://www.i-programmer.info/programming/android/6418-android-adventures-pickers.html?start=2
 // http://stackoverflow.com/questions/11069236/can-anyone-recommend-an-open-source-number-picker-for-ics
 
-        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int oldVal, int newVal) {
+        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
+		{
+			@Override
+			public void onValueChange(NumberPicker numberPicker, int oldVal, int newVal)
+			{
 
-                int acTemp = mRoom.getMeasuredTemperature();
-                String acTempStr = Integer.toString(acTemp);
-                pb.setProgress(acTemp);
+				int acTemp = mRoom.getMeasuredTemperature();
+				String acTempStr = Integer.toString(acTemp);
+				pb.setProgress(acTemp);
 
-                if (acTemp > 15 || acTemp < 46) {
-                    pb.setBackgroundColor(grArray[acTemp - 15][1]);
-                    tvACTemp.setText("Actual temperature: " + acTempStr);
-                }
+				if (acTemp > 15 || acTemp < 46)
+				{
+					pb.setBackgroundColor(grArray[acTemp - 15][1]);
+					tvACTemp.setText("Actual temperature: " + acTempStr);
+				}
 
-                String tvDesTempStr = Integer.toString(newVal);
-                tvDesTemp.setText(tvDesTempStr);
+				String tvDesTempStr = Integer.toString(newVal);
+				tvDesTemp.setText(tvDesTempStr);
 
-                np.setValue((newVal < oldVal)?oldVal-5:oldVal+5);
+				np.setValue((newVal < oldVal) ? oldVal - 5 : oldVal + 5);
 
-            }
-        });
+			}
+		});
 
-        np.setOnScrollListener(new NumberPicker.OnScrollListener() {
-            @Override
-            public void onScrollStateChange(NumberPicker numberPicker, int scrollState) {
-                int oldValue ;
-                if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
-                    //We get the different between oldValue and the new value
+        np.setOnScrollListener(new NumberPicker.OnScrollListener()
+		{
+			@Override
+			public void onScrollStateChange(NumberPicker numberPicker, int scrollState)
+			{
+				int oldValue;
+				if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE)
+				{
+					//We get the different between oldValue and the new value
 
-                    //  int valueDiff = numberPicker.getValue() - oldValue;
-                    Toast.makeText(getActivity(), "Value is now: " + Integer.toString(numberPicker.getValue()), Toast.LENGTH_SHORT).show();
+					//  int valueDiff = numberPicker.getValue() - oldValue;
+					Toast.makeText(getActivity(), "Value is now: " + Integer.toString(numberPicker.getValue()), Toast.LENGTH_SHORT).show();
 
-                    //Update oldValue to the new value for the next scroll
-                    oldValue = numberPicker.getValue();
+					//Update oldValue to the new value for the next scroll
+					oldValue = numberPicker.getValue();
 
-                    //Do action with valueDiff
-                }
+					//Do action with valueDiff
+				}
 
-            }
-        });
+			}
+		});
 
 
 

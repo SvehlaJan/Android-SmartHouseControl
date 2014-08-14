@@ -34,6 +34,7 @@
     <string name="bulbContentDesc">Bulb</string>
     <string name="tv_MainLamp">Main lamp</string>
     <string name="temp">Temperature</string>
+    <string name="ab_button_list_about">About us</string>
 
 
 </resources>
