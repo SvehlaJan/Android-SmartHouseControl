@@ -10,9 +10,10 @@
 	<item 
 		android:id="@+id/ab_button_list"
 		android:title="@string/ab_button_list"
-		android:icon="@drawable/more"
+
 		android:orderInCategory="2"
 		example:showAsAction="ifRoom">
+        <!--	android:icon="@drawable/more" -->
 		<menu>
             <item
                 android:id="@+id/ab_button_list_change_background"

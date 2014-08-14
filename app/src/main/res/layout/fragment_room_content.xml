@@ -49,13 +49,17 @@
             android:textSize="24sp"
             android:gravity="center_vertical"/>
 
-        <ProgressBar
-            style="@style/ProgressBar.FutureHousing"
+         <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/progressBar"/>
+            android:progress="50"
+            android:max="100"
+            style="@style/CustomSeekBar"
+            android:secondaryProgress="80"
+            android:layout_margin="5dip" />
 
     </RelativeLayout>
 

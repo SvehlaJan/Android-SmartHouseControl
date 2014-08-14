@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -326,6 +327,7 @@ public class RoomFragment extends TaskFragment
 		np.setValue(mRoom.getInputTemperature());
 		pb.setMax(30);
 		pb.setProgress(mRoom.getMeasuredTemperature());
+        //pb.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
 
 		if (mRoom.isMeasuredLight())
 			image.setImageResource(R.drawable.bulb_on);
