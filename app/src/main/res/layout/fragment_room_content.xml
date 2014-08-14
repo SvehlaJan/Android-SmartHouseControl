@@ -1,55 +1,95 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_room_content"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:measureAllChildren="false"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <ToggleButton
             android:id="@+id/toggleButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left|bottom"
+            android:layout_height="140dp"
             android:layout_weight="1"
-            android:text="Light1"
-            android:layout_marginTop="20dp" />
-
+            android:text="Light1"/>
 
         <ImageView
             android:id="@+id/ivLightOn"
-            android:layout_width="106dp"
-            android:layout_height="142dp"
-            android:layout_gravity="right|bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/bulbContentDesc"
-            android:src="@drawable/bulb_off"
-            android:layout_marginTop="20dp"/>
+            android:src="@drawable/bulb_off"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvACTemp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Actual temperature:"
+            android:gravity="center_vertical"/>
+
+        <ProgressBar
+            style="@style/ProgressBar.FutureHousing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/progressBar"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/seekBar"
-        android:layout_alignParentLeft="true"
-        android:text="@string/temp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="top|center"
+                android:text="Set desired temperature"/>
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/tvDesTemp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="top|center"
+                android:text="@string/temp"
+                android:textColor="#ffff0000"
+                android:textSize="@dimen/ab_dropdown_text"/>
+        </LinearLayout>
+
+        <NumberPicker
+            android:id="@+id/numberPicker"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</LinearLayout>
