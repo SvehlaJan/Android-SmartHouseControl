@@ -40,7 +40,7 @@ public class RoomFragment extends TaskFragment
 
 	private RoomEntity mRoom;
 	private String mBackgroundPath;
-    Button button;
+    ToggleButton button;
     ImageView image;
 
 	private ImageLoader mImageLoader = ImageLoader.getInstance();
@@ -333,10 +333,7 @@ public class RoomFragment extends TaskFragment
 
         final TextView tvDesTemp = (TextView) mRootView.findViewById((R.id.tvDesTemp));
         final TextView tvACTemp = (TextView) mRootView.findViewById((R.id.tvACTemp));
-
         final ProgressBar pb = (ProgressBar) mRootView.findViewById(R.id.progressBar);
-        pb.setProgress(0);
-
         final NumberPicker np = (NumberPicker) mRootView.findViewById(R.id.numberPicker);
 
 		np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -355,40 +352,18 @@ public class RoomFragment extends TaskFragment
 
 				int acTemp = mRoom.getMeasuredTemperature();
 				String acTempStr = Integer.toString(acTemp);
-				pb.setProgress(acTemp);
+//				pb.setProgress(acTemp);
 
 				if (acTemp > 15 || acTemp < 46)
 				{
-					pb.setBackgroundColor(grArray[acTemp - 15][1]);
+//					pb.setBackgroundColor(grArray[acTemp - 15][1]);
 					tvACTemp.setText("Actual temperature: " + acTempStr);
 				}
 
 				String tvDesTempStr = Integer.toString(newVal);
 				tvDesTemp.setText(tvDesTempStr);
 
-				np.setValue((newVal < oldVal) ? oldVal - 5 : oldVal + 5);
-
-			}
-		});
-
-        np.setOnScrollListener(new NumberPicker.OnScrollListener()
-		{
-			@Override
-			public void onScrollStateChange(NumberPicker numberPicker, int scrollState)
-			{
-				int oldValue;
-				if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE)
-				{
-					//We get the different between oldValue and the new value
-
-					//  int valueDiff = numberPicker.getValue() - oldValue;
-//					Toast.makeText(getActivity(), "Value is now: " + Integer.toString(numberPicker.getValue()), Toast.LENGTH_SHORT).show();
-
-					//Update oldValue to the new value for the next scroll
-					oldValue = numberPicker.getValue();
-
-					//Do action with valueDiff
-				}
+//				np.setValue((newVal < oldVal) ? oldVal - 5 : oldVal + 5);
 
 			}
 		});
@@ -396,6 +371,8 @@ public class RoomFragment extends TaskFragment
 		tvACTemp.setText("Actual temperature: " + mRoom.getMeasuredTemperature());
 		tvDesTemp.setText(Integer.toString(mRoom.getInputTemperature()));
 		np.setValue(mRoom.getInputTemperature());
+		pb.setMax(30);
+		pb.setProgress(mRoom.getMeasuredTemperature());
 
 		if (mRoom.isMeasuredLight())
 			image.setImageResource(R.drawable.bulb_on);
@@ -403,29 +380,24 @@ public class RoomFragment extends TaskFragment
 			image.setImageResource(R.drawable.bulb_off);
 
 
+		button.setChecked(mRoom.isMeasuredLight());
+		button.setOnClickListener(new View.OnClickListener() {
 
-        addListenerOnButton();
-    }
-
-    public void addListenerOnButton() {
-
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                boolean on = ((ToggleButton) view).isChecked();
-                if (on == true) {
-                    image.setImageResource(R.drawable.bulb_on);
+			@Override
+			public void onClick(View view) {
+				boolean on = ((ToggleButton) view).isChecked();
+				if (on == true) {
+					image.setImageResource(R.drawable.bulb_on);
 					mRoom.setMeasuredLight(true);
 					mRoom.setInputLight(true);
-                    // bg.setBackgroundColor(0xFFF3F3F3);
-                } else {
-                    image.setImageResource(R.drawable.bulb_off);
+					// bg.setBackgroundColor(0xFFF3F3F3);
+				} else {
+					image.setImageResource(R.drawable.bulb_off);
 					mRoom.setMeasuredLight(false);
 					mRoom.setInputLight(false);
-                    //bg.setBackgroundColor(0xFF000000);
-                }
-            }
-        });
+					//bg.setBackgroundColor(0xFF000000);
+				}
+			}
+		});
     }
 }
