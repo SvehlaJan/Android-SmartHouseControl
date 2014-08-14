@@ -297,9 +297,9 @@ public class HouseFragment extends TaskFragment
         if (kitchenroom != null ) {
             kitchenlight = (ImageView) mRootView.findViewById(R.id.kitchenlight);
             if (kitchenroom.isMeasuredLight()) {
-                kitchenlight.setImageResource(R.drawable.lightbulb_off);
-            } else {
                 kitchenlight.setImageResource(R.drawable.lightbulb);
+            } else {
+                kitchenlight.setImageResource(R.drawable.lightbulb_off);
             }
             temperaturekitchen = (TextView) mRootView.findViewById(R.id.temperaturekitchen);
             temperaturekitchen.setText(Integer.toString(kitchenroom.getMeasuredTemperature()));
@@ -322,9 +322,9 @@ public class HouseFragment extends TaskFragment
         if (livingroom != null ) {
             livingroomlight = (ImageView) mRootView.findViewById(R.id.livingroomlight);
             if (livingroom.isMeasuredLight()) {
-                livingroomlight.setImageResource(R.drawable.lightbulb_off);
-            } else {
                 livingroomlight.setImageResource(R.drawable.lightbulb);
+            } else {
+                livingroomlight.setImageResource(R.drawable.lightbulb_off);
             }
             temperaturelivingroom = (TextView) mRootView.findViewById(R.id.temperaturelivingroom);
             temperaturelivingroom.setText(Integer.toString(livingroom.getMeasuredTemperature()));

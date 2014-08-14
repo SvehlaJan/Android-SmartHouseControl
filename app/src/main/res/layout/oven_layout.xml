@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:background="#99000000">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Oven"/>
 
         <ToggleButton
             android:id="@+id/toggleButton"
@@ -38,16 +35,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_weight="0.2"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:background="#99000000"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
@@ -55,14 +53,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="center"
-                android:text="Currently oven temperature"/>
+                android:text="Current oven temperature"/>
 
             <TextView
                 android:id="@+id/tvDesTemp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="center"
-                android:text="@string/temp"
+                android:text="0"
                 android:textColor="#ffff0000"
                 android:textSize="@dimen/ab_dropdown_text"/>
         </LinearLayout>
@@ -70,7 +68,7 @@
         <NumberPicker
             android:id="@+id/numberPicker"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:clickable="false"/>
     </RelativeLayout>

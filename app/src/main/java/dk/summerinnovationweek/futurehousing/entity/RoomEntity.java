@@ -26,15 +26,8 @@ public class RoomEntity implements Serializable {
     public RoomEntity(long id, String name, boolean isMeasuredIsLightOn, int measuredTemperature) {
         mId = id;
         mName = name;
-        mInputLight = isMeasuredIsLightOn;
+		mMeasuredLight = isMeasuredIsLightOn;
         mMeasuredTemperature = measuredTemperature;
-    }
-
-    public RoomEntity(RoomEntity origin) {
-        mId = origin.mId;
-        mInputLight = origin.mInputLight;
-        mMeasuredTemperature = origin.mMeasuredTemperature;
-        mInputTemperature = origin.mInputTemperature;
     }
 
     public long getId() {
