@@ -83,7 +83,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter
 	}
 	
 	
-	public static String getFragmentTag(int viewPagerId, int position)
+	public static String getFragmentTag(int viewPagerId, long position)
 	{
 		return "android:switcher:" + viewPagerId + ":" + position;
 	}

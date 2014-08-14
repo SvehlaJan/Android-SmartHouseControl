@@ -26,10 +26,8 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import dk.summerinnovationweek.futurehousing.R;
-import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
-import dk.summerinnovationweek.futurehousing.utility.Logcat;
 import dk.summerinnovationweek.futurehousing.view.ViewState;
 
 public class RoomFragment extends TaskFragment
@@ -358,6 +356,8 @@ public class RoomFragment extends TaskFragment
                 String tvDesTempStr = Integer.toString(newVal);
                 tvDesTemp.setText(tvDesTempStr);
 
+                np.setValue((newVal < oldVal)?oldVal-5:oldVal+5);
+
             }
         });
 
@@ -379,6 +379,8 @@ public class RoomFragment extends TaskFragment
 
             }
         });
+
+
 
         addListenerOnButton();
     }

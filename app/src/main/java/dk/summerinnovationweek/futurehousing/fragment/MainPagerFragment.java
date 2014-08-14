@@ -54,64 +54,63 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	private APICallManager mAPICallManager = new APICallManager();
 
 	private ViewPager mViewPager;
-	private SmartHouseEntity mSmartHouseEntity;
 	private HouseEntity mHouseEntity;
 	private BitmapDrawable mBackgroundImage;
 
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{	
+	{
 		mRootView = inflater.inflate(R.layout.fragment_pager, container, false);
 
 		mViewPager = (ViewPager) mRootView.findViewById(R.id.fragment_pager_view_pager);
 
 		return mRootView;
 	}
-	
-	
+
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-		
+
 		// load and show data
-		if(mViewState==null || mViewState==ViewState.OFFLINE)
+		if (mViewState == null || mViewState == ViewState.OFFLINE)
 		{
 
-            HouseEntity house = new HouseEntity();
-            house.setId(1);
+			HouseEntity house = new HouseEntity();
+			house.setId(1);
 
-            ArrayList<RoomEntity> rooms = new ArrayList<RoomEntity>();
+			ArrayList<RoomEntity> rooms = new ArrayList<RoomEntity>();
 
-            RoomEntity room = new RoomEntity(1, "Kitchen", true, 20);
-            room.setInputIsLightOn(true);
-            room.setInputTemperature(22);
-            rooms.add(room);
+			RoomEntity room = new RoomEntity(1, "Kitchen", true, 20);
+			room.setInputIsLightOn(true);
+			room.setInputTemperature(22);
+			rooms.add(room);
 
-            room = new RoomEntity(2, "Guest room", false, 17);
-            room.setInputIsLightOn(false);
-            room.setInputTemperature(17);
-            rooms.add(room);
+			room = new RoomEntity(2, "Guest room", false, 17);
+			room.setInputIsLightOn(false);
+			room.setInputTemperature(17);
+			rooms.add(room);
 
-            room = new RoomEntity(3, "Living room", true, 23);
-            room.setInputIsLightOn(true);
-            room.setInputTemperature(22);
-            rooms.add(room);
+			room = new RoomEntity(3, "Living room", true, 23);
+			room.setInputIsLightOn(true);
+			room.setInputTemperature(22);
+			rooms.add(room);
 
-            room = new RoomEntity(4, "Office", false, 22);
-            room.setInputIsLightOn(true);
-            room.setInputTemperature(22);
-            rooms.add(room);
+			room = new RoomEntity(4, "Office", false, 22);
+			room.setInputIsLightOn(true);
+			room.setInputTemperature(22);
+			rooms.add(room);
 
-            room = new RoomEntity(5, "Dining room", false, 20);
-            room.setInputIsLightOn(false);
-            room.setInputTemperature(20);
-            rooms.add(room);
+			room = new RoomEntity(5, "Dining room", false, 20);
+			room.setInputIsLightOn(false);
+			room.setInputTemperature(20);
+			rooms.add(room);
 
-            house.setRoomList(rooms);
+			house.setRoomList(rooms);
 
-            mHouseEntity = house;
+			mHouseEntity = house;
 
 			/*
 			Gson gson = new Gson();
@@ -133,18 +132,15 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 			Logcat.e(smartHouseEntity.getHouseEntity().getName());
 			*/
 
-
-            renderView();
-            showContent();
+			renderView();
+			showContent();
 //			loadData();
-		}
-		else if(mViewState==ViewState.CONTENT)
+		} else if (mViewState == ViewState.CONTENT)
 		{
-			if(mHouseEntity!=null)
+			if (mHouseEntity != null)
 				renderView();
 			showContent();
-		}
-		else if(mViewState==ViewState.PROGRESS)
+		} else if (mViewState == ViewState.PROGRESS)
 		{
 			showProgress();
 		}
@@ -152,23 +148,23 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		// progress in action bar
 		showActionBarProgress(mActionBarProgress);
 	}
-	
-	
+
+
 	@Override
 	public void onPause()
 	{
 		super.onPause();
-		
+
 		// stop adapter
 //		if(mAdapter!=null) mAdapter.stop();
 	}
-	
-	
+
+
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
-		
+
 		// cancel async tasks
 		mAPICallManager.cancelAllTasks();
 	}
@@ -181,14 +177,14 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		{
 			public void run()
 			{
-				if(mRootView==null) return; // view was destroyed
-				
-				if(task.getRequest().getClass().equals(HouseRequest.class))
+				if (mRootView == null) return; // view was destroyed
+
+				if (task.getRequest().getClass().equals(HouseRequest.class))
 				{
 					Response<HouseEntity> exampleResponse = (Response<HouseEntity>) response;
-					
+
 					// error
-					if(exampleResponse.isError())
+					if (exampleResponse.isError())
 					{
 						Logcat.d("Fragment.onAPICallRespond(HouseRequest): " + status.getStatusCode() + " " + status.getStatusMessage() +
 								" / error / " + exampleResponse.getErrorType() + " / " + exampleResponse.getErrorMessage());
@@ -199,7 +195,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 						// handle error
 						handleError(exampleResponse.getErrorType(), exampleResponse.getErrorMessage());
 					}
-					
+
 					// response
 					else
 					{
@@ -215,12 +211,12 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 						showContent();
 					}
 				}
-				
+
 				// finish request
 				mAPICallManager.finishTask(task);
 
 				// hide progress in action bar
-				if(mAPICallManager.getTasksCount()==0) showActionBarProgress(false);
+				if (mAPICallManager.getTasksCount() == 0) showActionBarProgress(false);
 			}
 		});
 	}
@@ -233,25 +229,25 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		{
 			public void run()
 			{
-				if(mRootView==null) return; // view was destroyed
-				
-				if(task.getRequest().getClass().equals(HouseRequest.class))
+				if (mRootView == null) return; // view was destroyed
+
+				if (task.getRequest().getClass().equals(HouseRequest.class))
 				{
 					Logcat.d("Fragment.onAPICallFail(HouseRequest): " + status.getStatusCode() + " " + status.getStatusMessage() +
 							" / " + exception.getClass().getSimpleName() + " / " + exception.getMessage());
-					
+
 					// hide progress
 					showContent();
 
 					// handle fail
 					handleFail(exception);
 				}
-				
+
 				// finish request
 				mAPICallManager.finishTask(task);
 
 				// hide progress in action bar
-				if(mAPICallManager.getTasksCount()==0) showActionBarProgress(false);
+				if (mAPICallManager.getTasksCount() == 0) showActionBarProgress(false);
 			}
 		});
 	}
@@ -266,36 +262,42 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	private void handleFail(Exception exception)
 	{
 		int messageId;
-		if(exception!=null && exception.getClass().equals(UnknownHostException.class)) messageId = R.string.global_apicall_unknown_host_toast;
-		else if(exception!=null && exception.getClass().equals(FileNotFoundException.class)) messageId = R.string.global_apicall_not_found_toast;
-		else if(exception!=null && exception.getClass().equals(SocketTimeoutException.class)) messageId = R.string.global_apicall_timeout_toast;
-		else if(exception!=null && exception.getClass().equals(JsonParseException.class)) messageId = R.string.global_apicall_parse_fail_toast;
-		else if(exception!=null && exception.getClass().equals(ParseException.class)) messageId = R.string.global_apicall_parse_fail_toast;
-		else if(exception!=null && exception.getClass().equals(NumberFormatException.class)) messageId = R.string.global_apicall_parse_fail_toast;
-		else if(exception!=null && exception.getClass().equals(ClassCastException.class)) messageId = R.string.global_apicall_parse_fail_toast;
+		if (exception != null && exception.getClass().equals(UnknownHostException.class))
+			messageId = R.string.global_apicall_unknown_host_toast;
+		else if (exception != null && exception.getClass().equals(FileNotFoundException.class))
+			messageId = R.string.global_apicall_not_found_toast;
+		else if (exception != null && exception.getClass().equals(SocketTimeoutException.class))
+			messageId = R.string.global_apicall_timeout_toast;
+		else if (exception != null && exception.getClass().equals(JsonParseException.class))
+			messageId = R.string.global_apicall_parse_fail_toast;
+		else if (exception != null && exception.getClass().equals(ParseException.class))
+			messageId = R.string.global_apicall_parse_fail_toast;
+		else if (exception != null && exception.getClass().equals(NumberFormatException.class))
+			messageId = R.string.global_apicall_parse_fail_toast;
+		else if (exception != null && exception.getClass().equals(ClassCastException.class))
+			messageId = R.string.global_apicall_parse_fail_toast;
 		else messageId = R.string.global_apicall_fail_toast;
 		Toast.makeText(getActivity(), messageId, Toast.LENGTH_LONG).show();
 	}
-	
-	
+
+
 	private void loadData()
 	{
-		if(NetworkManager.isOnline(getActivity()))
+		if (NetworkManager.isOnline(getActivity()))
 		{
-			if(!mAPICallManager.hasRunningTask(HouseRequest.class))
+			if (!mAPICallManager.hasRunningTask(HouseRequest.class))
 			{
 				// show progress
 				showProgress();
 
 				// show progress in action bar
 				showActionBarProgress(true);
-				
+
 				// execute request
-				HouseRequest request = new HouseRequest(0);
+				HouseRequest request = new HouseRequest(1);
 				mAPICallManager.executeTask(request, this);
 			}
-		}
-		else
+		} else
 		{
 			showOffline();
 		}
@@ -304,30 +306,29 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 
 	public void refreshData()
 	{
-		if(NetworkManager.isOnline(getActivity()))
+		if (NetworkManager.isOnline(getActivity()))
 		{
-			if(!mAPICallManager.hasRunningTask(HouseRequest.class))
+			if (!mAPICallManager.hasRunningTask(HouseRequest.class))
 			{
 				// show progress in action bar
 				showActionBarProgress(true);
-				
+
 				// meta data
 				Bundle bundle = new Bundle();
 				bundle.putBoolean(META_REFRESH, true);
-				
+
 				// execute request
 				HouseRequest request = new HouseRequest(0);
 				request.setMetaData(bundle);
 				mAPICallManager.executeTask(request, this);
 			}
-		}
-		else
+		} else
 		{
 			Toast.makeText(getActivity(), R.string.global_offline_toast, Toast.LENGTH_LONG).show();
 		}
 	}
-	
-	
+
+
 	private void showActionBarProgress(boolean visible)
 	{
 		// show progress in action bar
@@ -340,8 +341,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		((ActionBarActivity) getActivity()).setTitle(title);
 	}
 
-	
-	
+
 	private void showContent()
 	{
 		// show list container
@@ -353,8 +353,8 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		containerOffline.setVisibility(View.GONE);
 		mViewState = ViewState.CONTENT;
 	}
-	
-	
+
+
 	private void showProgress()
 	{
 		// show progress container
@@ -366,8 +366,8 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		containerOffline.setVisibility(View.GONE);
 		mViewState = ViewState.PROGRESS;
 	}
-	
-	
+
+
 	private void showOffline()
 	{
 		// show offline container
@@ -380,16 +380,15 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		mViewState = ViewState.OFFLINE;
 	}
 
-	
+
 	private void renderView()
 	{
 		// pager content
-		if(mAdapter==null)
+		if (mAdapter == null)
 		{
 			// create adapter
 			mAdapter = new MainPagerAdapter(getChildFragmentManager(), mHouseEntity);
-		}
-		else
+		} else
 		{
 			// refill adapter
 			mAdapter.refill(mHouseEntity);
@@ -404,23 +403,23 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 			{
 
 			}
+
 			@Override
 			public void onPageSelected(int i)
 			{
 				if (i == 0)
 				{
 					changeActionBarTitle("House overview");
-				}
-				else if (i < mHouseEntity.getRoomList().size() + 1)
+				} else if (i < mHouseEntity.getRoomList().size() + 1)
 				{
 					changeActionBarTitle(mHouseEntity.getRoomList().get(i - 1).getName());
-				}
-				else
+				} else
 				{
 					changeActionBarTitle("House statistics");
 				}
 
 			}
+
 			@Override
 			public void onPageScrollStateChanged(int i)
 			{
@@ -454,10 +453,11 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 
 	public void setBackground(Bitmap background)
 	{
-		if (mViewPager != null)
+		if (mViewPager != null && mAdapter != null)
 		{
-			mBackgroundImage = new BitmapDrawable(background);
-			mViewPager.getChildAt(mViewPager.getCurrentItem()).setBackgroundDrawable(mBackgroundImage);
+			String tag = MainPagerAdapter.getFragmentTag(mViewPager.getId(), mAdapter.getItemId(mViewPager.getCurrentItem()));
+			RoomFragment fragment = (RoomFragment) getChildFragmentManager().findFragmentByTag(tag);
+			fragment.setBackground(background);
 		}
 
 	}
