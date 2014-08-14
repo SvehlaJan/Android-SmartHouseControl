@@ -457,7 +457,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		{
 			String tag = MainPagerAdapter.getFragmentTag(mViewPager.getId(), mAdapter.getItemId(mViewPager.getCurrentItem()));
 			RoomFragment fragment = (RoomFragment) getChildFragmentManager().findFragmentByTag(tag);
-			fragment.setBackground(background);
+			//fragment.setBackground(background);
 		}
 
 	}

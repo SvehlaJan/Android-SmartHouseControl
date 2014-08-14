@@ -30,66 +30,62 @@ import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
 import dk.summerinnovationweek.futurehousing.view.ViewState;
 
-public class RoomFragment extends TaskFragment
-{
-	private static final String ARGUMENT_ROOM = "room";
-	private static final String ARGUMENT_BACKGROUND = "background";
-	private boolean mActionBarProgress = false;
-	private ViewState mViewState = null;
-	private View mRootView;
+public class RoomFragment extends TaskFragment {
+    private static final String ARGUMENT_ROOM = "room";
+    private static final String ARGUMENT_BACKGROUND = "background";
+    private boolean mActionBarProgress = false;
+    private ViewState mViewState = null;
+    private View mRootView;
 
-	private RoomEntity mRoom;
-	private String mBackgroundPath;
+    private RoomEntity mRoom;
+    private String mBackgroundPath;
     Button button;
     ImageView image;
 
-	private ImageLoader mImageLoader = ImageLoader.getInstance();
-	private DisplayImageOptions mDisplayImageOptions;
-	private ImageLoadingListener mImageLoadingListener;
-	private ImageView mBackgroundImageView;
+    private ImageLoader mImageLoader = ImageLoader.getInstance();
+    private DisplayImageOptions mDisplayImageOptions;
+    private ImageLoadingListener mImageLoadingListener;
+    private ImageView mBackgroundImageView;
 
-	public static RoomFragment newInstance(RoomEntity room, String backgroundPath)
-	{
+    public static RoomFragment newInstance(RoomEntity room, String backgroundPath) {
         RoomFragment fragment = new RoomFragment();
 
-		// arguments
-		Bundle arguments = new Bundle();
-		arguments.putSerializable(ARGUMENT_ROOM, room);
-		arguments.putString(ARGUMENT_BACKGROUND, backgroundPath);
-		fragment.setArguments(arguments);
+        // arguments
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(ARGUMENT_ROOM, room);
+        arguments.putString(ARGUMENT_BACKGROUND, backgroundPath);
+        fragment.setArguments(arguments);
 
         return fragment;
     }
 
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		// handle fragment arguments
-		Bundle arguments = getArguments();
-		if(arguments != null)
-		{
-			handleArguments(arguments);
-		}
+        // handle fragment arguments
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            handleArguments(arguments);
+        }
 
-		// image caching options
-		mDisplayImageOptions = new DisplayImageOptions.Builder()
-				.showImageOnLoading(Color.TRANSPARENT)
-				.showImageForEmptyUri(Color.TRANSPARENT)
-				.showImageOnFail(Color.TRANSPARENT)
-				.cacheInMemory(true)
-				.cacheOnDisc(true)
-				.displayer(new SimpleBitmapDisplayer())
-				.build();
-		mImageLoadingListener = new SimpleImageLoadingListener();
-	}
+        // image caching options
+        mDisplayImageOptions = new DisplayImageOptions.Builder()
+                .showImageOnLoading(Color.TRANSPARENT)
+                .showImageForEmptyUri(Color.TRANSPARENT)
+                .showImageOnFail(Color.TRANSPARENT)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .displayer(new SimpleBitmapDisplayer())
+                .build();
+        mImageLoadingListener = new SimpleImageLoadingListener();
+    }
 
     private void handleArguments(Bundle arguments) {
         if (arguments.containsKey(ARGUMENT_ROOM)) {
             mRoom = (RoomEntity) arguments.getSerializable(ARGUMENT_ROOM);
-			mBackgroundPath = arguments.getString(ARGUMENT_BACKGROUND);
+            mBackgroundPath = arguments.getString(ARGUMENT_BACKGROUND);
         }
     }
 
@@ -106,7 +102,7 @@ public class RoomFragment extends TaskFragment
         mRootView = inflater.inflate(R.layout.fragment_room, container, false);
         image = (ImageView) mRootView.findViewById(R.id.ivLightOn);
         button = (ToggleButton) mRootView.findViewById(R.id.toggleButton);
-		mBackgroundImageView = (ImageView) mRootView.findViewById(R.id.fragment_room_background);
+        mBackgroundImageView = (ImageView) mRootView.findViewById(R.id.fragment_room_background);
 
         return mRootView;
     }
@@ -118,7 +114,7 @@ public class RoomFragment extends TaskFragment
 
         // load and show data
         if (mViewState == null || mViewState == ViewState.OFFLINE) {
-			if (mRoom != null) renderView();
+            if (mRoom != null) renderView();
             showContent();
         } else if (mViewState == ViewState.CONTENT) {
             if (mRoom != null) renderView();
@@ -267,7 +263,7 @@ public class RoomFragment extends TaskFragment
 
     private void renderView() {
 //		Logcat.e(mBackgroundPath);
-		mImageLoader.displayImage(mBackgroundPath, mBackgroundImageView, mDisplayImageOptions, mImageLoadingListener);
+        mImageLoader.displayImage(mBackgroundPath, mBackgroundImageView, mDisplayImageOptions, mImageLoadingListener);
 
 
         // http://smarthouses.summerinnovationweek.dk/Api/getHouse.php?houseID=1
@@ -332,11 +328,11 @@ public class RoomFragment extends TaskFragment
 
         final NumberPicker np = (NumberPicker) mRootView.findViewById(R.id.numberPicker);
 
-		np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         np.setMaxValue(30);
         np.setMinValue(15);
         np.setFadingEdgeLength(5);
-        
+
 // http://www.i-programmer.info/programming/android/6418-android-adventures-pickers.html?start=2
 // http://stackoverflow.com/questions/11069236/can-anyone-recommend-an-open-source-number-picker-for-ics
 
@@ -356,7 +352,14 @@ public class RoomFragment extends TaskFragment
                 String tvDesTempStr = Integer.toString(newVal);
                 tvDesTemp.setText(tvDesTempStr);
 
-                np.setValue((newVal < oldVal)?oldVal-5:oldVal+5);
+                if (newVal < oldVal) {
+                    oldVal = oldVal - 1;
+                } else {
+                    oldVal = oldVal + 1;
+                }
+
+                np.setValue(oldVal);
+                //np.setValue((newVal < oldVal) ? oldVal - 5 : oldVal + 5);
 
             }
         });
@@ -364,7 +367,7 @@ public class RoomFragment extends TaskFragment
         np.setOnScrollListener(new NumberPicker.OnScrollListener() {
             @Override
             public void onScrollStateChange(NumberPicker numberPicker, int scrollState) {
-                int oldValue ;
+                int oldValue;
                 if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
                     //We get the different between oldValue and the new value
 
@@ -380,8 +383,6 @@ public class RoomFragment extends TaskFragment
             }
         });
 
-
-
         addListenerOnButton();
     }
 
@@ -394,9 +395,13 @@ public class RoomFragment extends TaskFragment
                 boolean on = ((ToggleButton) view).isChecked();
                 if (on == true) {
                     image.setImageResource(R.drawable.bulb_on);
+                    mRoom.setInputIsLightOn(true);
+                    mRoom.setMeasuredIsLightOn(true);
                     // bg.setBackgroundColor(0xFFF3F3F3);
                 } else {
                     image.setImageResource(R.drawable.bulb_off);
+                    mRoom.setInputIsLightOn(false);
+                    mRoom.setMeasuredIsLightOn(false);
                     //bg.setBackgroundColor(0xFF000000);
                 }
             }
