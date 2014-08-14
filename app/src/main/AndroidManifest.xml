@@ -12,6 +12,8 @@
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.VIBRATE" />
+    <uses-feature android:name="android.hardware.camera"
+                  android:required="true" />
 
 	<application
 		android:name=".FutureHousingApplication"
@@ -24,7 +26,8 @@
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="standard"
-            android:uiOptions="none">
+            android:uiOptions="none"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

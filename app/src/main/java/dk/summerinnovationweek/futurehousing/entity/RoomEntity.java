@@ -1,14 +1,20 @@
 package dk.summerinnovationweek.futurehousing.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
 public class RoomEntity implements Serializable {
-    private int mId;
+	@SerializedName("id")
+    private long mId;
+	@SerializedName("name")
     private String mName;
+	@SerializedName("light")
     private boolean mMeasuredIsLightOn;
     private boolean mInputIsLightOn;
+	@SerializedName("temperature")
     private int mMeasuredTemperature;
     private int mInputTemperature;
 
@@ -17,7 +23,7 @@ public class RoomEntity implements Serializable {
 
     }
 
-    public RoomEntity(int id, String name, boolean isMeasuredIsLightOn, int measuredTemperature) {
+    public RoomEntity(long id, String name, boolean isMeasuredIsLightOn, int measuredTemperature) {
         mId = id;
         mName = name;
         mInputIsLightOn = isMeasuredIsLightOn;
@@ -31,11 +37,11 @@ public class RoomEntity implements Serializable {
         mInputTemperature = origin.mInputTemperature;
     }
 
-    public int getId() {
+    public long getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         mId = id;
     }
 

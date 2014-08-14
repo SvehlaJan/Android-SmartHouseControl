@@ -15,8 +15,8 @@
 		example:showAsAction="ifRoom">
 		<menu>
 			<item 
-				android:id="@+id/ab_button_list_expand"
-				android:title="@string/ab_button_list_expand"
+				android:id="@+id/ab_button_list_house_consumption"
+				android:title="@string/ab_button_house_consumption"
 				android:icon="@null"
 				android:orderInCategory="1" />
 			<item 
@@ -25,8 +25,8 @@
 				android:icon="@null"
 				android:orderInCategory="2" />
             <item
-                android:id="@+id/ab_button_list_mybutton"
-                android:title="@string/ab_button_list_mybutton"
+                android:id="@+id/ab_button_list_change_background"
+                android:title="@string/ab_button_list_change_background"
                 android:icon="@null"
                 android:orderInCategory="3" />
 

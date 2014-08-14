@@ -58,7 +58,7 @@ public class HouseParser extends Parser
 			}
 			
 			// response
-			else if(parser.getCurrentName().equals("product"))
+			else if(parser.getCurrentName().equals("house"))
 			{
 				long id = -1l;
 				String name = null;

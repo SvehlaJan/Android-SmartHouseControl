@@ -1,14 +1,24 @@
 package dk.summerinnovationweek.futurehousing.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.net.SocketTimeoutException;
@@ -26,6 +36,7 @@ import dk.summerinnovationweek.futurehousing.client.request.HouseRequest;
 import dk.summerinnovationweek.futurehousing.client.response.Response;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
+import dk.summerinnovationweek.futurehousing.entity.SmartHouseEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
 import dk.summerinnovationweek.futurehousing.utility.Logcat;
 import dk.summerinnovationweek.futurehousing.utility.NetworkManager;
@@ -44,8 +55,9 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 
 	private ViewPager mViewPager;
 	private HouseEntity mHouseEntity;
-	
-	
+	private BitmapDrawable mBackgroundImage;
+
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{	
@@ -98,6 +110,28 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
             house.setRoomList(rooms);
 
             mHouseEntity = house;
+
+			/*
+			Gson gson = new Gson();
+
+			String gsonString = "{\"smarthouse\":{\"house\":{\"id\":\"1\",\"name\":\"Innovation House\",\"floorPlanPicture\":\"http:\\/\\/is.gd\\/qsAKnw\",\"rooms\":{\"room\":[{\"id\":\"1\",\"name\":\"Kitchen\",\"temperature\":\"22\",\"light\":\"false\"},{\"id\":\"2\",\"name\":\"Living room\",\"temperature\":\"22\",\"light\":\"true\"}]}},\"users\":{\"user\":[{\"id\":\"1\",\"houseId\":\"1\",\"username\":\"admin\",\"password\":\"password\",\"isAdmin\":\"true\",\"analytics\":{\"data\":[{\"id\":\"1\",\"hoursOfSleep\":\"6\",\"weight\":\"70\",\"date\":\"2014-08-12T07:30:00\"},{\"id\":\"2\",\"hoursOfSleep\":\"6.5\",\"weight\":\"72\",\"date\":\"2014-08-13T07:32:00\"}]}},{\"id\":\"2\",\"houseId\":\"1\",\"username\":\"user\",\"password\":\"password\",\"isAdmin\":\"false\",\"analytics\":{\"data\":[{\"id\":\"1\",\"hoursOfSleep\":\"8\",\"weight\":\"50\",\"date\":\"2014-08-12T07:33:00\"},{\"id\":\"2\",\"hoursOfSleep\":\"7.7\",\"weight\":\"49.5\",\"date\":\"2014-08-13T07:35:00\"}]}}]}}}";
+			JSONObject jsonObject;
+			JSONArray data = null;
+			try
+			{
+				jsonObject = new JSONObject(gsonString);
+				data = jsonObject.getJSONArray("houseEntity");
+			} catch (JSONException e)
+			{
+				e.printStackTrace();
+			}
+
+			SmartHouseEntity smartHouseEntity = gson.fromJson(data, );
+
+			Logcat.e(smartHouseEntity.getHouseEntity().getName());
+			*/
+
+
             renderView();
             showContent();
 //			loadData();
@@ -299,6 +333,12 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		((ActionBarActivity) getActivity()).setSupportProgressBarIndeterminateVisibility(visible);
 		mActionBarProgress = visible;
 	}
+
+	private void changeActionBarTitle(String title)
+	{
+		((ActionBarActivity) getActivity()).setTitle(title);
+	}
+
 	
 	
 	private void showContent()
@@ -346,7 +386,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		if(mAdapter==null)
 		{
 			// create adapter
-			mAdapter = new MainPagerAdapter(((ActionBarActivity) getActivity()).getSupportFragmentManager(), mHouseEntity);
+			mAdapter = new MainPagerAdapter(getChildFragmentManager(), mHouseEntity);
 		}
 		else
 		{
@@ -356,6 +396,36 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 
 		// set adapter
 		mViewPager.setAdapter(mAdapter);
+		mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
+		{
+			@Override
+			public void onPageScrolled(int i, float v, int i2)
+			{
+
+			}
+			@Override
+			public void onPageSelected(int i)
+			{
+				if (i == 0)
+				{
+					changeActionBarTitle("House overview");
+				}
+				else if (i < mHouseEntity.getRoomList().size() + 1)
+				{
+					changeActionBarTitle(mHouseEntity.getRoomList().get(i - 1).getName());
+				}
+				else
+				{
+					changeActionBarTitle("House statistics");
+				}
+
+			}
+			@Override
+			public void onPageScrollStateChanged(int i)
+			{
+
+			}
+		});
 	}
 
 
@@ -379,5 +449,26 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	{
 		if (mViewPager != null)
 			mViewPager.setCurrentItem(0);
+	}
+
+	public void setBackground(Bitmap background)
+	{
+		if (mViewPager != null)
+		{
+			mBackgroundImage = new BitmapDrawable(background);
+			mViewPager.getChildAt(mViewPager.getCurrentItem()).setBackgroundDrawable(mBackgroundImage);
+		}
+
+	}
+
+	public boolean isOverviewShown()
+	{
+		if (mViewPager == null)
+			return true;
+
+		if (mViewPager.getCurrentItem() == 0)
+			return true;
+		else
+			return false;
 	}
 }

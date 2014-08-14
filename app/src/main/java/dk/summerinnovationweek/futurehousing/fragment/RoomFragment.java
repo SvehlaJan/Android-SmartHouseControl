@@ -1,6 +1,7 @@
 package dk.summerinnovationweek.futurehousing.fragment;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -18,44 +19,72 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
 import dk.summerinnovationweek.futurehousing.R;
+import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
 import dk.summerinnovationweek.futurehousing.view.ViewState;
 
-public class RoomFragment extends TaskFragment {
-    private static final String ARGUMENT_ROOM = "room";
-    private boolean mActionBarProgress = false;
-    private ViewState mViewState = null;
-    private View mRootView;
+public class RoomFragment extends TaskFragment
+{
+	private static final String ARGUMENT_ROOM = "room";
+	private static final String ARGUMENT_BACKGROUND = "background";
+	private boolean mActionBarProgress = false;
+	private ViewState mViewState = null;
+	private View mRootView;
 
-    private RoomEntity mRoom;
+	private RoomEntity mRoom;
+	private String mBackgroundPath;
     Button button;
     ImageView image;
 
+	private ImageLoader mImageLoader = ImageLoader.getInstance();
+	private DisplayImageOptions mDisplayImageOptions;
+	private ImageLoadingListener mImageLoadingListener;
+	private ImageView mBackgroundImageView;
 
-    public static RoomFragment newInstance(RoomEntity room) {
+	public static RoomFragment newInstance(RoomEntity room, String backgroundPath)
+	{
         RoomFragment fragment = new RoomFragment();
 
-        // arguments
-        Bundle arguments = new Bundle();
-        arguments.putSerializable(ARGUMENT_ROOM, room);
-        fragment.setArguments(arguments);
+		// arguments
+		Bundle arguments = new Bundle();
+		arguments.putSerializable(ARGUMENT_ROOM, room);
+		arguments.putString(ARGUMENT_BACKGROUND, backgroundPath);
+		fragment.setArguments(arguments);
 
         return fragment;
     }
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-        // handle fragment arguments
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            handleArguments(arguments);
-        }
-    }
+		// handle fragment arguments
+		Bundle arguments = getArguments();
+		if(arguments != null)
+		{
+			handleArguments(arguments);
+		}
+
+		// image caching options
+		mDisplayImageOptions = new DisplayImageOptions.Builder()
+				.showImageOnLoading(Color.TRANSPARENT)
+				.showImageForEmptyUri(Color.TRANSPARENT)
+				.showImageOnFail(Color.TRANSPARENT)
+				.cacheInMemory(true)
+				.displayer(new SimpleBitmapDisplayer())
+				.build();
+		mImageLoadingListener = new SimpleImageLoadingListener();
+	}
 
     private void handleArguments(Bundle arguments) {
         if (arguments.containsKey(ARGUMENT_ROOM)) {
@@ -76,6 +105,8 @@ public class RoomFragment extends TaskFragment {
         mRootView = inflater.inflate(R.layout.fragment_room, container, false);
         image = (ImageView) mRootView.findViewById(R.id.ivLightOn);
         button = (ToggleButton) mRootView.findViewById(R.id.toggleButton);
+		mBackgroundImageView = (ImageView) mRootView.findViewById(R.id.fragment_room_background);
+		mImageLoader.displayImage(mBackgroundPath, mBackgroundImageView);
 
         return mRootView;
     }
