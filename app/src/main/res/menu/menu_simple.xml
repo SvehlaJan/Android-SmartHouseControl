@@ -20,8 +20,8 @@
                 android:icon="@null"
                 android:orderInCategory="1" />
             <item
-                android:id="@+id/ab_button_list_house_consumption"
-                android:title="@string/ab_button_house_consumption"
+                android:id="@+id/ab_button_list_house_statistics"
+                android:title="@string/ab_button_house_statistics"
                 android:icon="@null"
                 android:orderInCategory="2" />
             <item

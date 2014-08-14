@@ -1,6 +1,7 @@
 package dk.summerinnovationweek.futurehousing.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -102,7 +105,6 @@ public class RoomFragment extends TaskFragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //ViewPager mRootView = (ViewPager) mRootView.findViewById(R.id.fragment_room);
         mRootView = inflater.inflate(R.layout.fragment_room, container, false);
         image = (ImageView) mRootView.findViewById(R.id.ivLightOn);
         button = (ToggleButton) mRootView.findViewById(R.id.toggleButton);
@@ -273,9 +275,7 @@ public class RoomFragment extends TaskFragment
 
 
     private void renderView() {
-//		Logcat.e(mBackgroundPath);
 		mImageLoader.displayImage(mBackgroundPath, mBackgroundImageView, mDisplayImageOptions, mImageLoadingListener);
-
 
         // http://smarthouses.summerinnovationweek.dk/Api/getHouse.php?houseID=1
         // http://blog.csdn.net/sun_star1chen/article/details/16330459
@@ -284,52 +284,6 @@ public class RoomFragment extends TaskFragment
                 {0, 136, 119}, {0, 153, 102}, {0, 170, 85}, {0, 187, 68}, {0, 204, 51}, {0, 221, 34}, {0, 238, 17}, {0, 255, 0}};
         final int[][] grArray = {{0, 255, 0}, {17, 238, 0}, {34, 221, 0}, {51, 204, 0}, {68, 187, 0}, {85, 170, 0}, {102, 153, 0}, {119, 136, 0},
                 {136, 119, 0}, {153, 102, 0}, {170, 85, 0}, {187, 68, 0}, {204, 51, 0}, {221, 34, 0}, {238, 17, 0}, {255, 0, 0}};
-
-
-/*
-       final SeekBar sb = (SeekBar) mRootView.findViewById(R.id.seekBar);
-       sb.setProgress(0);
-
-        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                int red = 0, green = 0, blue = 0;
-                seekBar.setMax(15);
-                int seekValue = sb.getProgress();
-                int temp = 15 + seekValue;
-
-                if (temp <= 20) {
-                    red = bgArray[seekValue][0];
-                    green = bgArray[seekValue][1];
-                    blue = bgArray[seekValue][2];
-                } else {
-                    red = grArray[seekValue][0];
-                    green = grArray[seekValue][1];
-                    blue = grArray[seekValue][2];
-                }
-
-                sb.setBackgroundColor(Color.rgb(red, green, blue));
-                sb.invalidate();
-
-                String val = Integer.toString(temp);
-                //   tvTemp.setText("Temperature: " + val);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser == true) {
-                    ;
-                }
-            }
-        });
-*/
 
         final TextView tvDesTemp = (TextView) mRootView.findViewById((R.id.tvDesTemp));
         final TextView tvACTemp = (TextView) mRootView.findViewById((R.id.tvACTemp));
@@ -352,16 +306,15 @@ public class RoomFragment extends TaskFragment
 
 				int acTemp = mRoom.getMeasuredTemperature();
 				String acTempStr = Integer.toString(acTemp);
-//				pb.setProgress(acTemp);
 
 				if (acTemp > 15 || acTemp < 46)
 				{
-//					pb.setBackgroundColor(grArray[acTemp - 15][1]);
 					tvACTemp.setText("Actual temperature: " + acTempStr);
 				}
 
 				String tvDesTempStr = Integer.toString(newVal);
 				tvDesTemp.setText(tvDesTempStr);
+				mRoom.setInputTemperature(newVal);
 
 //				np.setValue((newVal < oldVal) ? oldVal - 5 : oldVal + 5);
 
@@ -381,17 +334,21 @@ public class RoomFragment extends TaskFragment
 
 
 		button.setChecked(mRoom.isMeasuredLight());
-		button.setOnClickListener(new View.OnClickListener() {
+		button.setOnClickListener(new View.OnClickListener()
+		{
 
 			@Override
-			public void onClick(View view) {
+			public void onClick(View view)
+			{
 				boolean on = ((ToggleButton) view).isChecked();
-				if (on == true) {
+				if (on == true)
+				{
 					image.setImageResource(R.drawable.bulb_on);
 					mRoom.setMeasuredLight(true);
 					mRoom.setInputLight(true);
 					// bg.setBackgroundColor(0xFFF3F3F3);
-				} else {
+				} else
+				{
 					image.setImageResource(R.drawable.bulb_off);
 					mRoom.setMeasuredLight(false);
 					mRoom.setInputLight(false);

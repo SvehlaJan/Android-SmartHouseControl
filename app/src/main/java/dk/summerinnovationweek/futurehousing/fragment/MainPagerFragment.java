@@ -433,13 +433,13 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	public void showStatistics()
 	{
 		if (mViewPager != null)
-			mViewPager.setCurrentItem(mViewPager.getChildCount() + 1);
+			mViewPager.setCurrentItem(mViewPager.getChildCount() - 2);
 	}
 
 	public void showAbout()
 	{
 		if (mViewPager != null)
-			mViewPager.setCurrentItem(mViewPager.getChildCount() + 2);
+			mViewPager.setCurrentItem(mViewPager.getChildCount() - 1);
 	}
 
 	public void setBackground(Bitmap background)

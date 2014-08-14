@@ -155,7 +155,7 @@ public class MainActivity extends ActionBarActivity
 				fragment.refreshData();
 				return true;
 
-			case R.id.ab_button_list_house_consumption:
+			case R.id.ab_button_list_house_statistics:
 				fragment.showStatistics();
 				return true;
 

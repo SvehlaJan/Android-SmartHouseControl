@@ -26,7 +26,7 @@
     <string name="notification_example_title">Example notification title</string>
     <string name="ab_button_refresh">Refresh</string>
     <string name="ab_button_list">Options</string>
-    <string name="ab_button_house_consumption">House consumption</string>
+    <string name="ab_button_house_statistics">House statistics</string>
     <string name="ab_button_list_collapse">Schedule</string>
     <string name="ab_button_list_change_background">Change background</string>
     <string name="room_activity">Room overview</string>

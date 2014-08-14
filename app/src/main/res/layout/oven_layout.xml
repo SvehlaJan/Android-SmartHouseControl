@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+<RelativeLayout
+    android:id="@+id/oven_relative_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/oven_top"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="10dp"
@@ -14,7 +16,6 @@
         android:background="#99000000">
 
         <ToggleButton
-            android:id="@+id/toggleButton"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
@@ -23,56 +24,14 @@
             android:checked="false"/>
 
         <ImageView
-            android:id="@+id/ivOven"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="50dp"
-            android:contentDescription="@string/bulbContentDesc"
             android:src="@drawable/oven_off"/>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#99000000"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:text="Current oven temperature"/>
-
-            <TextView
-                android:id="@+id/tvDesTemp"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:text="0"
-                android:textColor="#ffff0000"
-                android:textSize="@dimen/ab_dropdown_text"/>
-        </LinearLayout>
-
-        <NumberPicker
-            android:id="@+id/numberPicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:clickable="false"/>
-    </RelativeLayout>
-
-</LinearLayout>
-
-    <!-- 150dp match_parent -->
+</RelativeLayout>
