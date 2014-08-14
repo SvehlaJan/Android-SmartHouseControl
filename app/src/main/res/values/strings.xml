@@ -35,6 +35,5 @@
     <string name="tv_MainLamp">Main lamp</string>
     <string name="temp">Temperature</string>
     <string name="ab_button_list_about">About us</string>
-
-
+    <string name="Water_consumption">Water consumption: 9m<sup><small>3</small></sup></string>
 </resources>
