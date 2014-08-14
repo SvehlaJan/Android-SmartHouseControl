@@ -54,6 +54,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	private APICallManager mAPICallManager = new APICallManager();
 
 	private ViewPager mViewPager;
+	private SmartHouseEntity mSmartHouseEntity;
 	private HouseEntity mHouseEntity;
 	private BitmapDrawable mBackgroundImage;
 
@@ -77,6 +78,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		// load and show data
 		if(mViewState==null || mViewState==ViewState.OFFLINE)
 		{
+
             HouseEntity house = new HouseEntity();
             house.setId(1);
 
@@ -203,6 +205,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 					{
 						Logcat.d("Fragment.onAPICallRespond(HouseRequest): " + status.getStatusCode() + " " + status.getStatusMessage());
 
+//						mSmartHouseEntity = exampleResponse.getResponseObject();
 						mHouseEntity = exampleResponse.getResponseObject();
 
 						if (mHouseEntity != null)
@@ -277,7 +280,6 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	
 	private void loadData()
 	{
-		/*
 		if(NetworkManager.isOnline(getActivity()))
 		{
 			if(!mAPICallManager.hasRunningTask(HouseRequest.class))
@@ -297,7 +299,6 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 		{
 			showOffline();
 		}
-		*/
 	}
 
 

@@ -15,19 +15,20 @@ import java.util.List;
 import dk.summerinnovationweek.futurehousing.client.parser.HouseParser;
 import dk.summerinnovationweek.futurehousing.client.response.Response;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
+import dk.summerinnovationweek.futurehousing.utility.Logcat;
 
 
 public class HouseRequest extends Request
 {
 	private static final String REQUEST_METHOD = "POST";
-	private static final String REQUEST_PATH = "example";
+	private static final String REQUEST_PATH = "getHouse";
 	
-	private int mSkip;
+	private int mHouseId;
 	
 
-	public HouseRequest(int skip)
+	public HouseRequest(int houseId)
 	{
-		mSkip = skip;
+		mHouseId = houseId;
 	}
 
 	
@@ -45,7 +46,7 @@ public class HouseRequest extends Request
 		List<NameValuePair> params = new LinkedList<NameValuePair>();
 
 		// params
-		params.add(new BasicNameValuePair("skip", Integer.toString(mSkip)));
+		params.add(new BasicNameValuePair("houseID", Integer.toString(mHouseId)));
 		String paramsString = URLEncodedUtils.format(params, CHARSET);
 
 		// url
@@ -57,7 +58,9 @@ public class HouseRequest extends Request
 			builder.append(paramsString);
 		}
 
-		return builder.toString();
+		String address = builder.toString();
+		Logcat.e("Address: " + address);
+		return address;
 	}
 
 

@@ -43,7 +43,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter
 		else
 		{
 			String backgroundPath = "";
-			switch (mHouse.getRoomList().get(position - 1).getId())
+			switch ((int) mHouse.getRoomList().get(position - 1).getId())
 			{
 				case 1:
 					backgroundPath = "drawable://" + R.drawable.background_1;

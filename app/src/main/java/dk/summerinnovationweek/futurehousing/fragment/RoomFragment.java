@@ -29,6 +29,7 @@ import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
+import dk.summerinnovationweek.futurehousing.utility.Logcat;
 import dk.summerinnovationweek.futurehousing.view.ViewState;
 
 public class RoomFragment extends TaskFragment
@@ -81,6 +82,7 @@ public class RoomFragment extends TaskFragment
 				.showImageForEmptyUri(Color.TRANSPARENT)
 				.showImageOnFail(Color.TRANSPARENT)
 				.cacheInMemory(true)
+				.cacheOnDisc(true)
 				.displayer(new SimpleBitmapDisplayer())
 				.build();
 		mImageLoadingListener = new SimpleImageLoadingListener();
@@ -89,6 +91,7 @@ public class RoomFragment extends TaskFragment
     private void handleArguments(Bundle arguments) {
         if (arguments.containsKey(ARGUMENT_ROOM)) {
             mRoom = (RoomEntity) arguments.getSerializable(ARGUMENT_ROOM);
+			mBackgroundPath = arguments.getString(ARGUMENT_BACKGROUND);
         }
     }
 
@@ -106,7 +109,6 @@ public class RoomFragment extends TaskFragment
         image = (ImageView) mRootView.findViewById(R.id.ivLightOn);
         button = (ToggleButton) mRootView.findViewById(R.id.toggleButton);
 		mBackgroundImageView = (ImageView) mRootView.findViewById(R.id.fragment_room_background);
-		mImageLoader.displayImage(mBackgroundPath, mBackgroundImageView);
 
         return mRootView;
     }
@@ -118,6 +120,7 @@ public class RoomFragment extends TaskFragment
 
         // load and show data
         if (mViewState == null || mViewState == ViewState.OFFLINE) {
+			if (mRoom != null) renderView();
             showContent();
         } else if (mViewState == ViewState.CONTENT) {
             if (mRoom != null) renderView();
@@ -265,6 +268,9 @@ public class RoomFragment extends TaskFragment
 
 
     private void renderView() {
+//		Logcat.e(mBackgroundPath);
+		mImageLoader.displayImage(mBackgroundPath, mBackgroundImageView, mDisplayImageOptions, mImageLoadingListener);
+
 
         // http://smarthouses.summerinnovationweek.dk/Api/getHouse.php?houseID=1
         // http://blog.csdn.net/sun_star1chen/article/details/16330459
@@ -328,6 +334,7 @@ public class RoomFragment extends TaskFragment
 
         final NumberPicker np = (NumberPicker) mRootView.findViewById(R.id.numberPicker);
 
+		np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         np.setMaxValue(30);
         np.setMinValue(15);
         np.setFadingEdgeLength(5);

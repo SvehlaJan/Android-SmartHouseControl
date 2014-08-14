@@ -165,9 +165,6 @@ public class MainActivity extends ActionBarActivity
 			case R.id.ab_button_list_house_consumption:
 				return true;
 
-			case R.id.ab_button_list_collapse:
-				return true;
-
 			case R.id.ab_button_list_change_background:
 				dispatchChangeBackground();
 				return true;

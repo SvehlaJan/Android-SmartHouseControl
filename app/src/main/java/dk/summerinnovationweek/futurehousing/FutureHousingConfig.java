@@ -8,8 +8,8 @@ public class FutureHousingConfig
 	
 	public static final boolean BUILD_DEBUG = BuildConfig.DEBUG;
 	
-	public static final String API_ENDPOINT_PRODUCTION = "http://example.com/api/";
-	public static final String API_ENDPOINT_DEVELOPMENT = "http://dev.example.com/api/";
+	public static final String API_ENDPOINT_PRODUCTION = "http://smarthouses.summerinnovationweek.dk/Api/";
+	public static final String API_ENDPOINT_DEVELOPMENT = "http://smarthouses.summerinnovationweek.dk/Api/";
 	
 	public static final String GCM_REGISTER_URL = "http://example.com/register";
 	public static final String GCM_UNREGISTER_URL = "http://example.com/unregister";
