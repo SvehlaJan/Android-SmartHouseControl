@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragment_room_content"
+        android:background="#99000000"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:layout_weight="1"
+
+        >
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="About"
+            android:textSize="35dp"
+            android:id="@+id/about"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Who we are?"
+            android:id="@+id/textView"
+            android:layout_below="@+id/about"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="A fresh Startup Comany which will revolutionize the way we interact with our homes"
+            android:id="@+id/textView2"
+            android:layout_below="@+id/textView"
+            android:layout_alignLeft="@+id/about" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Where can you find us?"
+            android:id="@+id/textView3"
+            android:layout_below="@+id/textView2"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="35dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Office 4.13\nChr M Østergaards Vej 4A\n 8700 Horsens"
+            android:id="@+id/textView4"
+            android:layout_below="@+id/textView3"
+            android:layout_alignLeft="@+id/textView2"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="How to contact us?"
+            android:id="@+id/textView7"
+            android:layout_marginTop="35dp"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="facebook.com/SmartHouseLabs\nfuturehousing.summerinnovationweek.dk/"
+            android:id="@+id/textView8"
+            android:layout_below="@+id/textView7"
+            android:layout_alignLeft="@+id/textView4" />
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>
