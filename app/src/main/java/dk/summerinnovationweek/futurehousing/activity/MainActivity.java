@@ -1,6 +1,5 @@
 package dk.summerinnovationweek.futurehousing.activity;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -8,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
@@ -25,13 +23,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
@@ -122,27 +115,27 @@ public class MainActivity extends ActionBarActivity
 		ArrayList<RoomEntity> rooms = new ArrayList<RoomEntity>();
 
 		RoomEntity room = new RoomEntity(1, "Kitchen", true, 20);
-		room.setInputIsLightOn(true);
+		room.setInputLight(true);
 		room.setInputTemperature(22);
         rooms.add(room);
 
 		room = new RoomEntity(2, "Guest room", false, 17);
-		room.setInputIsLightOn(false);
+		room.setInputLight(false);
 		room.setInputTemperature(17);
 		rooms.add(room);
 
 		room = new RoomEntity(3, "Living room", true, 23);
-		room.setInputIsLightOn(true);
+		room.setInputLight(true);
 		room.setInputTemperature(22);
 		rooms.add(room);
 
 		room = new RoomEntity(4, "Office", false, 22);
-		room.setInputIsLightOn(true);
+		room.setInputLight(true);
 		room.setInputTemperature(22);
 		rooms.add(room);
 
 		room = new RoomEntity(5, "Dining room", false, 20);
-		room.setInputIsLightOn(false);
+		room.setInputLight(false);
 		room.setInputTemperature(20);
 		rooms.add(room);
 
@@ -168,6 +161,10 @@ public class MainActivity extends ActionBarActivity
 
 			case R.id.ab_button_list_change_background:
 				dispatchChangeBackground();
+				return true;
+
+			case R.id.ab_button_list_about:
+				fragment.showAbout();
 				return true;
 
 			default:

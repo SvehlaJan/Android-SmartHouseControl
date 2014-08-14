@@ -11,7 +11,7 @@
 		android:fillViewport="true">
 
         <ImageView
-            android:id="@+id/fragment_room_background"
+            android:id="@+id/fragment_about_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/stairs"

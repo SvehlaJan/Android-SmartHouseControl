@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -383,7 +382,7 @@ public class RoomFragment extends TaskFragment
 					//We get the different between oldValue and the new value
 
 					//  int valueDiff = numberPicker.getValue() - oldValue;
-					Toast.makeText(getActivity(), "Value is now: " + Integer.toString(numberPicker.getValue()), Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getActivity(), "Value is now: " + Integer.toString(numberPicker.getValue()), Toast.LENGTH_SHORT).show();
 
 					//Update oldValue to the new value for the next scroll
 					oldValue = numberPicker.getValue();
@@ -393,6 +392,15 @@ public class RoomFragment extends TaskFragment
 
 			}
 		});
+
+		tvACTemp.setText("Actual temperature: " + mRoom.getMeasuredTemperature());
+		tvDesTemp.setText(Integer.toString(mRoom.getInputTemperature()));
+		np.setValue(mRoom.getInputTemperature());
+
+		if (mRoom.isMeasuredLight())
+			image.setImageResource(R.drawable.bulb_on);
+		else
+			image.setImageResource(R.drawable.bulb_off);
 
 
 
@@ -408,9 +416,13 @@ public class RoomFragment extends TaskFragment
                 boolean on = ((ToggleButton) view).isChecked();
                 if (on == true) {
                     image.setImageResource(R.drawable.bulb_on);
+					mRoom.setMeasuredLight(true);
+					mRoom.setInputLight(true);
                     // bg.setBackgroundColor(0xFFF3F3F3);
                 } else {
                     image.setImageResource(R.drawable.bulb_off);
+					mRoom.setMeasuredLight(false);
+					mRoom.setInputLight(false);
                     //bg.setBackgroundColor(0xFF000000);
                 }
             }

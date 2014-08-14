@@ -283,6 +283,12 @@ public class HouseFragment extends TaskFragment
 
         return null;
     }
+
+
+	public void updateHouse()
+	{
+		renderView();
+	}
 	
 	
 	private void renderView()
@@ -290,8 +296,7 @@ public class HouseFragment extends TaskFragment
         RoomEntity kitchenroom = getRoomByName(mHouse, "Kitchen");
         if (kitchenroom != null ) {
             kitchenlight = (ImageView) mRootView.findViewById(R.id.kitchenlight);
-            Log.e("Debug", Boolean.toString(kitchenroom.isMeasuredIsLightOn()));
-            if (kitchenroom.isMeasuredIsLightOn()) {
+            if (kitchenroom.isMeasuredLight()) {
                 kitchenlight.setImageResource(R.drawable.lightbulb_off);
             } else {
                 kitchenlight.setImageResource(R.drawable.lightbulb);
@@ -316,7 +321,7 @@ public class HouseFragment extends TaskFragment
         RoomEntity livingroom = getRoomByName(mHouse, "Living room");
         if (livingroom != null ) {
             livingroomlight = (ImageView) mRootView.findViewById(R.id.livingroomlight);
-            if (livingroom.isMeasuredIsLightOn()) {
+            if (livingroom.isMeasuredLight()) {
                 livingroomlight.setImageResource(R.drawable.lightbulb_off);
             } else {
                 livingroomlight.setImageResource(R.drawable.lightbulb);
@@ -341,7 +346,7 @@ public class HouseFragment extends TaskFragment
         RoomEntity dinningroom = getRoomByName(mHouse, "Dining room");
         if (dinningroom != null ) {
             dinningroomlight = (ImageView) mRootView.findViewById(R.id.dinningroomlight);
-            if (dinningroom.isMeasuredIsLightOn()) {
+            if (dinningroom.isMeasuredLight()) {
                 dinningroomlight.setImageResource(R.drawable.lightbulb);
             } else {
                 dinningroomlight.setImageResource(R.drawable.lightbulb_off);
@@ -368,7 +373,7 @@ public class HouseFragment extends TaskFragment
         if (officeroom != null ) {
 
             officelight = (ImageView) mRootView.findViewById(R.id.officelight);
-            if (officeroom.isMeasuredIsLightOn()) {
+            if (officeroom.isMeasuredLight()) {
                 officelight.setImageResource(R.drawable.lightbulb);
             } else {
                 officelight.setImageResource(R.drawable.lightbulb_off);
@@ -397,7 +402,7 @@ public class HouseFragment extends TaskFragment
 
             guestlight = (ImageView) mRootView.findViewById(R.id.guestlight);
 
-            if (guestroom.isMeasuredIsLightOn()) {
+            if (guestroom.isMeasuredLight()) {
                 guestlight.setImageResource(R.drawable.lightbulb);
             } else {
                 guestlight.setImageResource(R.drawable.lightbulb_off);

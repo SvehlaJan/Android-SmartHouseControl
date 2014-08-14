@@ -12,8 +12,8 @@ public class RoomEntity implements Serializable {
 	@SerializedName("name")
     private String mName;
 	@SerializedName("light")
-    private boolean mMeasuredIsLightOn;
-    private boolean mInputIsLightOn;
+    private boolean mMeasuredLight;
+    private boolean mInputLight;
 	@SerializedName("temperature")
     private int mMeasuredTemperature;
     private int mInputTemperature;
@@ -26,13 +26,13 @@ public class RoomEntity implements Serializable {
     public RoomEntity(long id, String name, boolean isMeasuredIsLightOn, int measuredTemperature) {
         mId = id;
         mName = name;
-        mInputIsLightOn = isMeasuredIsLightOn;
+        mInputLight = isMeasuredIsLightOn;
         mMeasuredTemperature = measuredTemperature;
     }
 
     public RoomEntity(RoomEntity origin) {
         mId = origin.mId;
-        mInputIsLightOn = origin.mInputIsLightOn;
+        mInputLight = origin.mInputLight;
         mMeasuredTemperature = origin.mMeasuredTemperature;
         mInputTemperature = origin.mInputTemperature;
     }
@@ -45,12 +45,12 @@ public class RoomEntity implements Serializable {
         mId = id;
     }
 
-    public boolean isInputIsLightOn() {
-        return mInputIsLightOn;
+    public boolean isInputLight() {
+        return mInputLight;
     }
 
-    public void setInputIsLightOn(boolean isLightOn) {
-        mInputIsLightOn = isLightOn;
+    public void setInputLight(boolean isLightOn) {
+        mInputLight = isLightOn;
     }
 
     public int getMeasuredTemperature() {
@@ -77,12 +77,12 @@ public class RoomEntity implements Serializable {
         mName = name;
     }
 
-    public boolean isMeasuredIsLightOn() {
-        return mMeasuredIsLightOn;
+    public boolean isMeasuredLight() {
+        return mMeasuredLight;
     }
 
-    public void setMeasuredIsLightOn(boolean measuredIsLightOn) {
-        mMeasuredIsLightOn = measuredIsLightOn;
+    public void setMeasuredLight(boolean measuredLight) {
+        mMeasuredLight = measuredLight;
     }
 
 

@@ -8,17 +8,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.net.SocketTimeoutException;
@@ -36,7 +28,6 @@ import dk.summerinnovationweek.futurehousing.client.request.HouseRequest;
 import dk.summerinnovationweek.futurehousing.client.response.Response;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
 import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
-import dk.summerinnovationweek.futurehousing.entity.SmartHouseEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
 import dk.summerinnovationweek.futurehousing.utility.Logcat;
 import dk.summerinnovationweek.futurehousing.utility.NetworkManager;
@@ -84,27 +75,27 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 			ArrayList<RoomEntity> rooms = new ArrayList<RoomEntity>();
 
 			RoomEntity room = new RoomEntity(1, "Kitchen", true, 20);
-			room.setInputIsLightOn(true);
+			room.setInputLight(true);
 			room.setInputTemperature(22);
 			rooms.add(room);
 
 			room = new RoomEntity(2, "Guest room", false, 17);
-			room.setInputIsLightOn(false);
+			room.setInputLight(false);
 			room.setInputTemperature(17);
 			rooms.add(room);
 
 			room = new RoomEntity(3, "Living room", true, 23);
-			room.setInputIsLightOn(true);
+			room.setInputLight(true);
 			room.setInputTemperature(22);
 			rooms.add(room);
 
 			room = new RoomEntity(4, "Office", false, 22);
-			room.setInputIsLightOn(true);
+			room.setInputLight(true);
 			room.setInputTemperature(22);
 			rooms.add(room);
 
 			room = new RoomEntity(5, "Dining room", false, 20);
-			room.setInputIsLightOn(false);
+			room.setInputLight(false);
 			room.setInputTemperature(20);
 			rooms.add(room);
 
@@ -376,7 +367,7 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 
 		// set adapter
 		mViewPager.setAdapter(mAdapter);
-		mViewPager.setOffscreenPageLimit(3);
+		mViewPager.setOffscreenPageLimit(7);
 		mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()
 		{
 			@Override
@@ -391,12 +382,19 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 				if (i == 0)
 				{
 					changeActionBarTitle("House overview");
+					String tag = MainPagerAdapter.getFragmentTag(mViewPager.getId(), mAdapter.getItemId(0));
+					HouseFragment fragment = (HouseFragment) getChildFragmentManager().findFragmentByTag(tag);
+					fragment.updateHouse();
 				} else if (i < mHouseEntity.getRoomList().size() + 1)
 				{
 					changeActionBarTitle(mHouseEntity.getRoomList().get(i - 1).getName());
-				} else
+				} else if (i == mHouseEntity.getRoomList().size() + 1)
 				{
 					changeActionBarTitle("House statistics");
+				}
+				else
+				{
+					changeActionBarTitle("About us");
 				}
 
 			}
@@ -436,6 +434,12 @@ public class MainPagerFragment extends TaskFragment implements APICallListener
 	{
 		if (mViewPager != null)
 			mViewPager.setCurrentItem(mViewPager.getChildCount() + 1);
+	}
+
+	public void showAbout()
+	{
+		if (mViewPager != null)
+			mViewPager.setCurrentItem(mViewPager.getChildCount() + 2);
 	}
 
 	public void setBackground(Bitmap background)
