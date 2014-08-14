@@ -1,6 +1,7 @@
 package dk.summerinnovationweek.futurehousing.fragment;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -18,7 +19,9 @@ import android.widget.ToggleButton;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
@@ -29,24 +32,27 @@ import dk.summerinnovationweek.futurehousing.view.ViewState;
 public class StatisticsFragment extends TaskFragment
 {
 	private static final String ARGUMENT_DATA = "data";
+	private static final String ARGUMENT_BACKGROUND = "background";
 	private boolean mActionBarProgress = false;
 	private ViewState mViewState = null;
 	private View mRootView;
 
 	private UserEntity mUserEntity;
+	private String mBackgroundPath;
 
 	private ImageLoader mImageLoader = ImageLoader.getInstance();
 	private DisplayImageOptions mDisplayImageOptions;
 	private ImageLoadingListener mImageLoadingListener;
 	private ImageView mBackgroundImageView;
 
-	public static StatisticsFragment newInstance(UserEntity user)
+	public static StatisticsFragment newInstance(UserEntity user, String backgroundPath)
 	{
         StatisticsFragment fragment = new StatisticsFragment();
 
 		// arguments
 		Bundle arguments = new Bundle();
 		arguments.putSerializable(ARGUMENT_DATA, user);
+		arguments.putString(ARGUMENT_BACKGROUND, backgroundPath);
 		fragment.setArguments(arguments);
 
 		return fragment;
@@ -64,6 +70,17 @@ public class StatisticsFragment extends TaskFragment
 		{
 			handleArguments(arguments);
 		}
+
+		// image caching options
+		mDisplayImageOptions = new DisplayImageOptions.Builder()
+				.showImageOnLoading(Color.TRANSPARENT)
+				.showImageForEmptyUri(Color.TRANSPARENT)
+				.showImageOnFail(Color.TRANSPARENT)
+				.cacheInMemory(true)
+				.cacheOnDisc(true)
+				.displayer(new SimpleBitmapDisplayer())
+				.build();
+		mImageLoadingListener = new SimpleImageLoadingListener();
 	}
 
 	private void handleArguments(Bundle arguments)
@@ -71,6 +88,7 @@ public class StatisticsFragment extends TaskFragment
 		if(arguments.containsKey(ARGUMENT_DATA))
 		{
 			mUserEntity = (UserEntity) arguments.getSerializable(ARGUMENT_DATA);
+			mBackgroundPath = arguments.getString(ARGUMENT_BACKGROUND);
 		}
 	}
 
@@ -85,8 +103,8 @@ public class StatisticsFragment extends TaskFragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-        //ViewPager mRootView = (ViewPager) mRootView.findViewById(R.id.fragment_room);
-		mRootView = inflater.inflate(R.layout.fragment_room, container, false);
+		mRootView = inflater.inflate(R.layout.fragment_statistics, container, false);
+		mBackgroundImageView = (ImageView) mRootView.findViewById(R.id.fragment_statistics_background);
 
 		return mRootView;
 	}
@@ -266,9 +284,15 @@ public class StatisticsFragment extends TaskFragment
 		containerEmpty.setVisibility(View.VISIBLE);
 		mViewState = ViewState.EMPTY;
 	}
-	
+
+	public void setBackground(Bitmap bitmap)
+	{
+		if (mBackgroundImageView != null)
+			mBackgroundImageView.setImageBitmap(bitmap);
+	}
 	
 	private void renderView()
 	{
+		mImageLoader.displayImage(mBackgroundPath, mBackgroundImageView, mDisplayImageOptions, mImageLoadingListener);
 	}
 }

@@ -10,7 +10,7 @@
 	<item 
 		android:id="@+id/ab_button_list"
 		android:title="@string/ab_button_list"
-		android:icon="@drawable/ab_ic_moreoverflow"
+		android:icon="@drawable/more"
 		android:orderInCategory="2"
 		example:showAsAction="ifRoom">
 		<menu>
@@ -24,6 +24,11 @@
                 android:title="@string/ab_button_list_change_background"
                 android:icon="@null"
                 android:orderInCategory="2" />
+            <item
+                android:id="@+id/ab_button_list_about"
+                android:title="@string/ab_button_list_about"
+                android:icon="@null"
+                android:orderInCategory="3" />
 
 		</menu>
 	</item>

@@ -6,8 +6,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
+import dk.summerinnovationweek.futurehousing.entity.UserEntity;
 import dk.summerinnovationweek.futurehousing.fragment.HouseFragment;
 import dk.summerinnovationweek.futurehousing.fragment.RoomFragment;
+import dk.summerinnovationweek.futurehousing.fragment.StatisticsFragment;
 import dk.summerinnovationweek.futurehousing.utility.Logcat;
 
 
@@ -29,7 +31,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter
 		if (mHouse == null)
 			return 1;
 		else
-			return mHouse.getRoomList().size() + 1;
+			return mHouse.getRoomList().size() + 2;
 	}
 
 
@@ -40,7 +42,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter
 		{
 			return HouseFragment.newInstance(mHouse);
 		}
-		else
+		else if (position <  mHouse.getRoomList().size() + 1)
 		{
 			String backgroundPath = "";
 			switch ((int) mHouse.getRoomList().get(position - 1).getId())
@@ -62,6 +64,15 @@ public class MainPagerAdapter extends FragmentPagerAdapter
 					break;
 			}
 			return RoomFragment.newInstance(mHouse.getRoomList().get(position - 1), backgroundPath);
+		}
+		else if (position == mHouse.getRoomList().size() + 1)
+		{
+			String backgroundPath = "drawable://" + R.drawable.background_6;
+			return StatisticsFragment.newInstance(new UserEntity(), backgroundPath);
+		}
+		else
+		{
+			return HouseFragment.newInstance(mHouse);
 		}
 	}
 	

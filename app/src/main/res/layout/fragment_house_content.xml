@@ -57,12 +57,15 @@
         android:layout_marginTop="15dp"
         android:id="@+id/guestlight"
         />
+
     <Button
-        android:layout_width="160dp"
-        android:layout_height="225dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/kitchen"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="@dimen/kitchen_ml"
+        android:layout_marginRight="@dimen/kitchen_mr"
         android:layout_marginTop="49dp"
+        android:layout_marginBottom="250dp"
         android:background="@android:color/transparent"/>
     <Button
         android:layout_width="160dp"
@@ -85,13 +88,17 @@
         android:background="@android:color/transparent"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="305dp" />
-    <Button
-        android:layout_width="145dp"
-        android:layout_height="135dp"
-        android:id="@+id/guest"
-        android:background="@android:color/transparent"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="170dp" />
+
+       <Button
+            android:layout_width="145dp"
+            android:layout_height="135dp"
+            android:id="@+id/guest"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="170dp" />
+
+
+
 
     <TextView
         android:layout_width="wrap_content"

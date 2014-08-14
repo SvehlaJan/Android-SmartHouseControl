@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -26,7 +27,6 @@ public class HouseParser extends Parser
 	public static Response<HouseEntity> parse(InputStream stream) throws IOException, JsonParseException
 	{
 		Response<HouseEntity> response = null;
-
 
 		// init parser
 		JsonFactory factory = new JsonFactory();
@@ -60,8 +60,12 @@ public class HouseParser extends Parser
 				Logcat.e(cname);
 				if (parser.getCurrentName().equals("id"))
 				{
-					if (parser.getCurrentToken() == JsonToken.VALUE_NUMBER_INT)
-						id = parser.getLongValue();
+					if (parser.getCurrentToken() == JsonToken.VALUE_STRING)
+					{
+						String idString = parser.getText();
+						id = Long.parseLong(idString);
+					}
+
 				} else if (parser.getCurrentName().equals("name"))
 				{
 					if (parser.getCurrentToken() == JsonToken.VALUE_STRING) name = parser.getText();
@@ -71,45 +75,51 @@ public class HouseParser extends Parser
 						floorPlan = parser.getText();
 				} else if (parser.getCurrentName().equals("rooms"))
 				{
-					rooms = new ArrayList<RoomEntity>();
-
-					if (parser.nextToken() == JsonToken.START_ARRAY)
-						while (parser.nextToken() != JsonToken.END_ARRAY)
+					if (parser.nextToken() == JsonToken.START_OBJECT)
+						while (parser.nextToken() != JsonToken.END_OBJECT)
 						{
+							if (parser.getCurrentName().equals("room"))
+							{
+								rooms = new ArrayList<RoomEntity>();
 
-							long roomId = 0;
-							String roomName = null;
-							int roomTemperature = 0;
-							boolean roomLight = false;
+								if (parser.nextToken() == JsonToken.START_ARRAY)
+									while (parser.nextToken() != JsonToken.END_ARRAY)
+									{
+										long roomId = 0;
+										String roomName = null;
+										int roomTemperature = 0;
+										boolean roomLight = false;
 
-							if (parser.nextToken() == JsonToken.START_OBJECT)
-								while (parser.nextToken() != JsonToken.END_OBJECT)
-								{
-									if (parser.getCurrentName().equals("id"))
-									{
-										if (parser.getCurrentToken() == JsonToken.VALUE_NUMBER_INT)
-											roomId = parser.getLongValue();
-									} else if (parser.getCurrentName().equals("name"))
-									{
-										if (parser.getCurrentToken() == JsonToken.VALUE_STRING)
-											roomName = parser.getText();
-									} else if (parser.getCurrentName().equals("temperature"))
-									{
-										if (parser.getCurrentToken() == JsonToken.VALUE_STRING)
-											roomTemperature = parser.getIntValue();
-									} else if (parser.getCurrentName().equals("light"))
-									{
-										if (parser.getCurrentToken() == JsonToken.VALUE_STRING)
-											roomLight = parser.getBooleanValue();
-									} else
-									{
-										handleUnknownParameter(parser);
+										if (parser.nextToken() == JsonToken.START_OBJECT)
+											while (parser.nextToken() != JsonToken.END_OBJECT)
+											{
+												if (parser.getCurrentName().equals("id"))
+												{
+													if (parser.getCurrentToken() == JsonToken.VALUE_NUMBER_INT)
+														roomId = parser.getLongValue();
+												} else if (parser.getCurrentName().equals("name"))
+												{
+													if (parser.getCurrentToken() == JsonToken.VALUE_STRING)
+														roomName = parser.getText();
+												} else if (parser.getCurrentName().equals("temperature"))
+												{
+													if (parser.getCurrentToken() == JsonToken.VALUE_STRING)
+														roomTemperature = parser.getIntValue();
+												} else if (parser.getCurrentName().equals("light"))
+												{
+													if (parser.getCurrentToken() == JsonToken.VALUE_STRING)
+														roomLight = parser.getBooleanValue();
+												} else
+												{
+													handleUnknownParameter(parser);
+												}
+											}
+
+										RoomEntity room = new RoomEntity(roomId, roomName, roomLight, roomTemperature);
+
+										rooms.add(room);
 									}
-								}
-
-							RoomEntity room = new RoomEntity(roomId, roomName, roomLight, roomTemperature);
-
-							rooms.add(room);
+							}
 						}
 				} else if (parser.getCurrentName().equals("error"))
 				{

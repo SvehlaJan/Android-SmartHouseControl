@@ -4,21 +4,22 @@
 	android:layout_height="match_parent"
 	android:animateLayoutChanges="true">
 
-    <ImageView
-        android:id="@+id/fragment_statistics_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"/>
-
-	<ScrollView
+	<FrameLayout
 		android:id="@+id/container_content"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:fillViewport="true">
 
-		<include layout="@layout/fragment_statistics_content" />
+        <ImageView
+            android:id="@+id/fragment_room_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/stairs"
+            android:scaleType="fitXY"/>
 
-	</ScrollView>
+		<include layout="@layout/fragment_about_content" />
+
+	</FrameLayout>
 
 	<include layout="@layout/placeholder_progress"
 		android:id="@+id/container_progress"
