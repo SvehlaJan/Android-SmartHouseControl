@@ -21,7 +21,7 @@ import dk.summerinnovationweek.futurehousing.utility.Logcat;
 public class HouseRequest extends Request
 {
 	private static final String REQUEST_METHOD = "POST";
-	private static final String REQUEST_PATH = "getHouse";
+	private static final String REQUEST_PATH = "getHouse.php";
 	
 	private int mHouseId;
 	

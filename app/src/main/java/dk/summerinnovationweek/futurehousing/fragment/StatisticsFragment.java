@@ -16,8 +16,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
+import dk.summerinnovationweek.futurehousing.entity.UserEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
 import dk.summerinnovationweek.futurehousing.view.ViewState;
 
@@ -28,15 +33,20 @@ public class StatisticsFragment extends TaskFragment
 	private ViewState mViewState = null;
 	private View mRootView;
 
-	private RoomEntity mRoom;
+	private UserEntity mUserEntity;
 
-	public static StatisticsFragment newInstance(RoomEntity room)
+	private ImageLoader mImageLoader = ImageLoader.getInstance();
+	private DisplayImageOptions mDisplayImageOptions;
+	private ImageLoadingListener mImageLoadingListener;
+	private ImageView mBackgroundImageView;
+
+	public static StatisticsFragment newInstance(UserEntity user)
 	{
         StatisticsFragment fragment = new StatisticsFragment();
 
 		// arguments
 		Bundle arguments = new Bundle();
-		arguments.putSerializable(ARGUMENT_DATA, room);
+		arguments.putSerializable(ARGUMENT_DATA, user);
 		fragment.setArguments(arguments);
 
 		return fragment;
@@ -60,7 +70,7 @@ public class StatisticsFragment extends TaskFragment
 	{
 		if(arguments.containsKey(ARGUMENT_DATA))
 		{
-			mRoom = (RoomEntity) arguments.getSerializable(ARGUMENT_DATA);
+			mUserEntity = (UserEntity) arguments.getSerializable(ARGUMENT_DATA);
 		}
 	}
 
@@ -90,12 +100,13 @@ public class StatisticsFragment extends TaskFragment
 		// load and show data
 		if(mViewState==null || mViewState==ViewState.OFFLINE)
 		{
-			showContent();
+			if(mUserEntity !=null) renderView();
+				showContent();
 		}
 		else if(mViewState==ViewState.CONTENT)
 		{
-			if(mRoom !=null) renderView();
-			showContent();
+			if(mUserEntity !=null) renderView();
+				showContent();
 		}
 		else if(mViewState==ViewState.PROGRESS)
 		{

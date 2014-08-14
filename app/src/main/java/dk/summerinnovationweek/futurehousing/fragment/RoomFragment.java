@@ -1,7 +1,9 @@
 package dk.summerinnovationweek.futurehousing.fragment;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -12,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -267,10 +271,17 @@ public class RoomFragment extends TaskFragment
     }
 
 
-    private void renderView() {
-//		Logcat.e(mBackgroundPath);
-		mImageLoader.displayImage(mBackgroundPath, mBackgroundImageView, mDisplayImageOptions, mImageLoadingListener);
+	public void setBackground(Bitmap bitmap)
+	{
+		if (mBackgroundImageView != null)
+		{
+			mBackgroundImageView.setImageBitmap(bitmap);
+		}
+	}
 
+
+    private void renderView() {
+		mImageLoader.displayImage(mBackgroundPath, mBackgroundImageView, mDisplayImageOptions, mImageLoadingListener);
 
         // http://smarthouses.summerinnovationweek.dk/Api/getHouse.php?houseID=1
         // http://blog.csdn.net/sun_star1chen/article/details/16330459
@@ -280,6 +291,18 @@ public class RoomFragment extends TaskFragment
         final int[][] grArray = {{0, 255, 0}, {17, 238, 0}, {34, 221, 0}, {51, 204, 0}, {68, 187, 0}, {85, 170, 0}, {102, 153, 0}, {119, 136, 0},
                 {136, 119, 0}, {153, 102, 0}, {170, 85, 0}, {187, 68, 0}, {204, 51, 0}, {221, 34, 0}, {238, 17, 0}, {255, 0, 0}};
 
+
+		LinearLayout linearLayout = (LinearLayout) mRootView.findViewById(R.id.fragment_room_linear_layout);
+
+		if (mRoom.getName().equalsIgnoreCase("Living room"))
+		{
+			RelativeLayout fireplaceLayout = (RelativeLayout) View.inflate(getActivity(), R.layout.fireplace_layout, null);
+			linearLayout.addView(fireplaceLayout, linearLayout.getChildCount(), ViewGroup.LayoutParams.WRAP_CONTENT);
+		}
+		else if (mRoom.getName().equalsIgnoreCase("Kitchen"))
+		{
+
+		}
 
 /*
        final SeekBar sb = (SeekBar) mRootView.findViewById(R.id.seekBar);
@@ -330,7 +353,7 @@ public class RoomFragment extends TaskFragment
         final TextView tvACTemp = (TextView) mRootView.findViewById((R.id.tvACTemp));
 
         final ProgressBar pb = (ProgressBar) mRootView.findViewById(R.id.progressBar);
-        pb.setProgress(0);
+        pb.setProgress(mRoom.getMeasuredTemperature());
 
         final NumberPicker np = (NumberPicker) mRootView.findViewById(R.id.numberPicker);
 
@@ -338,6 +361,10 @@ public class RoomFragment extends TaskFragment
         np.setMaxValue(30);
         np.setMinValue(15);
         np.setFadingEdgeLength(5);
+		np.setValue(mRoom.getInputTemperature());
+
+		tvACTemp.setText("Actual temperature: " + mRoom.getMeasuredTemperature());
+		tvDesTemp.setText(Integer.toString(mRoom.getInputTemperature()));
         
 // http://www.i-programmer.info/programming/android/6418-android-adventures-pickers.html?start=2
 // http://stackoverflow.com/questions/11069236/can-anyone-recommend-an-open-source-number-picker-for-ics
@@ -357,6 +384,7 @@ public class RoomFragment extends TaskFragment
 
                 String tvDesTempStr = Integer.toString(newVal);
                 tvDesTemp.setText(tvDesTempStr);
+				mRoom.setInputTemperature(newVal);
 
             }
         });
@@ -380,6 +408,11 @@ public class RoomFragment extends TaskFragment
             }
         });
 
+		if (mRoom.isMeasuredIsLightOn())
+			image.setImageResource(R.drawable.bulb_on);
+		else
+			image.setImageResource(R.drawable.bulb_off);
+
         addListenerOnButton();
     }
 
@@ -392,9 +425,13 @@ public class RoomFragment extends TaskFragment
                 boolean on = ((ToggleButton) view).isChecked();
                 if (on == true) {
                     image.setImageResource(R.drawable.bulb_on);
+					mRoom.setInputIsLightOn(true);
+					mRoom.setMeasuredIsLightOn(true);
                     // bg.setBackgroundColor(0xFFF3F3F3);
                 } else {
                     image.setImageResource(R.drawable.bulb_off);
+					mRoom.setInputIsLightOn(false);
+					mRoom.setMeasuredIsLightOn(false);
                     //bg.setBackgroundColor(0xFF000000);
                 }
             }
