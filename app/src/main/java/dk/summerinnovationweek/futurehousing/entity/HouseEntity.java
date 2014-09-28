@@ -1,8 +1,6 @@
 package dk.summerinnovationweek.futurehousing.entity;
 
 
-import android.graphics.Bitmap;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -16,32 +14,13 @@ public class HouseEntity implements Serializable
 	private String mName;
 	@SerializedName("floorPlanPicture")
 	private String mFloorPlan;
+	@SerializedName("floorPlanWidth")
+	private int mFloorPlanWidth;
+	@SerializedName("floorPlanHeight")
+	private int mFloorPlanHeight;
 	@SerializedName("rooms")
 	private ArrayList<RoomEntity> mRoomList;
 
-
-	// empty constructor
-	public HouseEntity()
-	{
-	
-	}
-
-	public HouseEntity(long id, String name, String floorPlan, ArrayList<RoomEntity> roomList)
-	{
-		mId = id;
-		mName = name;
-		mFloorPlan = floorPlan;
-		mRoomList = roomList;
-	}
-
-	// copy constructor
-	public HouseEntity(HouseEntity origin)
-	{
-		mId = origin.mId;
-		if (origin.getRoomList() != null)
-			mRoomList = new ArrayList<RoomEntity>(origin.getRoomList());
-	}
-	
 	
 	public long getId()
 	{
@@ -78,5 +57,29 @@ public class HouseEntity implements Serializable
 	public void setFloorPlan(String floorPlan)
 	{
 		mFloorPlan = floorPlan;
+	}
+
+
+	public int getFloorPlanWidth()
+	{
+		return mFloorPlanWidth;
+	}
+
+
+	public void setFloorPlanWidth(int floorPlanWidth)
+	{
+		mFloorPlanWidth = floorPlanWidth;
+	}
+
+
+	public int getFloorPlanHeight()
+	{
+		return mFloorPlanHeight;
+	}
+
+
+	public void setFloorPlanHeight(int floorPlanHeight)
+	{
+		mFloorPlanHeight = floorPlanHeight;
 	}
 }

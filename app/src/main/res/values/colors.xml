@@ -29,4 +29,9 @@
 	<color name="view_listview_item_bg_pressed">#ddd</color>
 	<color name="view_listview_item_bg_focused">#ccc</color>
 	<color name="view_listview_item_bg_selected">#ccc</color>
+
+	<color name="global_text_light_blue">#33b5FF</color>
+	<color name="global_text_light_red">#FF3333</color>
+	<color name="login_bg">#00000000</color>
+	<color name="login_bg_selected">#222222</color>
 </resources>

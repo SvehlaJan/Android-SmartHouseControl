@@ -6,12 +6,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
-import dk.summerinnovationweek.futurehousing.entity.UserEntity;
 import dk.summerinnovationweek.futurehousing.fragment.AboutFragment;
 import dk.summerinnovationweek.futurehousing.fragment.HouseFragment;
 import dk.summerinnovationweek.futurehousing.fragment.RoomFragment;
 import dk.summerinnovationweek.futurehousing.fragment.StatisticsFragment;
-import dk.summerinnovationweek.futurehousing.utility.Logcat;
 
 
 public class MainPagerAdapter extends FragmentPagerAdapter
@@ -45,31 +43,11 @@ public class MainPagerAdapter extends FragmentPagerAdapter
 		}
 		else if (position <  mHouse.getRoomList().size() + 1)
 		{
-			String backgroundPath = "";
-			switch ((int) mHouse.getRoomList().get(position - 1).getId())
-			{
-				case 1:
-					backgroundPath = "drawable://" + R.drawable.background_1;
-					break;
-				case 2:
-					backgroundPath = "drawable://" + R.drawable.background_2;
-					break;
-				case 3:
-					backgroundPath = "drawable://" + R.drawable.background_3;
-					break;
-				case 4:
-					backgroundPath = "drawable://" + R.drawable.background_4;
-					break;
-				case 5:
-					backgroundPath = "drawable://" + R.drawable.background_5;
-					break;
-			}
-			return RoomFragment.newInstance(mHouse.getRoomList().get(position - 1), backgroundPath);
+			return RoomFragment.newInstance(mHouse.getRoomList().get(position - 1));
 		}
 		else if (position == mHouse.getRoomList().size() + 1)
 		{
-			String backgroundPath = "drawable://" + R.drawable.background_6;
-			return StatisticsFragment.newInstance(new UserEntity(), backgroundPath);
+			return StatisticsFragment.newInstance(null);
 		}
 		else if (position == mHouse.getRoomList().size() + 2)
 		{

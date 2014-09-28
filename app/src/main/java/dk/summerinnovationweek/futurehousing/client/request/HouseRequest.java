@@ -1,6 +1,6 @@
 package dk.summerinnovationweek.futurehousing.client.request;
 
-import com.fasterxml.jackson.core.JsonParseException;
+import com.google.gson.JsonParseException;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -21,17 +21,34 @@ import dk.summerinnovationweek.futurehousing.utility.Logcat;
 public class HouseRequest extends Request
 {
 	private static final String REQUEST_METHOD = "POST";
-	private static final String REQUEST_PATH = "getHouse.php";
-	
-	private int mHouseId;
-	
+	private static final String REQUEST_PATH = "/api/futurehousing/house";
 
-	public HouseRequest(int houseId)
+	private int mHouseId;
+
+	private double mLatitude = NULL_DOUBLE;
+	private double mLongitude = NULL_DOUBLE;
+	private String mAccountEmail;
+	private String mAccountToken;
+
+
+	public HouseRequest(int houseId, String accountEmail, String accountToken)
 	{
 		mHouseId = houseId;
+		mAccountEmail = accountEmail;
+		mAccountToken = accountToken;
 	}
 
-	
+
+	public HouseRequest(int houseId, double latitude, double longitude, String accountEmail, String accountToken)
+	{
+		mHouseId = houseId;
+		mLatitude = latitude;
+		mLongitude = longitude;
+		mAccountEmail = accountEmail;
+		mAccountToken = accountToken;
+	}
+
+
 	@Override
 	public String getRequestMethod()
 	{
@@ -46,13 +63,17 @@ public class HouseRequest extends Request
 		List<NameValuePair> params = new LinkedList<NameValuePair>();
 
 		// params
-		params.add(new BasicNameValuePair("houseID", Integer.toString(mHouseId)));
+		params.add(new BasicNameValuePair("houseID", String.valueOf(mHouseId)));
+		if (mLatitude != NULL_DOUBLE)
+			params.add(new BasicNameValuePair("lat", String.valueOf(mLatitude)));
+		if (mLongitude != NULL_DOUBLE)
+			params.add(new BasicNameValuePair("long", String.valueOf(mLongitude)));
 		String paramsString = URLEncodedUtils.format(params, CHARSET);
 
 		// url
 		builder.append(API_ENDPOINT);
 		builder.append(REQUEST_PATH);
-		if(paramsString!=null && !paramsString.equals(""))
+		if (paramsString != null && !paramsString.equals(""))
 		{
 			builder.append("?");
 			builder.append(paramsString);
@@ -75,13 +96,11 @@ public class HouseRequest extends Request
 	public byte[] getContent()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append("content");
-		
+
 		try
 		{
 			return builder.toString().getBytes(CHARSET);
-		}
-		catch(UnsupportedEncodingException e)
+		} catch (UnsupportedEncodingException e)
 		{
 			e.printStackTrace();
 			return null;
@@ -92,13 +111,13 @@ public class HouseRequest extends Request
 	@Override
 	public String getBasicAuthUsername()
 	{
-		return "myusername";
+		return mAccountEmail;
 	}
 
 
 	@Override
-	public String getBasicAuthPassword()
+	public String getBasicAuthToken()
 	{
-		return "mypassword";
+		return mAccountToken;
 	}
 }

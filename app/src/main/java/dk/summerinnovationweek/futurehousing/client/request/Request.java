@@ -2,7 +2,7 @@ package dk.summerinnovationweek.futurehousing.client.request;
 
 import android.os.Bundle;
 
-import com.fasterxml.jackson.core.JsonParseException;
+import com.google.gson.JsonParseException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +16,11 @@ public abstract class Request
 	public static final String API_ENDPOINT = FutureHousingConfig.DEV_API ? FutureHousingConfig.API_ENDPOINT_DEVELOPMENT : FutureHousingConfig.API_ENDPOINT_PRODUCTION;
 	public static final String CHARSET = "UTF-8";
 	public static final String BOUNDARY = "0xKhTmLbOuNdArY";
+
+	public static final int NULL_INT = -1;
+	public static final long NULL_LONG = -1l;
+	public static final double NULL_DOUBLE = -1.0;
+	public static final String NULL_STRING = null;
 
 	private Bundle mMetaData = null;
 
@@ -36,7 +41,7 @@ public abstract class Request
 	}
 
 
-	public String getBasicAuthPassword()
+	public String getBasicAuthToken()
 	{
 		return null;
 	}

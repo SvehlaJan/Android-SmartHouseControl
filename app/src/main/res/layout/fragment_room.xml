@@ -4,36 +4,46 @@
 	android:layout_height="match_parent"
 	android:animateLayoutChanges="true">
 
-    <ImageView
-        android:id="@+id/fragment_room_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"/>
+	<ImageView
+		android:id="@+id/fragment_room_background"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scaleType="fitXY" />
 
-    <ScrollView
-        android:id="@+id/container_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+	<ScrollView
+		android:id="@+id/container_content"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fillViewport="true">
 
-        <include layout="@layout/fragment_room_content" />
+		<include layout="@layout/fragment_room_content" />
 
-    </ScrollView>
+	</ScrollView>
 
-	<include layout="@layout/placeholder_progress"
+	<include
 		android:id="@+id/container_progress"
+		layout="@layout/placeholder_progress"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:visibility="gone" />
 
-	<include layout="@layout/placeholder_offline"
+	<include
 		android:id="@+id/container_offline"
+		layout="@layout/placeholder_offline"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:visibility="gone" />
 
-	<include layout="@layout/placeholder_empty"
+	<include
+		android:id="@+id/container_no_location"
+		layout="@layout/placeholder_no_location"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:visibility="gone" />
+
+	<include
 		android:id="@+id/container_empty"
+		layout="@layout/placeholder_empty"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:visibility="gone" />

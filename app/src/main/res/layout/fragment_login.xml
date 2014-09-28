@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/fragment_login_layout"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/global_metric_large"
+		android:layout_marginRight="@dimen/global_metric_large"
+		android:orientation="vertical" >
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="250dp"
+			android:layout_marginBottom="@dimen/global_metric_large"
+			android:src="@drawable/future_housing" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingLeft="@dimen/global_metric_medium"
+			android:text="@string/login_user_id"
+			android:textSize="@dimen/global_text_micro" />
+
+		<EditText
+			android:id="@+id/fragment_login_user_id_edit_text"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/global_metric_medium"
+			android:paddingLeft="@dimen/global_metric_medium" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingLeft="@dimen/global_metric_medium"
+			android:text="@string/login_password"
+			android:textSize="@dimen/global_text_micro" />
+
+		<EditText
+			android:id="@+id/fragment_login_password_edit_text"
+			android:imeOptions="actionGo"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:inputType="textPassword"
+			android:paddingLeft="@dimen/global_metric_medium" />
+
+		<LinearLayout
+			android:id="@+id/fragment_login_login_linear_layout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/global_metric_large"
+			android:background="@drawable/login_btn_selector"
+			android:gravity="center"
+			android:paddingBottom="@dimen/global_metric_small"
+			android:paddingTop="@dimen/global_metric_small" >
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/login_log_in"
+				android:textSize="@dimen/global_text_medium" />
+		</LinearLayout>
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/fragment_login_forgot_password_linear_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_marginBottom="@dimen/global_metric_large"
+		android:background="@drawable/login_btn_selector"
+		android:gravity="center"
+		android:paddingBottom="@dimen/global_metric_small"
+		android:paddingTop="@dimen/global_metric_small" >
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/login_forgot_password" />
+	</LinearLayout>
+
+
+</RelativeLayout>

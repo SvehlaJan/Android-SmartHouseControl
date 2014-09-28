@@ -20,9 +20,9 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import dk.summerinnovationweek.futurehousing.R;
-import dk.summerinnovationweek.futurehousing.entity.UserEntity;
 import dk.summerinnovationweek.futurehousing.task.TaskFragment;
 import dk.summerinnovationweek.futurehousing.view.ViewState;
+
 
 public class AboutFragment extends TaskFragment
 {
@@ -38,9 +38,10 @@ public class AboutFragment extends TaskFragment
 	private ImageLoadingListener mImageLoadingListener;
 	private ImageView mBackgroundImageView;
 
+
 	public static AboutFragment newInstance(String backgroundPath)
 	{
-        AboutFragment fragment = new AboutFragment();
+		AboutFragment fragment = new AboutFragment();
 
 		// arguments
 		Bundle arguments = new Bundle();
@@ -58,7 +59,7 @@ public class AboutFragment extends TaskFragment
 
 		// handle fragment arguments
 		Bundle arguments = getArguments();
-		if(arguments != null)
+		if (arguments != null)
 		{
 			handleArguments(arguments);
 		}
@@ -75,19 +76,20 @@ public class AboutFragment extends TaskFragment
 		mImageLoadingListener = new SimpleImageLoadingListener();
 	}
 
+
 	private void handleArguments(Bundle arguments)
 	{
 		mBackgroundPath = arguments.getString(ARGUMENT_BACKGROUND);
 	}
 
-	
+
 	@Override
-	public void onAttach(Activity activity) 
+	public void onAttach(Activity activity)
 	{
 		super.onAttach(activity);
 	}
-	
-	
+
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -102,82 +104,79 @@ public class AboutFragment extends TaskFragment
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-		
+
 		// load and show data
-		if(mViewState==null || mViewState==ViewState.OFFLINE)
+		if (mViewState == null || mViewState == ViewState.OFFLINE)
 		{
 			renderView();
 			showContent();
-		}
-		else if(mViewState==ViewState.CONTENT)
+		} else if (mViewState == ViewState.CONTENT)
 		{
 			renderView();
 			showContent();
-		}
-		else if(mViewState==ViewState.PROGRESS)
+		} else if (mViewState == ViewState.PROGRESS)
 		{
 			showProgress();
-		}
-		else if(mViewState==ViewState.EMPTY)
+		} else if (mViewState == ViewState.EMPTY)
 		{
 			showEmpty();
 		}
-		
+
 		// progress in action bar
 		showActionBarProgress(mActionBarProgress);
 	}
-	
-	
+
+
 	@Override
 	public void onStart()
 	{
 		super.onStart();
 	}
-	
-	
+
+
 	@Override
 	public void onResume()
 	{
 		super.onResume();
 	}
-	
-	
+
+
 	@Override
 	public void onPause()
 	{
 		super.onPause();
 	}
-	
-	
+
+
 	@Override
 	public void onStop()
 	{
 		super.onStop();
 	}
-	
-	
+
+
 	@Override
 	public void onDestroyView()
 	{
 		super.onDestroyView();
 		mRootView = null;
 	}
-	
-	
+
+
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
 	}
-	
-	
+
+
 	@Override
 	public void onDetach()
 	{
 		super.onDetach();
 	}
-	
-	
+
+
 	@Override
 	public void onSaveInstanceState(Bundle outState)
 	{
@@ -185,35 +184,36 @@ public class AboutFragment extends TaskFragment
 		super.onSaveInstanceState(outState);
 //		setUserVisibleHint(true);
 	}
-	
-	
+
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		// action bar menu
 		super.onCreateOptionsMenu(menu, inflater);
-		
+
 		// TODO
 	}
-	
-	
+
+
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) 
+	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		// action bar menu behaviour
 		return super.onOptionsItemSelected(item);
-		
+
 		// TODO
 	}
-	
+
+
 	private void showActionBarProgress(boolean visible)
 	{
 		// show action bar progress
 		((ActionBarActivity) getActivity()).setSupportProgressBarIndeterminateVisibility(visible);
 		mActionBarProgress = visible;
 	}
-	
-	
+
+
 	private void showContent()
 	{
 		// show content container
@@ -227,8 +227,8 @@ public class AboutFragment extends TaskFragment
 		containerEmpty.setVisibility(View.GONE);
 		mViewState = ViewState.CONTENT;
 	}
-	
-	
+
+
 	private void showProgress()
 	{
 		// show progress container
@@ -242,8 +242,8 @@ public class AboutFragment extends TaskFragment
 		containerEmpty.setVisibility(View.GONE);
 		mViewState = ViewState.PROGRESS;
 	}
-	
-	
+
+
 	private void showOffline()
 	{
 		// show offline container
@@ -257,8 +257,8 @@ public class AboutFragment extends TaskFragment
 		containerEmpty.setVisibility(View.GONE);
 		mViewState = ViewState.OFFLINE;
 	}
-	
-	
+
+
 	private void showEmpty()
 	{
 		// show empty container
@@ -273,12 +273,14 @@ public class AboutFragment extends TaskFragment
 		mViewState = ViewState.EMPTY;
 	}
 
+
 	public void setBackground(Bitmap bitmap)
 	{
 		if (mBackgroundImageView != null)
 			mBackgroundImageView.setImageBitmap(bitmap);
 	}
-	
+
+
 	private void renderView()
 	{
 		mImageLoader.displayImage(mBackgroundPath, mBackgroundImageView, mDisplayImageOptions, mImageLoadingListener);

@@ -2,102 +2,161 @@ package dk.summerinnovationweek.futurehousing.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class RoomEntity implements Serializable {
+import dk.summerinnovationweek.futurehousing.entity.roomItems.RoomItemHeatingEntity;
+import dk.summerinnovationweek.futurehousing.entity.roomItems.RoomItemLightEntity;
+
+
+public class RoomEntity implements Serializable
+{
 	@SerializedName("id")
-    private long mId;
+	private int mId;
 	@SerializedName("name")
-    private String mName;
-	@SerializedName("light")
-    private boolean mMeasuredLight;
-    private boolean mInputLight;
-	@SerializedName("temperature")
-    private int mMeasuredTemperature;
-    private int mInputTemperature;
+	private String mName;
+
+	@SerializedName("backgroundPhoto")
+	private String mBackgroundPhotoUrl;
+
+	@SerializedName("floorPlanMarginTop")
+	private int mFloorPlanMarginTop;
+	@SerializedName("floorPlanMarginLeft")
+	private int mFloorPlanMarginLeft;
+	@SerializedName("floorPlanMarginRight")
+	private int mFloorPlanMarginRight;
+	@SerializedName("floorPlanMarginBottom")
+	private int mFloorPlanMarginBottom;
+	@SerializedName("roomItems")
+	private ArrayList<RoomItemEntity> mRoomItemEntities;
+
+	private transient RoomItemHeatingEntity mItemHeatingEntity;
+	private transient RoomItemLightEntity mItemLightEntity;
 
 
-    public RoomEntity() {
-
-    }
-
-    public RoomEntity(long id, String name, boolean isMeasuredIsLightOn, int measuredTemperature) {
-        mId = id;
-        mName = name;
-		mMeasuredLight = isMeasuredIsLightOn;
-        mMeasuredTemperature = measuredTemperature;
-    }
-
-    public long getId() {
-        return mId;
-    }
-
-    public void setId(long id) {
-        mId = id;
-    }
-
-    public boolean isInputLight() {
-        return mInputLight;
-    }
-
-    public void setInputLight(boolean isLightOn) {
-        mInputLight = isLightOn;
-    }
-
-    public int getMeasuredTemperature() {
-        return mMeasuredTemperature;
-    }
-
-    public void setMeasuredTemperature(int measuredTemperature) {
-        mMeasuredTemperature = measuredTemperature;
-    }
-
-    public int getInputTemperature() {
-        return mInputTemperature;
-    }
-
-    public void setInputTemperature(int inputTemperature) {
-        mInputTemperature = inputTemperature;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        mName = name;
-    }
-
-    public boolean isMeasuredLight() {
-        return mMeasuredLight;
-    }
-
-    public void setMeasuredLight(boolean measuredLight) {
-        mMeasuredLight = measuredLight;
-    }
+	public RoomEntity(int id, String name)
+	{
+		mId = id;
+		mName = name;
+	}
 
 
-    public String ReadCPUinfo() {
-        ProcessBuilder cmd;
-        String result = "";
+	public int getId()
+	{
+		return mId;
+	}
 
-        try {
-            String[] args = {"/system/bin/cat", "/proc/cpuinfo"};
-            cmd = new ProcessBuilder(args);
 
-            Process process = cmd.start();
-            InputStream in = process.getInputStream();
-            byte[] re = new byte[1024];
-            while (in.read(re) != -1) {
-                System.out.println(new String(re));
-                result = result + new String(re);
-            }
-            in.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return result;
-    }
+	public void setId(int id)
+	{
+		mId = id;
+	}
+
+
+	public String getName()
+	{
+		return mName;
+	}
+
+
+	public void setName(String name)
+	{
+		mName = name;
+	}
+
+
+	public ArrayList<RoomItemEntity> getRoomItemEntities()
+	{
+		return mRoomItemEntities;
+	}
+
+
+	public void setRoomItemEntities(ArrayList<RoomItemEntity> roomItemEntities)
+	{
+		mRoomItemEntities = roomItemEntities;
+	}
+
+
+	public RoomItemHeatingEntity getItemHeatingEntity()
+	{
+		return mItemHeatingEntity;
+	}
+
+
+	public void setItemHeatingEntity(RoomItemHeatingEntity itemHeatingEntity)
+	{
+		mItemHeatingEntity = itemHeatingEntity;
+	}
+
+
+	public RoomItemLightEntity getItemLightEntity()
+	{
+		return mItemLightEntity;
+	}
+
+
+	public void setItemLightEntity(RoomItemLightEntity itemLightEntity)
+	{
+		mItemLightEntity = itemLightEntity;
+	}
+
+
+	public int getFloorPlanMarginLeft()
+	{
+		return mFloorPlanMarginLeft;
+	}
+
+
+	public void setFloorPlanMarginLeft(int floorPlanMarginLeft)
+	{
+		mFloorPlanMarginLeft = floorPlanMarginLeft;
+	}
+
+
+	public int getFloorPlanMarginTop()
+	{
+		return mFloorPlanMarginTop;
+	}
+
+
+	public void setFloorPlanMarginTop(int floorPlanMarginTop)
+	{
+		mFloorPlanMarginTop = floorPlanMarginTop;
+	}
+
+
+	public String getBackgroundPhotoUrl()
+	{
+		return mBackgroundPhotoUrl;
+	}
+
+
+	public void setBackgroundPhotoUrl(String backgroundPhotoUrl)
+	{
+		mBackgroundPhotoUrl = backgroundPhotoUrl;
+	}
+
+
+	public int getFloorPlanMarginBottom()
+	{
+		return mFloorPlanMarginBottom;
+	}
+
+
+	public void setFloorPlanMarginBottom(int floorPlanMarginBottom)
+	{
+		mFloorPlanMarginBottom = floorPlanMarginBottom;
+	}
+
+
+	public int getFloorPlanMarginRight()
+	{
+		return mFloorPlanMarginRight;
+	}
+
+
+	public void setFloorPlanMarginRight(int floorPlanMarginRight)
+	{
+		mFloorPlanMarginRight = floorPlanMarginRight;
+	}
 }

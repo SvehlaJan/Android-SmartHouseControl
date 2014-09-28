@@ -1,46 +1,51 @@
 package dk.summerinnovationweek.futurehousing.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
+import android.support.v8.renderscript.ScriptIntrinsicColorMatrix;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 
-import java.util.ArrayList;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import java.io.IOException;
+
+import dk.summerinnovationweek.futurehousing.FutureHousingConfig;
 import dk.summerinnovationweek.futurehousing.R;
-import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
-import dk.summerinnovationweek.futurehousing.entity.RoomEntity;
 import dk.summerinnovationweek.futurehousing.fragment.MainPagerFragment;
+import dk.summerinnovationweek.futurehousing.gcm.GcmUtility;
 import dk.summerinnovationweek.futurehousing.utility.DialogUtility;
+import dk.summerinnovationweek.futurehousing.utility.Logcat;
 
 
 public class MainActivity extends ActionBarActivity
 {
-	public static final String EXTRA_HOUSE = "extraHouse";
-	public static final String EXTRA_ROOM = "extraRoom";
-
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
 	private static final int REQUEST_IMAGE_SELECT = 2;
-	private String mCurrentPhotoPath;
+
+	private GoogleCloudMessaging mGcm;
+	private String mGcmRegistrationId;
+	private AsyncTask<Void, Void, Void> mGcmRegisterAsyncTask;
 
 	public static Intent newIntent(Context context)
 	{
@@ -58,6 +63,9 @@ public class MainActivity extends ActionBarActivity
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setupActionBar();
 		setContentView(R.layout.activity_main);
+
+		// handle GCM registration
+		handleGcmRegistration();
 	}
 	
 	
@@ -72,6 +80,9 @@ public class MainActivity extends ActionBarActivity
 	public void onResume()
 	{
 		super.onResume();
+
+		// check Google Play Services
+		GcmUtility.checkPlayServices(this);
 	}
 	
 	
@@ -92,7 +103,24 @@ public class MainActivity extends ActionBarActivity
 	@Override
 	public void onDestroy()
 	{
+		// cancel async tasks
+		if(mGcmRegisterAsyncTask!=null) mGcmRegisterAsyncTask.cancel(true);
+
 		super.onDestroy();
+	}
+
+
+	private void setupActionBar()
+	{
+		ActionBar bar = getSupportActionBar();
+		bar.setIcon(getResources().getDrawable(R.drawable.future_housing));
+		bar.setDisplayUseLogoEnabled(false);
+		bar.setDisplayShowTitleEnabled(true);
+		bar.setDisplayShowHomeEnabled(true);
+		bar.setDisplayHomeAsUpEnabled(false);
+		bar.setHomeButtonEnabled(true);
+
+		setSupportProgressBarIndeterminateVisibility(false);
 	}
 	
 	
@@ -101,7 +129,7 @@ public class MainActivity extends ActionBarActivity
 	{
 		// action bar menu
 		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.menu_simple, menu);
+		menuInflater.inflate(R.menu.menu_future_housing, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -109,38 +137,6 @@ public class MainActivity extends ActionBarActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
-		HouseEntity house = new HouseEntity();
-		house.setId(1);
-
-		ArrayList<RoomEntity> rooms = new ArrayList<RoomEntity>();
-
-		RoomEntity room = new RoomEntity(1, "Kitchen", true, 20);
-		room.setInputLight(true);
-		room.setInputTemperature(22);
-        rooms.add(room);
-
-		room = new RoomEntity(2, "Guest room", false, 17);
-		room.setInputLight(false);
-		room.setInputTemperature(17);
-		rooms.add(room);
-
-		room = new RoomEntity(3, "Living room", true, 23);
-		room.setInputLight(true);
-		room.setInputTemperature(22);
-		rooms.add(room);
-
-		room = new RoomEntity(4, "Office", false, 22);
-		room.setInputLight(true);
-		room.setInputTemperature(22);
-		rooms.add(room);
-
-		room = new RoomEntity(5, "Dining room", false, 20);
-		room.setInputLight(false);
-		room.setInputTemperature(20);
-		rooms.add(room);
-
-		house.setRoomList(rooms);
-
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		MainPagerFragment fragment = (MainPagerFragment) fragmentManager.findFragmentById(R.id.fragment_main_pager);
 
@@ -196,7 +192,9 @@ public class MainActivity extends ActionBarActivity
 			{
 
 			}
-		}, "From galery", "Use camera", "Cancel", "Would you like to take picture or select from galery?", "Select Background");
+		}, getString(R.string.dialog_change_background_gallery), getString(R.string.dialog_change_background_camera),
+				getString(android.R.string.cancel), getString(R.string.dialog_change_background_message),
+				getString(R.string.dialog_change_background_title));
 	}
 
 
@@ -259,7 +257,7 @@ public class MainActivity extends ActionBarActivity
 		else fragment.showHouse();
 	}
 
-	private void setBackground(Bitmap background)
+	private void setBackground(Bitmap inBitmap)
 	{
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
@@ -272,42 +270,100 @@ public class MainActivity extends ActionBarActivity
 
 		Bitmap scaledBitmap;
 		Bitmap rotatedBitmap;
+		Bitmap blurBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+		Bitmap grayBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 
-		if (background.getWidth() > background.getHeight())
+		if (inBitmap.getWidth() > inBitmap.getHeight())
 		{
-			scaledBitmap = Bitmap.createScaledBitmap(background, height/2, width/2, true);
-			rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+			rotatedBitmap = Bitmap.createScaledBitmap(inBitmap, height, width, true);
+			scaledBitmap = Bitmap.createBitmap(rotatedBitmap, 0, 0, rotatedBitmap.getWidth(), rotatedBitmap.getHeight(), matrix, true);
 		}
 		else
 		{
-			rotatedBitmap = Bitmap.createScaledBitmap(background, width/2, height/2, true);
+			scaledBitmap = Bitmap.createScaledBitmap(inBitmap, width, height, true);
 		}
 
+
 		final RenderScript rs = RenderScript.create(getBaseContext());
-		final Allocation input = Allocation.createFromBitmap(rs, rotatedBitmap, Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
+		final Allocation input = Allocation.createFromBitmap(rs, scaledBitmap, Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
 		final Allocation output = Allocation.createTyped(rs, input.getType());
+
 		final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
-		script.setRadius(15f);
+		script.setRadius(15f); // 0 < radius <= 25
 		script.setInput(input);
 		script.forEach(output);
-		output.copyTo(rotatedBitmap);
+		output.copyTo(blurBitmap);
+
+		final ScriptIntrinsicColorMatrix scriptColor = ScriptIntrinsicColorMatrix.create(rs, Element.U8_4(rs));
+		scriptColor.setGreyscale();
+		scriptColor.forEach(input, output);
+		output.copyTo(grayBitmap);
+
+		rs.destroy();
 
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		MainPagerFragment fragment = (MainPagerFragment) fragmentManager.findFragmentById(R.id.fragment_main_pager);
-		fragment.setBackground(rotatedBitmap);
+
+		fragment.setBackground(blurBitmap);
 	}
-	
-	
-	private void setupActionBar()
+
+
+
+
+
+	private void handleGcmRegistration()
 	{
-		ActionBar bar = getSupportActionBar();
-		bar.setIcon(getResources().getDrawable(R.drawable.back_arrow_image));
-		bar.setDisplayUseLogoEnabled(false);
-		bar.setDisplayShowTitleEnabled(true);
-		bar.setDisplayShowHomeEnabled(true);
-		bar.setDisplayHomeAsUpEnabled(false);
-		bar.setHomeButtonEnabled(true);
-		
-		setSupportProgressBarIndeterminateVisibility(false);
+		final Context context = getApplicationContext();
+
+		// check device for Play Services APK
+		if(GcmUtility.checkPlayServices(this))
+		{
+			// registration id
+			mGcm = GoogleCloudMessaging.getInstance(this);
+			mGcmRegistrationId = GcmUtility.getRegistrationId(context);
+
+			// register device
+			if(mGcmRegistrationId.isEmpty())
+			{
+				mGcmRegisterAsyncTask = new AsyncTask<Void, Void, Void>()
+				{
+					@Override
+					protected Void doInBackground(Void... params)
+					{
+						try
+						{
+							// register on GCM server
+							if(mGcm==null) mGcm = GoogleCloudMessaging.getInstance(context);
+							mGcmRegistrationId = mGcm.register(FutureHousingConfig.GCM_SENDER_ID);
+
+							// GcmUtility.register() must be called after successfull GoogleCloudMessaging.register(),
+							// because it sets registration id in shared preferences
+							GcmUtility.register(context, mGcmRegistrationId);
+						}
+						catch(IOException e)
+						{
+							e.printStackTrace();
+						}
+						return null;
+					}
+
+
+					@Override
+					protected void onPostExecute(Void result)
+					{
+						mGcmRegisterAsyncTask = null;
+					}
+				};
+				mGcmRegisterAsyncTask.execute(null, null, null);
+			}
+			else
+			{
+				Logcat.d("Activity.handleGcmRegistration(): device is already registered on server / " + mGcmRegistrationId);
+			}
+		}
+		else
+		{
+			Logcat.d("Activity.handleGcmRegistration(): no valid Google Play Services APK found");
+		}
 	}
 }

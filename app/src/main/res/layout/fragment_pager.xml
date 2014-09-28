@@ -8,27 +8,37 @@
 		android:id="@+id/container_content"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:fillViewport="true"
-		android:background="@color/global_bg_front">
+		android:background="@color/global_bg_front"
+		android:fillViewport="true">
 
 		<include layout="@layout/fragment_pager_content" />
 
 	</RelativeLayout>
 
-	<include layout="@layout/placeholder_progress"
+	<include
 		android:id="@+id/container_progress"
+		layout="@layout/placeholder_progress"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:visibility="gone" />
 
-	<include layout="@layout/placeholder_offline"
+	<include
 		android:id="@+id/container_offline"
+		layout="@layout/placeholder_offline"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:visibility="gone" />
 
-	<include layout="@layout/placeholder_empty"
+	<include
+		android:id="@+id/container_no_location"
+		layout="@layout/placeholder_no_location"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:visibility="gone" />
+
+	<include
 		android:id="@+id/container_empty"
+		layout="@layout/placeholder_empty"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:visibility="gone" />

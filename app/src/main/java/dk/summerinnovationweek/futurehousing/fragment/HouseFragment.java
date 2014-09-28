@@ -1,18 +1,23 @@
 package dk.summerinnovationweek.futurehousing.fragment;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import dk.summerinnovationweek.futurehousing.R;
 import dk.summerinnovationweek.futurehousing.entity.HouseEntity;
@@ -25,27 +30,23 @@ import dk.summerinnovationweek.futurehousing.view.ViewState;
 public class HouseFragment extends TaskFragment
 {
 	private static final String ARGUMENT_HOUSE = "house";
+
+	//image loader
+	private ImageLoader mImageLoader = ImageLoader.getInstance();
+
+	private DisplayImageOptions mDisplayImageOptions;
+	private ImageLoadingListener mImageLoadingListener;
+
+	private ImageView mFloorPlanImageView;
+
 	private boolean mActionBarProgress = false;
 	private ViewState mViewState = null;
 	private View mRootView;
-
-    TextView temperaturekitchen;
-    TextView temperaturedinningroom;
-    TextView temperaturelivingroom;
-    TextView temperatureoffice;
-    TextView temperatureguest;
-    Button kitchen;
-    Button dinningroom;
-    Button livingroom;
-    Button office;
-    Button guest;
-    ImageView kitchenlight;
-    ImageView dinningroomlight;
-    ImageView livingroomlight;
-    ImageView officelight;
-    ImageView guestlight;
-
 	private HouseEntity mHouse;
+	private int mFloorPlanViewWidth;
+	private int mFloorPlanViewHeight;
+	private float mFloorPlanScaleRatio;
+
 
 	public static HouseFragment newInstance(HouseEntity house)
 	{
@@ -67,141 +68,118 @@ public class HouseFragment extends TaskFragment
 
 		// handle fragment arguments
 		Bundle arguments = getArguments();
-		if(arguments != null)
+		if (arguments != null)
 		{
 			handleArguments(arguments);
 		}
+
+		// image caching options
+		mDisplayImageOptions = new DisplayImageOptions.Builder()
+				.showImageOnLoading(Color.TRANSPARENT)
+				.showImageForEmptyUri(Color.TRANSPARENT)
+				.showImageOnFail(Color.TRANSPARENT)
+				.cacheInMemory(true)
+				.displayer(new SimpleBitmapDisplayer())
+				.build();
+		mImageLoadingListener = new SimpleImageLoadingListener();
 	}
+
 
 	private void handleArguments(Bundle arguments)
 	{
-		if(arguments.containsKey(ARGUMENT_HOUSE))
+		if (arguments.containsKey(ARGUMENT_HOUSE))
 		{
 			mHouse = (HouseEntity) arguments.getSerializable(ARGUMENT_HOUSE);
 		}
 	}
 
+
 	@Override
-	public void onAttach(Activity activity) 
+	public void onAttach(Activity activity)
 	{
 		super.onAttach(activity);
 	}
-	
-	
+
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		mRootView = inflater.inflate(R.layout.fragment_house, container, false);
+
+		mFloorPlanImageView = (ImageView) mRootView.findViewById(R.id.fragment_house_floorplan_image_view);
+
 		return mRootView;
 	}
-	
-	
+
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-		
-		// load and show data
-		if(mViewState==null || mViewState==ViewState.OFFLINE)
-		{
-            renderView();
-			showContent();
-		}
-		else if(mViewState==ViewState.CONTENT)
-		{
-			if(mHouse !=null) renderView();
-			showContent();
-		}
-		else if(mViewState==ViewState.PROGRESS)
-		{
-			showProgress();
-		}
-		else if(mViewState==ViewState.EMPTY)
-		{
-			showEmpty();
-		}
-		
+
+		renderView();
+
 		// progress in action bar
 		showActionBarProgress(mActionBarProgress);
 	}
-	
-	
+
+
 	@Override
 	public void onStart()
 	{
 		super.onStart();
 	}
-	
-	
+
+
 	@Override
 	public void onResume()
 	{
 		super.onResume();
 	}
-	
-	
+
+
 	@Override
 	public void onPause()
 	{
 		super.onPause();
 	}
-	
-	
+
+
 	@Override
 	public void onStop()
 	{
 		super.onStop();
 	}
-	
-	
+
+
 	@Override
 	public void onDestroyView()
 	{
 		super.onDestroyView();
 		mRootView = null;
 	}
-	
-	
+
+
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
 	}
-	
-	
+
+
 	@Override
 	public void onDetach()
 	{
 		super.onDetach();
 	}
-	
-	
+
+
 	@Override
 	public void onSaveInstanceState(Bundle outState)
 	{
 		// save current instance state
 		super.onSaveInstanceState(outState);
 //		setUserVisibleHint(true);
-	}
-	
-	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-		// action bar menu
-		super.onCreateOptionsMenu(menu, inflater);
-		
-		// TODO
-	}
-	
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) 
-	{
-		// action bar menu behaviour
-		return super.onOptionsItemSelected(item);
-		
-		// TODO
 	}
 
 
@@ -211,298 +189,116 @@ public class HouseFragment extends TaskFragment
 		((ActionBarActivity) getActivity()).setSupportProgressBarIndeterminateVisibility(visible);
 		mActionBarProgress = visible;
 	}
-	
-	
-	private void showContent()
-	{
-		// show content container
-		ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
-		ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
-		ViewGroup containerOffline = (ViewGroup) mRootView.findViewById(R.id.container_offline);
-		ViewGroup containerEmpty = (ViewGroup) mRootView.findViewById(R.id.container_empty);
-		containerContent.setVisibility(View.VISIBLE);
-		containerProgress.setVisibility(View.GONE);
-		containerOffline.setVisibility(View.GONE);
-		containerEmpty.setVisibility(View.GONE);
-		mViewState = ViewState.CONTENT;
-	}
-	
-	
-	private void showProgress()
-	{
-		// show progress container
-		ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
-		ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
-		ViewGroup containerOffline = (ViewGroup) mRootView.findViewById(R.id.container_offline);
-		ViewGroup containerEmpty = (ViewGroup) mRootView.findViewById(R.id.container_empty);
-		containerContent.setVisibility(View.GONE);
-		containerProgress.setVisibility(View.VISIBLE);
-		containerOffline.setVisibility(View.GONE);
-		containerEmpty.setVisibility(View.GONE);
-		mViewState = ViewState.PROGRESS;
-	}
-	
-	
-	private void showOffline()
-	{
-		// show offline container
-		ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
-		ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
-		ViewGroup containerOffline = (ViewGroup) mRootView.findViewById(R.id.container_offline);
-		ViewGroup containerEmpty = (ViewGroup) mRootView.findViewById(R.id.container_empty);
-		containerContent.setVisibility(View.GONE);
-		containerProgress.setVisibility(View.GONE);
-		containerOffline.setVisibility(View.VISIBLE);
-		containerEmpty.setVisibility(View.GONE);
-		mViewState = ViewState.OFFLINE;
-	}
-	
-	
-	private void showEmpty()
-	{
-		// show empty container
-		ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
-		ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
-		ViewGroup containerOffline = (ViewGroup) mRootView.findViewById(R.id.container_offline);
-		ViewGroup containerEmpty = (ViewGroup) mRootView.findViewById(R.id.container_empty);
-		containerContent.setVisibility(View.GONE);
-		containerProgress.setVisibility(View.GONE);
-		containerOffline.setVisibility(View.GONE);
-		containerEmpty.setVisibility(View.VISIBLE);
-		mViewState = ViewState.EMPTY;
-	}
 
 
-    private RoomEntity getRoomByName(HouseEntity house, String roomName)
-    {
-        for (RoomEntity room : house.getRoomList())
-        {
-            if (room.getName().equals(roomName))
-                return room;
-        }
+	private RoomEntity getRoomByName(HouseEntity house, String roomName)
+	{
+		for (RoomEntity room : house.getRoomList())
+		{
+			if (room.getName().equals(roomName))
+				return room;
+		}
 
-        return null;
-    }
+		return null;
+	}
 
 
 	public void updateHouse()
 	{
-		renderView();
+		drawRooms();
 	}
-	
-	
+
+
 	private void renderView()
 	{
-        RoomEntity kitchenroom = getRoomByName(mHouse, "Kitchen");
-        if (kitchenroom != null ) {
-            kitchenlight = (ImageView) mRootView.findViewById(R.id.kitchenlight);
-            if (kitchenroom.isMeasuredLight()) {
-                kitchenlight.setImageResource(R.drawable.lightbulb);
-            } else {
-                kitchenlight.setImageResource(R.drawable.lightbulb_off);
-            }
-            temperaturekitchen = (TextView) mRootView.findViewById(R.id.temperaturekitchen);
-            temperaturekitchen.setText(Integer.toString(kitchenroom.getMeasuredTemperature()));
+		mImageLoader.displayImage(mHouse.getFloorPlan(), mFloorPlanImageView, mDisplayImageOptions, mImageLoadingListener);
+		ViewTreeObserver viewTreeObserver = mFloorPlanImageView.getViewTreeObserver();
+		viewTreeObserver
+				.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+				{
 
-            if (kitchenroom.getInputTemperature() == kitchenroom.getMeasuredTemperature()) {
-                temperaturekitchen.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_green));
-            }
+					@Override
+					public void onGlobalLayout()
+					{
+						mFloorPlanViewWidth = mFloorPlanImageView.getWidth();
+						mFloorPlanViewHeight = mFloorPlanImageView.getHeight();
 
-            if (kitchenroom.getInputTemperature() > kitchenroom.getMeasuredTemperature()) {
-                temperaturekitchen.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_blue));
-            }
+						mFloorPlanImageView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
-            if (kitchenroom.getInputTemperature() < kitchenroom.getMeasuredTemperature()) {
-                temperaturekitchen.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_red));
-            }
-        }
-
-
-        RoomEntity livingroom = getRoomByName(mHouse, "Living room");
-        if (livingroom != null ) {
-            livingroomlight = (ImageView) mRootView.findViewById(R.id.livingroomlight);
-            if (livingroom.isMeasuredLight()) {
-                livingroomlight.setImageResource(R.drawable.lightbulb);
-            } else {
-                livingroomlight.setImageResource(R.drawable.lightbulb_off);
-            }
-            temperaturelivingroom = (TextView) mRootView.findViewById(R.id.temperaturelivingroom);
-            temperaturelivingroom.setText(Integer.toString(livingroom.getMeasuredTemperature()));
-
-            if (livingroom.getInputTemperature() == livingroom.getMeasuredTemperature()) {
-                temperaturelivingroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_green));
-            }
-
-            if (livingroom.getInputTemperature() > livingroom.getMeasuredTemperature()) {
-                temperaturelivingroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_blue));
-            }
-
-            if (livingroom.getInputTemperature() < livingroom.getMeasuredTemperature()) {
-                temperaturelivingroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_red));
-            }
-
-        }
-
-        RoomEntity dinningroom = getRoomByName(mHouse, "Dining room");
-        if (dinningroom != null ) {
-            dinningroomlight = (ImageView) mRootView.findViewById(R.id.dinningroomlight);
-            if (dinningroom.isMeasuredLight()) {
-                dinningroomlight.setImageResource(R.drawable.lightbulb);
-            } else {
-                dinningroomlight.setImageResource(R.drawable.lightbulb_off);
-            }
-
-            temperaturedinningroom = (TextView) mRootView.findViewById(R.id.temperaturedinningroom);
-            temperaturedinningroom.setText(Integer.toString(dinningroom.getMeasuredTemperature()));
-
-            if (dinningroom.getInputTemperature() == dinningroom.getMeasuredTemperature()) {
-                temperaturedinningroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_green));
-            }
-
-            if (dinningroom.getInputTemperature() > dinningroom.getMeasuredTemperature()) {
-                temperaturedinningroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_blue));
-            }
-
-            if (dinningroom.getInputTemperature() < dinningroom.getMeasuredTemperature()) {
-                temperaturedinningroom.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_red));
-            }
-        }
-
-        RoomEntity officeroom = getRoomByName(mHouse, "Office");
-
-        if (officeroom != null ) {
-
-            officelight = (ImageView) mRootView.findViewById(R.id.officelight);
-            if (officeroom.isMeasuredLight()) {
-                officelight.setImageResource(R.drawable.lightbulb);
-            } else {
-                officelight.setImageResource(R.drawable.lightbulb_off);
-            }
-
-            temperatureoffice = (TextView) mRootView.findViewById(R.id.temperatureoffice);
-            temperatureoffice.setText(Integer.toString(officeroom.getMeasuredTemperature()));
-
-            if (officeroom.getInputTemperature() == officeroom.getMeasuredTemperature()) {
-                temperatureoffice.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_green));
-            }
-
-            if (officeroom.getInputTemperature() > officeroom.getMeasuredTemperature()) {
-                temperatureoffice.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_blue));
-            }
-
-            if (officeroom.getInputTemperature() < officeroom.getMeasuredTemperature()) {
-                temperatureoffice.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_red));
-            }
-
-        }
-
-        RoomEntity guestroom = getRoomByName(mHouse, "Guest room");
-        if (guestroom != null ) {
-
-
-            guestlight = (ImageView) mRootView.findViewById(R.id.guestlight);
-
-            if (guestroom.isMeasuredLight()) {
-                guestlight.setImageResource(R.drawable.lightbulb);
-            } else {
-                guestlight.setImageResource(R.drawable.lightbulb_off);
-            }
-            temperatureguest = (TextView) mRootView.findViewById(R.id.temperatureguest);
-            temperatureguest.setText(Integer.toString(guestroom.getMeasuredTemperature()));
-
-            if (guestroom.getInputTemperature() == guestroom.getMeasuredTemperature()) {
-                temperatureguest.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_green));
-            }
-
-            if (guestroom.getInputTemperature() > guestroom.getMeasuredTemperature()) {
-                temperatureguest.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_blue));
-            }
-
-            if (guestroom.getInputTemperature() < guestroom.getMeasuredTemperature()) {
-                temperatureguest.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_red));
-            }
-        }
-
-        addListenerOnButton();
+						drawRooms();
+					}
+				});
 	}
 
-    public void addListenerOnButton() {
+	public void drawRooms()
+	{
+		RelativeLayout roomsRootRelativeLayout = (RelativeLayout) mRootView.findViewById(R.id.fragment_house_floorplan_overlay);
 
-        final MainPagerFragment fragment = FragmentUtils.getParent(this, MainPagerFragment.class);
+		if (mFloorPlanViewWidth == 0)
+		{
+			return;
+		}
 
-        kitchen = (Button) mRootView.findViewById(R.id.kitchen);
-        kitchen.setOnClickListener(new View.OnClickListener() {
+		mFloorPlanScaleRatio = (float)mFloorPlanViewWidth / (float)mHouse.getFloorPlanWidth();
 
-            @Override
-            public void onClick(View arg0) {
-                fragment.showRoom(1);
+		roomsRootRelativeLayout.removeAllViews();
 
-                //TODO
-                Log.e("TAG", "Kitchen" );
+		for (final RoomEntity room : mHouse.getRoomList())
+		{
+			if (room.getFloorPlanMarginBottom() == 0 || room.getFloorPlanMarginRight() == 0)
+				continue;
 
+			LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View child = li.inflate(R.layout.fragment_house_room_item, null);
 
-            }
+			if (room.getItemLightEntity() != null)
+			{
+				ImageView lightImageView = (ImageView) child.findViewById(R.id.fragment_house_room_item_light_image_view);
+				if (room.getItemLightEntity().isMeasuredLight())
+				{
+					lightImageView.setImageResource(R.drawable.lightbulb);
+				} else
+				{
+					lightImageView.setImageResource(R.drawable.lightbulb_off);
+				}
+			}
+			if (room.getItemHeatingEntity() != null)
+			{
+				TextView temperatureTextView = (TextView) child.findViewById(R.id.fragment_house_room_item_temperature_text_view);
+				temperatureTextView.setText(Integer.toString(room.getItemHeatingEntity().getMeasuredTemperature()));
 
-        });
+				if (room.getItemHeatingEntity().getUserTemperature() < room.getItemHeatingEntity().getMeasuredTemperature())
+				{
+					temperatureTextView.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_blue));
+				} else if (room.getItemHeatingEntity().getUserTemperature() > room.getItemHeatingEntity().getMeasuredTemperature())
+				{
+					temperatureTextView.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_red));
+				} else
+				{
+					temperatureTextView.setBackgroundDrawable(getResources().getDrawable(R.drawable.temperature_shape_green));
+				}
+			}
 
-        dinningroom = (Button) mRootView.findViewById(R.id.dinningroom);
-        dinningroom.setOnClickListener(new View.OnClickListener() {
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+			params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+			params.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+			params.topMargin = (int)(room.getFloorPlanMarginTop() * mFloorPlanScaleRatio);
+			params.leftMargin = (int)(room.getFloorPlanMarginLeft() * mFloorPlanScaleRatio);
+			params.rightMargin = (int)((mHouse.getFloorPlanWidth() - room.getFloorPlanMarginRight()) * mFloorPlanScaleRatio);
+			params.bottomMargin = (int)((mHouse.getFloorPlanHeight() - room.getFloorPlanMarginBottom()) * mFloorPlanScaleRatio);
 
-            @Override
-            public void onClick(View arg0) {
+			final MainPagerFragment fragment = FragmentUtils.getParent(this, MainPagerFragment.class);
+			child.setClickable(true);
+			child.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					fragment.showRoomWithId(room.getId());
+				}
+			});
 
-                //TODO
-                Log.e("TAG", "dinningroom" );
-                fragment.showRoom(5);
-
-
-            }
-
-        });
-        livingroom = (Button) mRootView.findViewById(R.id.livingroom);
-        livingroom.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                //TODO
-                Log.e("TAG", "livingroom" );
-                fragment.showRoom(3);
-
-
-            }
-
-        });
-        office = (Button) mRootView.findViewById(R.id.office);
-        office.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                //TODO
-                Log.e("TAG", "office" );
-                fragment.showRoom(4);
-
-
-            }
-
-        });
-
-        guest = (Button) mRootView.findViewById(R.id.guest);
-        guest.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                //TODO
-                Log.e("TAG", "guest" );
-                fragment.showRoom(2);
-
-
-
-            }
-
-        });
-
-    }
+			roomsRootRelativeLayout.addView(child, params);
+		}
+	}
 }

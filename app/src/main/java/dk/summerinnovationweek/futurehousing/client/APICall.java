@@ -2,7 +2,7 @@ package dk.summerinnovationweek.futurehousing.client;
 
 import android.util.Base64;
 
-import com.fasterxml.jackson.core.JsonParseException;
+import com.google.gson.JsonParseException;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -94,9 +94,9 @@ public class APICall
 			{
 				mConnection.setRequestMethod(mRequest.getRequestMethod()); // GET, POST, OPTIONS, HEAD, PUT, DELETE, TRACE
 			}
-			if(mRequest.getBasicAuthUsername()!=null && mRequest.getBasicAuthPassword()!=null)
+			if(mRequest.getBasicAuthUsername()!=null && mRequest.getBasicAuthToken()!=null)
 			{
-				mConnection.setRequestProperty("Authorization", getBasicAuthToken(mRequest.getBasicAuthUsername(), mRequest.getBasicAuthPassword()));
+				mConnection.setRequestProperty("Authorization", getBasicAuthToken(mRequest.getBasicAuthUsername(), mRequest.getBasicAuthToken()));
 			}
 			mConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 			//mConnection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + Request.BOUNDARY); // for multipart

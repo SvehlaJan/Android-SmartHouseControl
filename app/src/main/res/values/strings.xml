@@ -12,28 +12,40 @@
     <string name="global_apicall_timeout_toast">Wooops! Connection timed out</string>
     <string name="global_apicall_parse_fail_toast">Wooops! Unable to process response from server</string>
 
-    <string name="ab_title_example">Smart House Labs</string>
-
-    <string name="ab_button_example">Example button</string>
-
-    <string name="placeholder_empty">No data</string>
+    <string name="placeholder_empty">No XVals</string>
     <string name="placeholder_offline">No network</string>
+	<string name="placeholder_no_location">No location</string>
 
-    <string name="fragment_example_title">Example fragment title</string>
-
-    <string name="dialog_example_title">Example dialog title</string>
-
-    <string name="notification_example_title">Example notification title</string>
     <string name="ab_button_refresh">Refresh</string>
     <string name="ab_button_list">Options</string>
-    <string name="ab_button_house_statistics">House statistics</string>
-    <string name="ab_button_list_collapse">Schedule</string>
+    <string name="ab_button_list_statistics">House statistics</string>
     <string name="ab_button_list_change_background">Change background</string>
+	<string name="ab_button_list_about">About us</string>
+	<string name="ab_button_list_bonus">Bonus</string>
+	<string name="ab_button_list_settings">Settings</string>
+	<string name="ab_button_list_login_hack">Hack</string>
+
     <string name="room_activity">Room overview</string>
     <string name="house_activity">House overview</string>
-    <string name="bulbContentDesc">Bulb</string>
-    <string name="tv_MainLamp">Main lamp</string>
-    <string name="temp">Temperature</string>
-    <string name="ab_button_list_about">About us</string>
     <string name="Water_consumption">Water consumption: 9m<sup><small>3</small></sup></string>
+
+	<string name="room_item_heating_state_heating">Heating</string>
+	<string name="room_item_heating_state_cooling">Cooling</string>
+
+	<string name="login_user_id">USER ID</string>
+	<string name="login_password">PASSWORD</string>
+	<string name="login_log_in">Log In</string>
+	<string name="login_forgot_password">Forgot my Password</string>
+	<string name="login_invalid_credentials">Invalid credentials</string>
+
+	<string name="dialog_rate_app_message">If you enjoy using our application, please take a moment to rate it.</string>
+	<string name="dialog_rate_app_positive_label">Rate it!</string>
+
+	<string name="dialog_new_version_message">There is a new version of application available!</string>
+	<string name="dialog_new_version_positive_label">Update!</string>
+
+	<string name="dialog_change_background_gallery">From gallery</string>
+	<string name="dialog_change_background_camera">Use camera</string>
+	<string name="dialog_change_background_title">Select Background</string>
+	<string name="dialog_change_background_message">Would you like to take picture or select from gallery?</string>
 </resources>
